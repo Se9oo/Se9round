@@ -7,6 +7,7 @@ const breakpoints = createBreakpoints({
   md: '768px',
   lg: '992px',
   xl: '1200px',
+  xxl: '1400px',
 });
 
 const colors = {
@@ -15,7 +16,7 @@ const colors = {
   white: '#fff',
 };
 
-export const theme = extendTheme({
+const theme = extendTheme({
   fonts: {
     heading: 'AppleSDGothicNeoHeading',
     body: 'AppleSDGothicNeoBody',
@@ -31,7 +32,8 @@ export const theme = extendTheme({
         fontSize: '16px',
       },
       body: {
-        backgroundColor: 'white',
+        backgroundColor: 'gray.200',
+        fontSize: '16px',
       },
       'body, input, a, ol, ul, li, button': {
         fontFamily: `Apple SD Gothic','Noto Sans KR','맑은고딕','Nanum Gothic','sans-serif`,
@@ -54,3 +56,5 @@ export const theme = extendTheme({
   breakpoints,
   colors,
 });
+
+export default theme;

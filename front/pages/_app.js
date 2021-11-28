@@ -6,7 +6,7 @@ import theme from '../public/common/theme';
 
 const App = ({ Component, pageProps }) => {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme} resetCSS>
       <Head>
         <meta charSet="utf-8" />
         <meta

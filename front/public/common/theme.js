@@ -18,8 +18,7 @@ const colors = {
 
 const theme = extendTheme({
   fonts: {
-    heading: 'AppleSDGothicNeoHeading',
-    body: 'AppleSDGothicNeoBody',
+    body: 'Apple SD Gothic',
   },
   styles: {
     global: {
@@ -36,7 +35,7 @@ const theme = extendTheme({
         fontSize: '16px',
       },
       'body, input, a, ol, ul, li, button': {
-        fontFamily: `Apple SD Gothic','Noto Sans KR','맑은고딕','Nanum Gothic','sans-serif`,
+        fontFamily: `'Apple SD Gothic','Noto Sans KR','맑은고딕','Nanum Gothic','sans-serif'`,
       },
       a: {
         textDecoration: 'none',

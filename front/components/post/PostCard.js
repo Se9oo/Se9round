@@ -14,14 +14,15 @@ const PostCard = () => {
   });
 
   const margin = useBreakpointValue({
-    base: '5px 0',
-    xs: '5px 0',
-    sm: '5px 0',
-    md: '.5rem',
-    lg: '5px',
-    xl: '5px',
-    xxl: '5px',
+    base: '10px 0',
+    xs: '10px 0',
+    sm: '10px 0',
+    md: '10px',
+    lg: '10px',
+    xl: '10px',
+    xxl: '10px',
   });
+
   return (
     <Flex
       w={postWidth}
@@ -32,6 +33,11 @@ const PostCard = () => {
       boxShadow="sm"
       borderRadius="md"
       cursor="pointer"
+      _hover={{
+        transform: 'translateY(-.2rem)',
+        transition: 'all .2s ease',
+        boxShadow: 'lg',
+      }}
     >
       <Box h="200px">이미지</Box>
       <Heading as="h2" fontSize="1.2rem" mb="1rem">

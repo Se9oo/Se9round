@@ -6,6 +6,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../public/common/theme';
 import Fonts from '../public/common/fonts';
 
+import wrapper from '../store/configureStore';
+
 const App = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme} resetCSS>
@@ -23,4 +25,4 @@ const App = ({ Component, pageProps }) => {
   );
 };
 
-export default App;
+export default wrapper.withRedux(App);

@@ -4,24 +4,23 @@ import { Flex, Box, Heading, Text, useBreakpointValue } from '@chakra-ui/react';
 
 const PostCard = () => {
   const postWidth = useBreakpointValue({
-    xxs: '100%',
+    base: '100%',
     xs: '100%',
     sm: '100%',
-    md: 'calc(50% - 1rem)',
+    md: 'calc(50% - 2rem)',
     lg: 'calc(50% - 2rem)',
-    xl: 'calc(50% - 2rem)',
-    xxl: 'calc(33% - 2rem)',
-    '2xl': 'calc(33% - 2rem)',
+    xl: '20rem',
+    xxl: '20rem',
   });
 
   const margin = useBreakpointValue({
-    xxs: '.5rem 0',
-    xs: '.5rem 0',
-    sm: '.5rem 0',
-    md: '.5rem',
-    lg: '.5rem',
-    xl: '.5rem',
-    xxl: '.5rem',
+    base: '10px 0',
+    xs: '10px 0',
+    sm: '10px 0',
+    md: '10px',
+    lg: '10px',
+    xl: '10px',
+    xxl: '10px',
   });
 
   return (

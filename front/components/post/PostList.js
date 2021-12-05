@@ -1,12 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { Flex, useBreakpointValue } from '@chakra-ui/react';
 
 import PostCard from './PostCard';
 
 const PostList = () => {
-  const postList = Array.from({ length: 20 }, () => Array(20).fill(0));
-
   const width = useBreakpointValue({
     xxs: '100%',
     xs: '100%',
@@ -17,6 +16,8 @@ const PostList = () => {
     xxl: '85%',
     '2xl': '75%',
   });
+
+  const { postList } = useSelector((state) => state.post);
 
   return (
     <Flex flexDir="column" w={width}>

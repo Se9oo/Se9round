@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { loadPostsRequestAction } from '../reducers/post';
 
 import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
 
@@ -28,6 +31,12 @@ const Se9round = () => {
     xxl: '4rem auto 0',
     '2xl': '4rem auto 0',
   });
+
+  const dispatch = useDispatch('');
+
+  useEffect(() => {
+    dispatch(loadPostsRequestAction());
+  }, []);
 
   return (
     <Box w="100%" h="100vh" p="0" position="relative">

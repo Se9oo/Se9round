@@ -23,7 +23,7 @@ const PostList = () => {
     <Flex flexDir="column" w={width}>
       <Flex flexWrap="wrap">
         {postList.map((post) => {
-          return <PostCard />;
+          return <PostCard key={post.id} post={post} />;
         })}
       </Flex>
     </Flex>

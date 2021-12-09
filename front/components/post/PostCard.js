@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Flex, Box, Heading, Text, useBreakpointValue } from '@chakra-ui/react';
 
-const PostCard = () => {
+const PostCard = ({ post }) => {
   const postWidth = useBreakpointValue({
     xxs: '100%',
     xs: '100%',
@@ -43,11 +43,10 @@ const PostCard = () => {
     >
       <Box h="200px">이미지</Box>
       <Heading as="h2" fontSize="1.2rem" mb="1rem">
-        Lorem Ipsum
+        {post.title}
       </Heading>
       <Text fontSize="1rem" mb="5px" isTruncated>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-        standard dummy text ever since the 1500s,
+        {post.contents}
       </Text>
       <Text fontSize="sm">2021.11.28</Text>
     </Flex>

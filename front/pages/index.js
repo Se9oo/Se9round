@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadPostsRequestAction } from '../reducers/post';
 
-import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, useBreakpointValue } from '@chakra-ui/react';
 
-import Header from '../components/Header';
+import MainLayout from '../components/MainLayout';
 import PostList from '../components/post/PostList';
 import TagList from '../components/tag/TagList';
 
@@ -21,17 +21,6 @@ const Se9round = () => {
     '2xl': 'block',
   });
 
-  const margin = useBreakpointValue({
-    xxs: '4rem 0 0',
-    xs: '4rem 0 0',
-    sm: '4rem 0 0',
-    md: '4rem 0 0',
-    lg: '4rem 0 0',
-    xl: '4rem auto 0',
-    xxl: '4rem auto 0',
-    '2xl': '4rem auto 0',
-  });
-
   const dispatch = useDispatch('');
 
   useEffect(() => {
@@ -39,15 +28,12 @@ const Se9round = () => {
   }, []);
 
   return (
-    <Box w="100%" h="100vh" p="0" position="relative">
-      <Header />
-      <Box w={['100%', '100%', '100%', '100%', '100%', '85%', '85%']} maxW="1400px" m={margin} p="1rem">
-        <Flex w="100%">
-          <PostList />
-          {display === 'block' && <TagList />}
-        </Flex>
-      </Box>
-    </Box>
+    <MainLayout>
+      <Flex w="100%">
+        <PostList />
+        {display === 'block' && <TagList />}
+      </Flex>
+    </MainLayout>
   );
 };
 

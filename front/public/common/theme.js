@@ -1,6 +1,8 @@
 import { extendTheme } from '@chakra-ui/react';
 import { createBreakpoints } from '@chakra-ui/theme-tools';
 
+import { Button, Input } from './customComponents';
+
 const breakpoints = createBreakpoints({
   xxs: '17.5rem',
   xs: '20rem',
@@ -34,6 +36,7 @@ const theme = extendTheme({
       body: {
         backgroundColor: 'gray.200',
         fontSize: '16px',
+        position: 'relative',
       },
       'body, input, a, ol, ul, li, button': {
         fontFamily: `'Apple SD Gothic','Noto Sans KR','맑은고딕','Nanum Gothic','sans-serif'`,
@@ -52,6 +55,10 @@ const theme = extendTheme({
         backgroundColor: 'transparent',
       },
     },
+  },
+  components: {
+    Button,
+    Input,
   },
   breakpoints,
   colors,

@@ -20,12 +20,14 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_POSTS_REQUEST:
       return {
+        ...state,
         loadPostsLoading: true,
         loadPostsSuccess: false,
         loadPostsFailure: false,
       };
     case LOAD_POSTS_SUCCESS:
       return {
+        ...state,
         loadPostsLoading: false,
         loadPostsSuccess: true,
         loadPostsFailure: false,
@@ -33,6 +35,7 @@ const reducer = (state = initialState, action) => {
       };
     case LOAD_POSTS_FAILURE:
       return {
+        ...state,
         loadPostsLoading: false,
         loadPostsSuccess: false,
         loadPostsFailure: true,

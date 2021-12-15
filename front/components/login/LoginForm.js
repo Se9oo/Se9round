@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import router from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminLoginRequestAction } from '../../reducers/user';
 
 import { Box, Input, Button, useBreakpointValue } from '@chakra-ui/react';
 
@@ -14,6 +17,8 @@ const LoginForm = () => {
     '2xl': '30rem',
   });
 
+  const dispatch = useDispatch('');
+  const { adminLoginSuccess } = useSelector((state) => state.user);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,8 +39,15 @@ const LoginForm = () => {
       alert('비밀번호를 확인해주세요.');
       return;
     }
-    console.log(id, password);
+
+    dispatch(adminLoginRequestAction({ id, password }));
   };
+
+  useEffect(() => {
+    if (adminLoginSuccess) {
+      router.push('/');
+    }
+  }, [adminLoginSuccess]);
 
   return (
     <Box w={width} m="0 auto" bg="white" p="4rem 2rem" borderRadius="lg" boxShadow="sm">

@@ -8,6 +8,10 @@ import Fonts from '../public/common/fonts';
 
 import wrapper from '../store/configureStore';
 
+// tui-editor
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
 const App = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme} resetCSS>

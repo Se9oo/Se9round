@@ -54,6 +54,10 @@ const theme = extendTheme({
       'input, button': {
         backgroundColor: 'transparent',
       },
+      '.tui-editor-contents': {
+        fontFamily: `'Apple SD Gothic','Noto Sans KR','맑은고딕','Nanum Gothic','sans-serif'`,
+        fontSize: '16px',
+      },
     },
   },
   components: {

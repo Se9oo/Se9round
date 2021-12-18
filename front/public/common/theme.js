@@ -58,6 +58,10 @@ const theme = extendTheme({
         fontFamily: `'Apple SD Gothic','Noto Sans KR','맑은고딕','Nanum Gothic','sans-serif'`,
         fontSize: '16px',
       },
+      '.te-md-container .CodeMirror': {
+        fontFamily: `'Apple SD Gothic','Noto Sans KR','맑은고딕','Nanum Gothic','sans-serif'`,
+        fontSize: '16px',
+      },
     },
   },
   components: {

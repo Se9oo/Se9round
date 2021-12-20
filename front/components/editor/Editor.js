@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 
 import { Editor as TuiEditor } from '@toast-ui/react-editor';
 
-const Editor = ({ height }) => {
+const Editor = ({ height, editorRef, handleEditPost }) => {
   return (
     <>
       <Box w="100%" bg="white">
@@ -13,6 +13,8 @@ const Editor = ({ height }) => {
           previewStyle="vertical"
           height={height}
           initialEditType="wysiwyg"
+          ref={editorRef}
+          onChange={handleEditPost}
         />
       </Box>
     </>

@@ -1,4 +1,6 @@
 import React, { forwardRef, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import router from 'next/router';
 import dynamic from 'next/dynamic';
 
 import {
@@ -13,7 +15,10 @@ import {
   TagCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
+
 import Alert from '../alert';
+
+import { savePostRequestAction } from '../../reducers/post';
 
 const PostEditor = dynamic(() => import('./Editor'), { ssr: false });
 
@@ -35,6 +40,7 @@ const EditorForm = () => {
   const [title, setTitle] = useState('');
   const [tagsArray, setTagsArray] = useState([]);
   const [contents, setContents] = useState('');
+  const dispatch = useDispatch('');
 
   // editor ref
   const editorRef = useRef(null);
@@ -84,13 +90,24 @@ const EditorForm = () => {
       return;
     }
 
+    // alert open
     onOpen();
   };
 
   // 게시글 저장
   const handlePostSave = () => {
-    //dispatch();
-    console.log('저장');
+    dispatch(
+      savePostRequestAction({
+        title,
+        tagsArray,
+        contents,
+      })
+    );
+
+    // alert close
+    onClose();
+    // 게시글 저장 후 홈으로 이동
+    router.push('/');
   };
 
   return (

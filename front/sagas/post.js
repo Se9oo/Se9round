@@ -5,9 +5,12 @@ import {
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_FAILURE,
+  SAVE_POST_REQUEST,
   SAVE_POST_SUCCESS,
   SAVE_POST_FAILURE,
-  SAVE_POST_REQUEST,
+  TEMP_SAVE_POST_REQUEST,
+  TEMP_SAVE_POST_SUCCESS,
+  TEMP_SAVE_POST_FAILURE,
 } from '../reducers/post';
 
 // 게시글 목록 조회
@@ -67,7 +70,6 @@ function savePostAPI(data) {
 
 function* savePost(data) {
   try {
-    console.log(data);
     //call(savePostAPI, data);
     yield put({
       type: SAVE_POST_SUCCESS,
@@ -84,6 +86,29 @@ function* watchSavePost() {
   yield takeLatest(SAVE_POST_REQUEST, savePost);
 }
 
+// 게시글 임시 저장
+function tempSavePostAPI(data) {
+  axios.post('/api/temp/post', data);
+}
+
+function* tempSavePost(data) {
+  try {
+    // call(tempSavePostAPI, data);
+    yield put({
+      type: TEMP_SAVE_POST_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: TEMP_SAVE_POST_FAILURE,
+      err: err.reponse.data,
+    });
+  }
+}
+
+function* watchTempSavePost() {
+  yield takeLatest(TEMP_SAVE_POST_REQUEST, tempSavePost);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchLoadPosts), fork(watchSavePost)]);
+  yield all([fork(watchLoadPosts), fork(watchSavePost), fork(watchTempSavePost)]);
 }

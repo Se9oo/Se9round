@@ -6,6 +6,9 @@ export const initialState = {
   savePostLoading: false,
   savePostSuccess: false,
   savePostFailure: false,
+  tempSavePostLoading: false,
+  tempSavePostSuccess: false,
+  tempSavePostFailure: false,
 };
 
 // 게시글 목록 조회
@@ -27,6 +30,18 @@ export const SAVE_POST_FAILURE = 'SAVE_POST_FAILURE';
 export const savePostRequestAction = (data) => {
   return {
     type: SAVE_POST_REQUEST,
+    data,
+  };
+};
+
+// 게시글 임시 저장
+export const TEMP_SAVE_POST_REQUEST = 'TEMP_SAVE_POST_REQUEST';
+export const TEMP_SAVE_POST_SUCCESS = 'TEMP_SAVE_POST_SUCCESS';
+export const TEMP_SAVE_POST_FAILURE = 'TEMP_SAVE_POST_FAILURE';
+
+export const tempSavePostRequestAction = (data) => {
+  return {
+    type: TEMP_SAVE_POST_REQUEST,
     data,
   };
 };
@@ -77,6 +92,28 @@ const reducer = (state = initialState, action) => {
         savePostLoading: false,
         savePostSuccess: false,
         savePostFailure: true,
+      };
+    // 게시글 임시 저장
+    case TEMP_SAVE_POST_REQUEST:
+      return {
+        ...state,
+        tempSavePostLoading: true,
+        tempSavePostSuccess: false,
+        tempSavePostFailure: false,
+      };
+    case TEMP_SAVE_POST_SUCCESS:
+      return {
+        ...state,
+        tempSavePostLoading: false,
+        tempSavePostSuccess: true,
+        tempSavePostFailure: false,
+      };
+    case TEMP_SAVE_POST_FAILURE:
+      return {
+        ...state,
+        tempSavePostLoading: false,
+        tempSavePostSuccess: false,
+        tempSavePostFailure: true,
       };
 
     default:

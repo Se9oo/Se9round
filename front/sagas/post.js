@@ -20,32 +20,7 @@ function loadPostsAPI() {
 
 function* loadPosts() {
   try {
-    //const result = call(loadPostsAPI);
-    const result = {
-      data: [
-        {
-          id: 1,
-          title: '테스트',
-          contents: '테스트테스트',
-          reg_dt: '2021-12-05',
-          status: 1,
-        },
-        {
-          id: 2,
-          title: '테스트',
-          contents: '테스트테스트',
-          reg_dt: '2021-12-05',
-          status: 1,
-        },
-        {
-          id: 3,
-          title: '테스트',
-          contents: '테스트테스트',
-          reg_dt: '2021-12-05',
-          status: 1,
-        },
-      ],
-    };
+    const result = yield call(loadPostsAPI);
 
     yield put({
       type: LOAD_POSTS_SUCCESS,
@@ -54,7 +29,7 @@ function* loadPosts() {
   } catch (err) {
     yield put({
       type: LOAD_POSTS_FAILURE,
-      err: err.response.data,
+      err: err.response,
     });
   }
 }

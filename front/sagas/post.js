@@ -45,7 +45,7 @@ function savePostAPI(data) {
 
 function* savePost(data) {
   try {
-    //call(savePostAPI, data);
+    yield call(savePostAPI, data);
     yield put({
       type: SAVE_POST_SUCCESS,
     });

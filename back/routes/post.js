@@ -2,7 +2,8 @@ const express = require('express');
 // db client
 const client = require('../config/db');
 // query
-const { selectPostLists } = require('../query/post');
+const { selectPostLists, insertPost } = require('../query/post');
+const { insertTag } = require('../query/tag');
 // router
 const router = express.Router();
 
@@ -19,11 +20,41 @@ client.connect((err) => {
 router.get('/api/posts', (req, res) => {
   client.query(selectPostLists, (error, response) => {
     if (error) {
-      throw error;
+      res.status(500).json(error);
     } else {
       res.status(200).json(response.rows);
     }
   });
+});
+
+// 게시글 등록
+router.post('/api/post', (req, res) => {
+  if (!req.body) {
+    res.status(500).json('empty request');
+  } else {
+    const { title, tagsArray, contents } = req.body.data;
+
+    // 태그 저장
+    if (Array.isArray(tagsArray) && tagsArray.length !== 0) {
+      try {
+        tagsArray.map((tag) => {
+          client.query(insertTag, [tag]);
+        });
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    }
+
+    // 게시글 저장
+    client.query(insertPost, [title, contents, tagsArray], (error, response) => {
+      if (error) {
+        res.status(500).json(error);
+        console.log(error);
+      } else {
+        res.status(200).json('success');
+      }
+    });
+  }
 });
 
 module.exports = router;

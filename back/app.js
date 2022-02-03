@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const postRouter = require('./routes/post');
 
 const app = express();
@@ -10,6 +11,10 @@ app.use(
     origin: 'http://localhost:3000',
   })
 );
+
+// body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // router 연결
 app.use(postRouter);

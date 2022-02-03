@@ -48,7 +48,7 @@ const PostCard = ({ post }) => {
       <Text fontSize="1rem" mb="5px" isTruncated>
         {post.contents}
       </Text>
-      <Text fontSize="sm">2021.11.28</Text>
+      <Text fontSize="sm">{post.reg_dt}</Text>
     </Flex>
   );
 };

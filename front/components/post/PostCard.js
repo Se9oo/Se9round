@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 
 import { Flex, Box, Heading, Text, useBreakpointValue } from '@chakra-ui/react';
 
@@ -45,9 +46,9 @@ const PostCard = ({ post }) => {
       <Heading as="h2" fontSize="1.2rem" mb="1rem">
         {post.title}
       </Heading>
-      <Text fontSize="1rem" mb="5px" isTruncated>
-        {post.contents}
-      </Text>
+      <Heading as="h4" fontSize="1rem" fontWeight="normal" mb="5px" isTruncated>
+        {ReactHtmlParser(post.contents)}
+      </Heading>
       <Text fontSize="sm">{post.reg_dt}</Text>
     </Flex>
   );

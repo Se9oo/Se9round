@@ -1,7 +1,9 @@
-import React, { forwardRef, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 import dynamic from 'next/dynamic';
+import axios from 'axios';
+import { baseURL } from '../../config/config';
 
 import {
   Flex,
@@ -18,7 +20,7 @@ import {
 
 import Alert from '../alert';
 
-import { savePostRequestAction } from '../../reducers/post';
+import { savePostRequestAction, tempSavePostRequestAction } from '../../reducers/post';
 
 const PostEditor = dynamic(() => import('./Editor'), { ssr: false });
 
@@ -44,6 +46,30 @@ const EditorForm = () => {
 
   // editor ref
   const editorRef = useRef(null);
+
+  // image editor에 추가시 서버에 image 저장
+  useEffect(() => {
+    if (editorRef.current) {
+      // 기존 library hook 제거
+      editorRef.current.getInstance().removeHook('addImageBlobHook');
+      // 새로운 hook 추가
+      editorRef.current.getInstance().addHook('addImageBlobHook', (blob, callback) => {
+        (async () => {
+          let formData = new FormData();
+          formData.append('image', blob);
+
+          //dispatch(saveImageRequestAction(formData));
+          const { data } = await axios.post('/api/image', formData);
+
+          callback(`${baseURL}/${data}`, 'alt image');
+        })();
+
+        return false;
+      });
+    }
+
+    return () => {};
+  }, [editorRef.current]);
 
   // alert
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -94,6 +120,17 @@ const EditorForm = () => {
     onOpen();
   };
 
+  // 게시글 임시저장
+  const handleTempPostSave = () => {
+    dispatch(
+      tempSavePostRequestAction({
+        title,
+        tagsArray,
+        contents,
+      })
+    );
+  };
+
   // 게시글 저장
   const handlePostSave = () => {
     dispatch(
@@ -131,7 +168,7 @@ const EditorForm = () => {
         </Box>
         <ForwardedPostEditor height="calc(100vh - 24rem)" editorRef={editorRef} handleEditPost={handleEditPost} />
         <Flex justifyContent="flex-end">
-          <Button size={buttonSize} m="1rem .1rem">
+          <Button size={buttonSize} m="1rem .1rem" onClick={handleTempPostSave}>
             임시 저장
           </Button>
           <Button size={buttonSize} m="1rem .1rem" onClick={handlePostSaveAlertOpen}>

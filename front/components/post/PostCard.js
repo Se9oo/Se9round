@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 
-import { Flex, Box, Heading, Text, Image, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel } from '@chakra-ui/react';
 
 const PostCard = ({ post }) => {
   const postWidth = useBreakpointValue({
@@ -42,16 +42,29 @@ const PostCard = ({ post }) => {
         boxShadow: 'lg',
       }}
     >
-      <Box h="200px">
-        <Image src={post.thumbnail} />
+      <Flex justifyContent="center" alignItems="center" mb="1rem">
+        {post.thumbnail !== null ? (
+          <Image src={post.thumbnail} />
+        ) : (
+          <Image src="/assets/images/empty.png" alt="empty image" />
+        )}
+      </Flex>
+      <Box>
+        <Heading as="h2" fontSize="1.2rem" mb="1rem">
+          {post.title}
+        </Heading>
+        <Heading as="h4" fontSize="1rem" fontWeight="normal" mb="1rem" isTruncated>
+          {ReactHtmlParser(post.contents)}
+        </Heading>
+        <Box mb=".5rem">
+          {post.tags.map((tag, idx) => (
+            <Tag key={`${tag}_${idx}`} m=".1rem .5rem .1rem 0">
+              <TagLabel>{tag}</TagLabel>
+            </Tag>
+          ))}
+        </Box>
+        <Text fontSize="sm">{post.reg_dt}</Text>
       </Box>
-      <Heading as="h2" fontSize="1.2rem" mb="1rem">
-        {post.title}
-      </Heading>
-      <Heading as="h4" fontSize="1rem" fontWeight="normal" mb="5px" isTruncated>
-        {ReactHtmlParser(post.contents)}
-      </Heading>
-      <Text fontSize="sm">{post.reg_dt}</Text>
     </Flex>
   );
 };

@@ -1,9 +1,11 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import router from 'next/router';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import { baseURL } from '../../config/config';
+
+import { getImgUrlByRegExp } from '../../util/common';
 
 import {
   Flex,
@@ -42,6 +44,7 @@ const EditorForm = () => {
   const [title, setTitle] = useState('');
   const [tagsArray, setTagsArray] = useState([]);
   const [contents, setContents] = useState('');
+  const [thumbNail, setThumbNail] = useState(null);
   const dispatch = useDispatch('');
 
   // editor ref
@@ -116,6 +119,9 @@ const EditorForm = () => {
       return;
     }
 
+    // thumbnail 세팅
+    setThumbNail(getImgUrlByRegExp(contents));
+
     // alert open
     onOpen();
   };
@@ -138,6 +144,7 @@ const EditorForm = () => {
         title,
         tagsArray,
         contents,
+        thumbNail,
       })
     );
 

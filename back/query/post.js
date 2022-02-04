@@ -8,6 +8,7 @@ exports.selectPostLists = `
     , cancel_dt
     , status
     , tags
+    , thumbnail
   FROM
     post
   WHERE
@@ -24,6 +25,7 @@ exports.insertPost = `
     , reg_dt
     , status
     , tags
+    , thumbnail
   )
   VALUES
   (
@@ -32,5 +34,6 @@ exports.insertPost = `
     , now()
     , 1
     , $3
+    , $4
   )
 `;

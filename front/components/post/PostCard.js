@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 
-import { Flex, Box, Heading, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Box, Heading, Text, Image, useBreakpointValue } from '@chakra-ui/react';
 
 const PostCard = ({ post }) => {
   const postWidth = useBreakpointValue({
@@ -42,7 +42,9 @@ const PostCard = ({ post }) => {
         boxShadow: 'lg',
       }}
     >
-      <Box h="200px">이미지</Box>
+      <Box h="200px">
+        <Image src={post.thumbnail} />
+      </Box>
       <Heading as="h2" fontSize="1.2rem" mb="1rem">
         {post.title}
       </Heading>

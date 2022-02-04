@@ -42,6 +42,7 @@ const EditorForm = () => {
 
   // states
   const [title, setTitle] = useState('');
+  const [subTitle, setSubTitle] = useState('');
   const [tagsArray, setTagsArray] = useState([]);
   const [contents, setContents] = useState('');
   const [thumbNail, setThumbNail] = useState(null);
@@ -101,6 +102,11 @@ const EditorForm = () => {
     setTitle(e.target.value);
   };
 
+  // 소제목 입력
+  const handleSubTitle = (e) => {
+    setSubTitle(e.target.value);
+  };
+
   // editor 글 작성
   const handleEditPost = () => {
     if (!editorRef.current) {
@@ -145,6 +151,7 @@ const EditorForm = () => {
         tagsArray,
         contents,
         thumbNail,
+        subTitle,
       })
     );
 
@@ -162,6 +169,10 @@ const EditorForm = () => {
         </Text>
         <Input size="sm" mb="1rem" placeholder="제목을 입력하세요" onChange={handleTitle} />
         <Text fontWeight="bold" mb=".5rem">
+          한 줄 소개
+        </Text>
+        <Input size="sm" mb="1rem" placeholder="한 줄 소개" onChange={handleSubTitle} />
+        <Text fontWeight="bold" mb=".5rem">
           태그
         </Text>
         <Input size="sm" mb=".5rem" placeholder="태그를 입력하세요" onKeyPress={onKeyPress} />
@@ -173,7 +184,7 @@ const EditorForm = () => {
             </Tag>
           ))}
         </Box>
-        <ForwardedPostEditor height="calc(100vh - 24rem)" editorRef={editorRef} handleEditPost={handleEditPost} />
+        <ForwardedPostEditor height="calc(100vh - 30rem)" editorRef={editorRef} handleEditPost={handleEditPost} />
         <Flex justifyContent="flex-end">
           <Button size={buttonSize} m="1rem .1rem" onClick={handleTempPostSave}>
             임시 저장

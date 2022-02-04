@@ -9,6 +9,7 @@ exports.selectPostLists = `
     , status
     , tags
     , thumbnail
+    , sub_title
   FROM
     post
   WHERE
@@ -26,6 +27,7 @@ exports.insertPost = `
     , status
     , tags
     , thumbnail
+    , sub_title
   )
   VALUES
   (
@@ -35,5 +37,6 @@ exports.insertPost = `
     , 1
     , $3
     , $4
+    , $5
   )
 `;

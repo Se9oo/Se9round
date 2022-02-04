@@ -54,7 +54,7 @@ const PostCard = ({ post }) => {
           {post.title}
         </Heading>
         <Heading as="h4" fontSize="1rem" fontWeight="normal" mb="1rem" isTruncated>
-          {ReactHtmlParser(post.contents)}
+          {post.sub_title}
         </Heading>
         <Box mb=".5rem">
           {post.tags.map((tag, idx) => (

@@ -1,7 +1,8 @@
 export const Button = {
   variants: {
     solid: {
-      bg: '#63B3ED',
+      //bg: '#8C735D',
+      bg: '#8C7A70',
       color: '#fff',
     },
   },
@@ -13,6 +14,6 @@ export const Button = {
 export const Input = {
   defaultProps: {
     size: 'md',
-    focusBorderColor: '#63B3ED',
+    focusBorderColor: '#8C7A70',
   },
 };

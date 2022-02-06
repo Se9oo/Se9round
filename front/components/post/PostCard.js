@@ -1,7 +1,8 @@
 import React from 'react';
-import ReactHtmlParser from 'react-html-parser';
 
-import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel } from '@chakra-ui/react';
+import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel, Divider } from '@chakra-ui/react';
+
+import { ViewIcon } from '@chakra-ui/icons';
 
 const PostCard = ({ post }) => {
   const postWidth = useBreakpointValue({
@@ -35,36 +36,81 @@ const PostCard = ({ post }) => {
       p="10px"
       boxShadow="sm"
       borderRadius="md"
-      cursor="pointer"
       _hover={{
-        transform: 'translateY(-.2rem)',
+        transform: 'translateY(-.5rem)',
         transition: 'all .2s ease',
         boxShadow: 'lg',
       }}
     >
-      <Flex justifyContent="center" alignItems="center" mb="1rem">
+      <Box position="relative" pt="52%" mb="1rem" cursor="pointer">
         {post.thumbnail !== null ? (
-          <Image src={post.thumbnail} />
+          <Image
+            src={post.thumbnail}
+            alt="thumbnail"
+            position="absolute"
+            w="100%"
+            h="100%"
+            top="0"
+            left="0"
+            objectFit="cover"
+          />
         ) : (
-          <Image src="/assets/images/empty.png" alt="empty image" />
+          <Image
+            src="/assets/images/empty.png"
+            alt="empty image"
+            position="absolute"
+            w="100%"
+            h="100%"
+            top="0"
+            left="0"
+            objectFit="cover"
+          />
         )}
-      </Flex>
-      <Box>
-        <Heading as="h2" fontSize="1.2rem" mb="1rem">
+      </Box>
+      <Box mb=".5rem">
+        <Heading as="h2" fontSize="1.3rem" mb=".5rem" cursor="pointer">
           {post.title}
         </Heading>
-        <Heading as="h4" fontSize="1rem" fontWeight="normal" mb="1rem" isTruncated>
+        <Text
+          fontSize=".9rem"
+          w="100%"
+          h="2.5rem"
+          mb="1rem"
+          textOverflow="ellipsis"
+          overflow="hidden"
+          wordBreak="break-word"
+          noOfLines="2"
+          cursor="pointer"
+        >
           {post.sub_title}
-        </Heading>
-        <Box mb=".5rem">
-          {post.tags.map((tag, idx) => (
-            <Tag key={`${tag}_${idx}`} m=".1rem .5rem .1rem 0">
-              <TagLabel>{tag}</TagLabel>
-            </Tag>
-          ))}
+        </Text>
+        <Box position="relative" mb=".5rem" pt="1.5rem">
+          <Box position="absolute" top="0" left="0" w="100%" h="100%" overflow="hidden">
+            {post.tags.map((tag, idx) => (
+              <Tag
+                key={`${tag}_${idx}`}
+                m=".1rem .5rem .1rem 0"
+                cursor="pointer"
+                _hover={{ bg: 'rgba(226, 232, 240, .3)' }}
+              >
+                <TagLabel>{tag}</TagLabel>
+              </Tag>
+            ))}
+          </Box>
         </Box>
-        <Text fontSize="sm">{post.reg_dt}</Text>
       </Box>
+      <Divider mb=".5rem" />
+      <Flex justifyContent="space-between">
+        <Text fontSize=".8rem" color="rgba(0, 0, 0, .5)">
+          {post.reg_dt}
+        </Text>
+        <Flex justifyContent="center" alignItems="center">
+          <ViewIcon w=".8rem" mr=".3rem" color="brown" />
+          <Text fontSize=".8rem" color="rgba(0, 0, 0, .5)">
+            {post.click_count}
+          </Text>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };

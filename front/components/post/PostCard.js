@@ -3,6 +3,7 @@ import React from 'react';
 import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel, Divider } from '@chakra-ui/react';
 
 import { ViewIcon } from '@chakra-ui/icons';
+import { getDateDiff } from '../../util/common';
 
 const PostCard = ({ post }) => {
   const postWidth = useBreakpointValue({
@@ -102,7 +103,7 @@ const PostCard = ({ post }) => {
       <Divider mb=".5rem" />
       <Flex justifyContent="space-between">
         <Text fontSize=".8rem" color="rgba(0, 0, 0, .5)">
-          {post.reg_dt}
+          {getDateDiff(post.reg_dt)}
         </Text>
         <Flex justifyContent="center" alignItems="center">
           <ViewIcon w=".8rem" mr=".3rem" color="brown" />

@@ -4,7 +4,7 @@ exports.selectPostLists = `
     id
     , title
     , contents
-    , TO_CHAR(reg_dt, 'YYYY-MM-DD') AS reg_dt
+    , TO_CHAR(reg_dt, 'YYYY-MM-DD HH:MI') AS reg_dt
     , cancel_dt
     , status
     , tags

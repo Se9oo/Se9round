@@ -2,10 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import router from 'next/router';
 
-import { Flex, Button, Image } from '@chakra-ui/react';
+import { Flex, Button, Image, useBreakpointValue } from '@chakra-ui/react';
 
 const Header = () => {
   const { isAdmin } = useSelector((state) => state.user);
+
+  const logoSize = useBreakpointValue({
+    xxs: '1.3rem',
+    xs: '1.3rem',
+  });
 
   // 로고 클릭시 홈으로 이동
   const handleLogo = () => {
@@ -31,7 +36,14 @@ const Header = () => {
         boxShadow="sm"
         zIndex="9999"
       >
-        <Image src="/assets/images/se9round_logo.svg" alt="logo" p="1rem" onClick={handleLogo} cursor="pointer" />
+        <Image
+          h={logoSize}
+          src="/assets/images/se9round_logo.svg"
+          alt="logo"
+          p="0 .5rem"
+          onClick={handleLogo}
+          cursor="pointer"
+        />
         {isAdmin && (
           <Button size="sm" m="0 1rem" onClick={handleEditPost}>
             글쓰기

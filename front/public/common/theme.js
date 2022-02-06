@@ -17,6 +17,7 @@ const colors = {
   transparent: 'transparent',
   black: '#000',
   white: '#fff',
+  brown: '#8C7A70',
 };
 
 const theme = extendTheme({

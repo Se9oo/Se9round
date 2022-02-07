@@ -36,3 +36,18 @@ export const getDateDiff = (regDt) => {
     return regDate.format('YYYY-MM-DD');
   }
 };
+
+// 천 단위 format
+export const getCountFormat = (count) => {
+  if (isNaN(count)) {
+    return 0;
+  }
+
+  if (count >= 1000000) {
+    return `${(count / 1000000).toFixed(1)}k`;
+  } else if (count >= 1000 && count < 1000000) {
+    return `${(count / 1000).toFixed(1)}k`;
+  } else {
+    return count;
+  }
+};

@@ -1,9 +1,12 @@
 import React from 'react';
+import router from 'next/router';
+import { useDispatch } from 'react-redux';
 
 import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel, Divider } from '@chakra-ui/react';
 
 import { ViewIcon } from '@chakra-ui/icons';
-import { getDateDiff } from '../../util/common';
+import { getCountFormat, getDateDiff } from '../../util/common';
+import { addClickCountRequestAction } from '../../reducers/post';
 
 const PostCard = ({ post }) => {
   const postWidth = useBreakpointValue({
@@ -28,6 +31,19 @@ const PostCard = ({ post }) => {
     '2xl': '.5rem',
   });
 
+  const dispatch = useDispatch('');
+
+  // 게시글 페이지로 이동
+  const handlePostClick = () => {
+    // 조회수 add
+    dispatch(addClickCountRequestAction({ postId: post.id }));
+
+    router.push({
+      pathname: `/post/[postTitle]`,
+      query: { postTitle: post.title },
+    });
+  };
+
   return (
     <Flex
       w={postWidth}
@@ -43,7 +59,7 @@ const PostCard = ({ post }) => {
         boxShadow: 'lg',
       }}
     >
-      <Box position="relative" pt="52%" mb="1rem" cursor="pointer">
+      <Box position="relative" pt="52%" mb="1rem" cursor="pointer" onClick={handlePostClick}>
         {post.thumbnail !== null ? (
           <Image
             src={post.thumbnail}
@@ -69,7 +85,7 @@ const PostCard = ({ post }) => {
         )}
       </Box>
       <Box mb=".5rem">
-        <Heading as="h2" fontSize="1.3rem" mb=".5rem" cursor="pointer">
+        <Heading as="h2" fontSize="1.3rem" mb=".5rem" cursor="pointer" onClick={handlePostClick}>
           {post.title}
         </Heading>
         <Text
@@ -82,6 +98,7 @@ const PostCard = ({ post }) => {
           wordBreak="break-word"
           noOfLines="2"
           cursor="pointer"
+          onClick={handlePostClick}
         >
           {post.sub_title}
         </Text>
@@ -108,7 +125,7 @@ const PostCard = ({ post }) => {
         <Flex justifyContent="center" alignItems="center">
           <ViewIcon w=".8rem" mr=".3rem" color="brown" />
           <Text fontSize=".8rem" color="rgba(0, 0, 0, .5)">
-            {post.click_count}
+            {getCountFormat(post.click_count)}
           </Text>
         </Flex>
       </Flex>

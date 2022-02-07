@@ -10,6 +10,7 @@ exports.selectPostLists = `
     , tags
     , thumbnail
     , sub_title
+    , click_count
   FROM
     post
   WHERE
@@ -39,4 +40,12 @@ exports.insertPost = `
     , $4
     , $5
   )
+`;
+
+// 게시글 조회수 add
+exports.updatePostClickCount = `
+  UPDATE post SET
+    click_count = click_count + 1
+  WHERE
+    id = $1
 `;

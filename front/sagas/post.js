@@ -11,6 +11,9 @@ import {
   TEMP_SAVE_POST_REQUEST,
   TEMP_SAVE_POST_SUCCESS,
   TEMP_SAVE_POST_FAILURE,
+  ADD_CLICK_COUNT_REQUEST,
+  ADD_CLICK_COUNT_SUCCESS,
+  ADD_CLICK_COUNT_FAILURE,
 } from '../reducers/post';
 
 // 게시글 목록 조회
@@ -52,7 +55,7 @@ function* savePost(data) {
   } catch (err) {
     yield put({
       type: SAVE_POST_FAILURE,
-      err: err.response.data,
+      err: err.response,
     });
   }
 }
@@ -63,7 +66,7 @@ function* watchSavePost() {
 
 // 게시글 임시 저장
 function tempSavePostAPI(data) {
-  axios.post('/api/temp/post', data);
+  axios.post('/api/post/temp', data);
 }
 
 function* tempSavePost(data) {
@@ -84,6 +87,29 @@ function* watchTempSavePost() {
   yield takeLatest(TEMP_SAVE_POST_REQUEST, tempSavePost);
 }
 
+// 게시글 조회수 add
+function addClickCountAPI(data) {
+  axios.post('/api/post/count', data);
+}
+
+function* addClickCount(data) {
+  try {
+    yield call(addClickCountAPI, data);
+    yield put({
+      type: ADD_CLICK_COUNT_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: ADD_CLICK_COUNT_FAILURE,
+      err: err.response,
+    });
+  }
+}
+
+function* watchAddClickCount() {
+  yield takeLatest(ADD_CLICK_COUNT_REQUEST, addClickCount);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchLoadPosts), fork(watchSavePost), fork(watchTempSavePost)]);
+  yield all([fork(watchLoadPosts), fork(watchSavePost), fork(watchTempSavePost), fork(watchAddClickCount)]);
 }

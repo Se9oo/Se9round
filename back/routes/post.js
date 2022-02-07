@@ -2,7 +2,7 @@ const express = require('express');
 // db client
 const client = require('../config/db');
 // query
-const { selectPostLists, insertPost } = require('../query/post');
+const { selectPostLists, insertPost, updatePostClickCount } = require('../query/post');
 const { insertTag } = require('../query/tag');
 // router
 const router = express.Router();
@@ -53,6 +53,27 @@ router.post('/api/post', (req, res) => {
         res.status(200).json('success');
       }
     });
+  }
+});
+
+// 게시글 조회수 add
+router.post('/api/post/count', (req, res) => {
+  try {
+    if (!req.body) {
+      res.status(500).json('empty request');
+    } else {
+      const { postId } = req.body.data;
+
+      client.query(updatePostClickCount, [postId], (error, response) => {
+        if (error) {
+          res.status(500).json(error);
+        } else {
+          res.status(200).json('success');
+        }
+      });
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

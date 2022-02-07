@@ -9,6 +9,9 @@ export const initialState = {
   tempSavePostLoading: false,
   tempSavePostSuccess: false,
   tempSavePostFailure: false,
+  addClickCountLoading: false,
+  addClickCountSuccess: false,
+  addClickCountFailure: false,
 };
 
 // 게시글 목록 조회
@@ -42,6 +45,18 @@ export const TEMP_SAVE_POST_FAILURE = 'TEMP_SAVE_POST_FAILURE';
 export const tempSavePostRequestAction = (data) => {
   return {
     type: TEMP_SAVE_POST_REQUEST,
+    data,
+  };
+};
+
+// 게시글 클릭시 조회수 add
+export const ADD_CLICK_COUNT_REQUEST = 'ADD_CLICK_COUNT_REQUEST';
+export const ADD_CLICK_COUNT_SUCCESS = 'ADD_CLICK_COUNT_SUCCESS';
+export const ADD_CLICK_COUNT_FAILURE = 'ADD_CLICK_COUNT_FAILURE';
+
+export const addClickCountRequestAction = (data) => {
+  return {
+    type: ADD_CLICK_COUNT_REQUEST,
     data,
   };
 };
@@ -114,6 +129,28 @@ const reducer = (state = initialState, action) => {
         tempSavePostLoading: false,
         tempSavePostSuccess: false,
         tempSavePostFailure: true,
+      };
+    // 게시글 조회수 add
+    case ADD_CLICK_COUNT_REQUEST:
+      return {
+        ...state,
+        addClickCountLoading: true,
+        addClickCountSuccess: false,
+        addClickCountFailure: false,
+      };
+    case ADD_CLICK_COUNT_SUCCESS:
+      return {
+        ...state,
+        addClickCountLoading: false,
+        addClickCountSuccess: true,
+        addClickCountFailure: false,
+      };
+    case ADD_CLICK_COUNT_FAILURE:
+      return {
+        ...state,
+        addClickCountLoading: false,
+        addClickCountSuccess: false,
+        addClickCountFailure: true,
       };
 
     default:

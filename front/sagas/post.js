@@ -14,6 +14,9 @@ import {
   ADD_CLICK_COUNT_REQUEST,
   ADD_CLICK_COUNT_SUCCESS,
   ADD_CLICK_COUNT_FAILURE,
+  LOAD_POST_REQUEST,
+  LOAD_POST_SUCCESS,
+  LOAD_POST_FAILURE,
 } from '../reducers/post';
 
 // 게시글 목록 조회
@@ -43,7 +46,7 @@ function* watchLoadPosts() {
 
 // 게시글 저장
 function savePostAPI(data) {
-  axios.post('/api/post', data);
+  return axios.post('/api/post', data);
 }
 
 function* savePost(data) {
@@ -66,7 +69,7 @@ function* watchSavePost() {
 
 // 게시글 임시 저장
 function tempSavePostAPI(data) {
-  axios.post('/api/post/temp', data);
+  return axios.post('/api/post/temp', data);
 }
 
 function* tempSavePost(data) {
@@ -89,7 +92,7 @@ function* watchTempSavePost() {
 
 // 게시글 조회수 add
 function addClickCountAPI(data) {
-  axios.post('/api/post/count', data);
+  return axios.post('/api/post/count', data);
 }
 
 function* addClickCount(data) {
@@ -110,6 +113,37 @@ function* watchAddClickCount() {
   yield takeLatest(ADD_CLICK_COUNT_REQUEST, addClickCount);
 }
 
+// 특정 게시글 조회
+function loadPostAPI(data) {
+  return axios.get('/api/post', data);
+}
+
+function* loadPost(data) {
+  try {
+    const result = yield call(loadPostAPI, data);
+
+    yield put({
+      type: LOAD_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_POST_FAILURE,
+      err: err.response,
+    });
+  }
+}
+
+function* watchLoadPost() {
+  yield takeLatest(LOAD_POST_REQUEST, loadPost);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchLoadPosts), fork(watchSavePost), fork(watchTempSavePost), fork(watchAddClickCount)]);
+  yield all([
+    fork(watchLoadPosts),
+    fork(watchSavePost),
+    fork(watchTempSavePost),
+    fork(watchAddClickCount),
+    fork(watchLoadPost),
+  ]);
 }

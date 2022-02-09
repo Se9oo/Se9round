@@ -49,3 +49,22 @@ exports.updatePostClickCount = `
   WHERE
     id = $1
 `;
+
+// 특정 게시글 조회
+exports.selectPostByTitle = `
+  SELECT
+    id
+    , title
+    , contents
+    , TO_CHAR(reg_dt, 'YYYY-MM-DD HH:MI') AS reg_dt
+    , cancel_dt
+    , status
+    , tags
+    , thumbnail
+    , sub_title
+    , click_count
+  FROM
+    post
+  WHERE
+    title = $1
+`;

@@ -1,5 +1,6 @@
 export const initialState = {
   postList: [],
+  loadPostInfo: {},
   loadPostsLoading: false,
   loadPostsSuccess: false,
   loadPostsFailure: false,
@@ -12,6 +13,9 @@ export const initialState = {
   addClickCountLoading: false,
   addClickCountSuccess: false,
   addClickCountFailure: false,
+  loadPostLoading: false,
+  loadPostSuccess: false,
+  loadPostFailure: false,
 };
 
 // 게시글 목록 조회
@@ -57,6 +61,18 @@ export const ADD_CLICK_COUNT_FAILURE = 'ADD_CLICK_COUNT_FAILURE';
 export const addClickCountRequestAction = (data) => {
   return {
     type: ADD_CLICK_COUNT_REQUEST,
+    data,
+  };
+};
+
+// 특정 게시글 조회
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
+
+export const loadPostRequestAction = (data) => {
+  return {
+    type: LOAD_POST_REQUEST,
     data,
   };
 };
@@ -152,7 +168,31 @@ const reducer = (state = initialState, action) => {
         addClickCountSuccess: false,
         addClickCountFailure: true,
       };
-
+    // 특정 게시글 조회
+    case LOAD_POST_REQUEST:
+      return {
+        ...state,
+        loadPostInfo: {},
+        loadPostLoading: true,
+        loadPostSuccess: false,
+        loadPostFailure: false,
+      };
+    case LOAD_POST_SUCCESS:
+      return {
+        ...state,
+        loadPostInfo: action.data,
+        loadPostLoading: false,
+        loadPostSuccess: true,
+        loadPostFailure: false,
+      };
+    case LOAD_POST_FAILURE:
+      return {
+        ...state,
+        loadPostInfo: {},
+        loadPostLoading: false,
+        loadPostSuccess: false,
+        loadPostFailure: true,
+      };
     default:
       return state;
   }

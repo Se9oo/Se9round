@@ -4,19 +4,20 @@ import post from './post';
 import user from './user';
 import image from './image';
 
-const rootReducer = combineReducers({
-  index: (state = {}, action) => {
-    switch (action.type) {
-      case HYDRATE:
-        console.log('HYDRATE', action);
-        return { ...state, ...action.payload };
-      default:
-        return state;
+const rootReducer = (state, action) => {
+  switch (action.type) {
+    case HYDRATE:
+      console.log('HYDRATE', action);
+      return action.payload;
+    default: {
+      const combineReducer = combineReducers({
+        post,
+        user,
+        image,
+      });
+      return combineReducer(state, action);
     }
-  },
-  post,
-  user,
-  image,
-});
+  }
+};
 
 export default rootReducer;

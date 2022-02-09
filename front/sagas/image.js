@@ -5,7 +5,6 @@ import { SAVE_IMAGE_REQUEST, SAVE_IMAGE_SUCCESS, SAVE_IMAGE_FAILURE } from '../r
 
 // 이미지 저장
 function saveImageAPI(data) {
-  console.log('전송');
   return axios.post('/api/image', data);
 }
 

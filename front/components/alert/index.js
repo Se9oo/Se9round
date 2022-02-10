@@ -42,8 +42,8 @@ const Alert = ({ title, contents, mod, actionText, btnAction, isOpen, onClose })
               {actionText}
             </Button>
           )}
-          <Button size={buttonSize} bg="gray.300" m="1rem 0" onClick={onClose}>
-            취소
+          <Button size={buttonSize} bg={mod === 'action' ? 'gray.300' : 'brown'} m="1rem 0" onClick={onClose}>
+            닫기
           </Button>
         </ModalFooter>
       </ModalContent>

@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
@@ -46,7 +46,9 @@ const EditorForm = () => {
   const [tagsArray, setTagsArray] = useState([]);
   const [contents, setContents] = useState('');
   const [thumbNail, setThumbNail] = useState(null);
+
   const dispatch = useDispatch('');
+  const { savePostSuccess } = useSelector((state) => state.post);
 
   // editor ref
   const editorRef = useRef(null);
@@ -157,9 +159,14 @@ const EditorForm = () => {
 
     // alert close
     onClose();
-    // 게시글 저장 후 홈으로 이동
-    router.push('/');
   };
+
+  // 게시글 저장 후 저장이 성공하면 홈으로 이동
+  useEffect(() => {
+    if (savePostSuccess) {
+      router.push('/');
+    }
+  }, [savePostSuccess]);
 
   return (
     <>

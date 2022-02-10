@@ -30,7 +30,7 @@ export const getDateDiff = (regDt) => {
     return `${now.diff(regDate, 'h')}시간 전`;
   } else if (now.diff(regDate, 'm') > 0) {
     return `${now.diff(regDate, 'm')}분 전`;
-  } else if (now.diff(regDate, 's') > 0) {
+  } else if (now.diff(regDate, 's') >= 0) {
     return `${now.diff(regDate, 's')}초 전`;
   } else {
     return regDate.format('YYYY-MM-DD');

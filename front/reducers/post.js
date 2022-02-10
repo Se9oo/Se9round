@@ -15,7 +15,7 @@ export const initialState = {
   addClickCountFailure: false,
   loadPostLoading: false,
   loadPostSuccess: false,
-  loadPostFailure: false,
+  loadPostFailure: { err: false, message: null },
 };
 
 // 게시글 목록 조회
@@ -108,21 +108,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         savePostLoading: true,
         savePostSuccess: false,
-        savePostFailure: false,
+        savePostFailure: { err: false, message: null },
       };
     case SAVE_POST_SUCCESS:
       return {
         ...state,
         savePostLoading: false,
         savePostSuccess: true,
-        savePostFailure: false,
+        savePostFailure: { err: false, message: null },
       };
     case SAVE_POST_FAILURE:
       return {
         ...state,
         savePostLoading: false,
         savePostSuccess: false,
-        savePostFailure: true,
+        savePostFailure: { err: true, message: action.err },
       };
     // 게시글 임시 저장
     case TEMP_SAVE_POST_REQUEST:

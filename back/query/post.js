@@ -18,6 +18,16 @@ exports.selectPostLists = `
   ORDER BY id DESC
 `;
 
+exports.selectIsExistPost = `
+  SELECT
+    count(*)
+  FROM
+    post
+  WHERE
+    status = 1
+    AND title = $1
+`;
+
 // 게시글 등록
 exports.insertPost = `
   INSERT INTO post

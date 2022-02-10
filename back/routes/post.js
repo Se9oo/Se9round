@@ -2,7 +2,13 @@ const express = require('express');
 // db client
 const client = require('../config/db');
 // query
-const { selectPostLists, insertPost, updatePostClickCount, selectPostByTitle } = require('../query/post');
+const {
+  selectPostLists,
+  insertPost,
+  updatePostClickCount,
+  selectPostByTitle,
+  selectIsExistPost,
+} = require('../query/post');
 const { insertTag } = require('../query/tag');
 // router
 const router = express.Router();
@@ -28,31 +34,41 @@ router.get('/api/posts', (req, res) => {
 });
 
 // 게시글 등록
-router.post('/api/post', (req, res) => {
-  if (!req.body) {
-    res.status(500).json('empty request');
-  } else {
-    const { title, tagsArray, contents, thumbNail, subTitle } = req.body.data;
+router.post('/api/post', async (req, res) => {
+  try {
+    if (!req.body) {
+      res.status(500).json('empty request');
+    } else {
+      const { title, tagsArray, contents, thumbNail, subTitle } = req.body.data;
 
-    // 태그 저장
-    if (Array.isArray(tagsArray) && tagsArray.length !== 0) {
-      try {
-        tagsArray.map((tag) => {
-          client.query(insertTag, [tag]);
+      // 중복 게시글 존재 여부 체크
+      const result = await client.query(selectIsExistPost, [title]);
+
+      const count = result.rows[0].count;
+
+      // 게시글 중복된 경우
+      if (count > 0) {
+        res.status(500).json('중복된 게시글이 존재합니다.');
+      } else {
+        // 중복되지 않은 경우
+        // 태그 저장
+        if (Array.isArray(tagsArray) && tagsArray.length !== 0) {
+          tagsArray.map((tag) => {
+            client.query(insertTag, [tag]);
+          });
+        }
+        // 게시글 저장
+        client.query(insertPost, [title, contents, tagsArray, thumbNail, subTitle], (error, response) => {
+          if (error) {
+            res.status(500).json(error);
+          } else {
+            res.status(200).json('success');
+          }
         });
-      } catch (err) {
-        res.status(500).json(err);
       }
     }
-
-    // 게시글 저장
-    client.query(insertPost, [title, contents, tagsArray, thumbNail, subTitle], (error, response) => {
-      if (error) {
-        res.status(500).json(error);
-      } else {
-        res.status(200).json('success');
-      }
-    });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

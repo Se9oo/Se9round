@@ -58,7 +58,7 @@ function* savePost(data) {
   } catch (err) {
     yield put({
       type: SAVE_POST_FAILURE,
-      err: err.response,
+      err: err.response.data,
     });
   }
 }

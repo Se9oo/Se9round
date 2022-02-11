@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import { baseURL } from '../../config/config';
 
 import { getImgUrlByRegExp } from '../../util/common';
@@ -45,10 +46,14 @@ const EditorForm = () => {
   const [subTitle, setSubTitle] = useState('');
   const [tagsArray, setTagsArray] = useState([]);
   const [contents, setContents] = useState('');
+  const [contentsHtml, setContentsHtml] = useState('');
   const [thumbNail, setThumbNail] = useState(null);
 
+  // alert state
+  const [alertProps, setAlertProps] = useState({});
+
   const dispatch = useDispatch('');
-  const { savePostSuccess } = useSelector((state) => state.post);
+  const { savePostSuccess, savePostFailure } = useSelector((state) => state.post);
 
   // editor ref
   const editorRef = useRef(null);
@@ -117,22 +122,53 @@ const EditorForm = () => {
 
     const instance = editorRef.current.getInstance();
     const html = instance.getHtml();
+    const markDown = instance.getMarkdown();
 
-    setContents(html);
+    setContentsHtml(html);
+    setContents(markDown);
   };
 
   // 등록 버튼
   const handlePostSaveAlertOpen = () => {
-    if (!title || tagsArray.length === 0 || !contents.trim()) {
+    let alertContents = '';
+    if (!title) {
+      alertContents = `'제목'을 입력 해주세요.`;
+    } else if (!subTitle) {
+      alertContents = `'한 줄 소개'를 입력 해주세요.`;
+    } else if (tagsArray.length === 0) {
+      alertContents = `'태그'를 추가 해주세요.`;
+    } else if (!contents.trim()) {
+      alertContents = `'게시글'을 작성 해주세요.`;
+    }
+
+    if (!title || !subTitle || tagsArray.length === 0 || !contents.trim()) {
+      // modal 세팅
+      setAlertProps({
+        title: '게시글 저장',
+        contents: alertContents,
+        mod: '',
+      });
+
       return;
     }
 
     // thumbnail 세팅
-    setThumbNail(getImgUrlByRegExp(contents));
-
-    // alert open
-    onOpen();
+    setThumbNail(getImgUrlByRegExp(contentsHtml));
+    // modal 세팅
+    setAlertProps({
+      title: '게시글 저장',
+      contents: '게시글을 저장하시겠습니까?',
+      mod: 'action',
+      actionText: '저장',
+    });
   };
+
+  useDeepCompareEffect(() => {
+    if (alertProps.title !== null && alertProps.title !== undefined) {
+      // alert open
+      onOpen();
+    }
+  }, [alertProps]);
 
   // 게시글 임시저장
   const handleTempPostSave = () => {
@@ -167,6 +203,16 @@ const EditorForm = () => {
       router.push('/');
     }
   }, [savePostSuccess]);
+
+  useDeepCompareEffect(() => {
+    if (savePostFailure.err) {
+      setAlertProps({
+        title: '게시글 저장',
+        contents: `${savePostFailure.message}`,
+        mod: '',
+      });
+    }
+  }, [savePostFailure]);
 
   return (
     <>
@@ -205,10 +251,10 @@ const EditorForm = () => {
         </Flex>
       </Box>
       <Alert
-        title="게시글 저장"
-        contents="게시글을 저장하시겠습니까?"
-        mod="action"
-        actionText="저장"
+        title={alertProps.title}
+        contents={alertProps.contents}
+        mod={alertProps.mod}
+        actionText={alertProps.actionText}
         btnAction={handlePostSave}
         isOpen={isOpen}
         onClose={onClose}

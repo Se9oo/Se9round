@@ -6,7 +6,7 @@ export const initialState = {
   loadPostsFailure: false,
   savePostLoading: false,
   savePostSuccess: false,
-  savePostFailure: false,
+  savePostFailure: { err: false, message: null },
   tempSavePostLoading: false,
   tempSavePostSuccess: false,
   tempSavePostFailure: false,

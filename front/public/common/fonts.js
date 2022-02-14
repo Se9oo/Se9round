@@ -8,7 +8,7 @@ const Fonts = () => (
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url('./fonts/AppleSDGothicNeoL.woff') format('woff');
+        src: url('/fonts/AppleSDGothicNeoL.woff') format('woff');
       }
 
       @font-face {
@@ -16,7 +16,7 @@ const Fonts = () => (
         font-style: normal;
         font-weight: 700;
         font-display: swap;
-        src: url('./fonts/AppleSDGothicNeoB.woff') format('woff');
+        src: url('/fonts/AppleSDGothicNeoB.woff') format('woff');
       }
       `}
   />

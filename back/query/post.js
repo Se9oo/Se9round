@@ -14,7 +14,7 @@ exports.selectPostLists = `
   FROM
     post
   WHERE
-    status = 1
+    status = $1
   ORDER BY id DESC
 `;
 
@@ -24,8 +24,8 @@ exports.selectIsExistPost = `
   FROM
     post
   WHERE
-    status = 1
-    AND title = $1
+    status = $1
+    AND title = $2
 `;
 
 // 게시글 등록
@@ -35,21 +35,28 @@ exports.insertPost = `
     title
     , contents
     , reg_dt
-    , status
     , tags
     , thumbnail
     , sub_title
+    , status
   )
   VALUES
   (
     $1
     , $2
     , now()
-    , 1
     , $3
     , $4
     , $5
-  )
+    , $6
+  ) ON
+  CONFLICT (title) DO
+  UPDATE SET
+    contents = $2
+    , tags = $3
+    , thumbnail = $4
+    , sub_title = $5
+    , status = $6
 `;
 
 // 게시글 조회수 add

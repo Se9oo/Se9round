@@ -74,14 +74,14 @@ function tempSavePostAPI(data) {
 
 function* tempSavePost(data) {
   try {
-    // call(tempSavePostAPI, data);
+    yield call(tempSavePostAPI, data);
     yield put({
       type: TEMP_SAVE_POST_SUCCESS,
     });
   } catch (err) {
     yield put({
       type: TEMP_SAVE_POST_FAILURE,
-      err: err.reponse.data,
+      err: err.response.data,
     });
   }
 }

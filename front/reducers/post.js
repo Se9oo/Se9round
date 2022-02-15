@@ -9,7 +9,7 @@ export const initialState = {
   savePostFailure: { err: false, message: null },
   tempSavePostLoading: false,
   tempSavePostSuccess: false,
-  tempSavePostFailure: false,
+  tempSavePostFailure: { err: false, message: null },
   addClickCountLoading: false,
   addClickCountSuccess: false,
   addClickCountFailure: false,
@@ -130,21 +130,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         tempSavePostLoading: true,
         tempSavePostSuccess: false,
-        tempSavePostFailure: false,
+        tempSavePostFailure: { err: false, message: null },
       };
     case TEMP_SAVE_POST_SUCCESS:
       return {
         ...state,
         tempSavePostLoading: false,
         tempSavePostSuccess: true,
-        tempSavePostFailure: false,
+        tempSavePostFailure: { err: false, message: null },
       };
     case TEMP_SAVE_POST_FAILURE:
       return {
         ...state,
         tempSavePostLoading: false,
         tempSavePostSuccess: false,
-        tempSavePostFailure: true,
+        tempSavePostFailure: { err: true, message: action.err },
       };
     // 게시글 조회수 add
     case ADD_CLICK_COUNT_REQUEST:

@@ -13,6 +13,11 @@ const { insertTag } = require('../query/tag');
 // router
 const router = express.Router();
 
+// 게시글 상태 변수
+const POST_CANCEL_STATUS = 0;
+const POST_OK_STATUS = 1;
+const POST_TEMP_STATUS = 2;
+
 // db connect
 client.connect((err) => {
   if (err) {
@@ -24,7 +29,7 @@ client.connect((err) => {
 
 // 게시글 조회
 router.get('/api/posts', (req, res) => {
-  client.query(selectPostLists, (error, response) => {
+  client.query(selectPostLists, [POST_OK_STATUS], (error, response) => {
     if (error) {
       res.status(500).json(error);
     } else {
@@ -42,7 +47,7 @@ router.post('/api/post', async (req, res) => {
       const { title, tagsArray, contents, thumbNail, subTitle } = req.body.data;
 
       // 중복 게시글 존재 여부 체크
-      const result = await client.query(selectIsExistPost, [title]);
+      const result = await client.query(selectIsExistPost, [POST_OK_STATUS, title]);
 
       const count = result.rows[0].count;
 
@@ -58,13 +63,52 @@ router.post('/api/post', async (req, res) => {
           });
         }
         // 게시글 저장
-        client.query(insertPost, [title, contents, tagsArray, thumbNail, subTitle], (error, response) => {
-          if (error) {
-            res.status(500).json(error);
-          } else {
-            res.status(200).json('success');
+        client.query(
+          insertPost,
+          [title, contents, tagsArray, thumbNail, subTitle, POST_OK_STATUS],
+          (error, response) => {
+            if (error) {
+              res.status(500).json(error);
+            } else {
+              res.status(200).json('success');
+            }
           }
-        });
+        );
+      }
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// 게시글 임시 저장
+router.post('/api/post/temp', async (req, res) => {
+  try {
+    if (!req.body) {
+      res.status(500).json('empty request');
+    } else {
+      const { title, tagsArray, contents, thumbNail, subTitle } = req.body.data;
+      // 중복 게시글 존재 여부 체크
+      const result = await client.query(selectIsExistPost, [POST_OK_STATUS, title]);
+
+      const count = result.rows[0].count;
+
+      // 게시글 중복된 경우
+      if (count > 0) {
+        res.status(500).json('중복된 게시글이 존재합니다.');
+      } else {
+        // 게시글 임시 저장
+        client.query(
+          insertPost,
+          [title, contents, tagsArray, thumbNail, subTitle, POST_TEMP_STATUS],
+          (error, response) => {
+            if (error) {
+              res.status(500).json(error);
+            } else {
+              res.status(200).json('success');
+            }
+          }
+        );
       }
     }
   } catch (err) {

@@ -53,7 +53,9 @@ const EditorForm = () => {
   const [alertProps, setAlertProps] = useState({});
 
   const dispatch = useDispatch('');
-  const { savePostSuccess, savePostFailure } = useSelector((state) => state.post);
+  const { savePostSuccess, savePostFailure, tempSavePostSuccess, tempSavePostFailure } = useSelector(
+    (state) => state.post
+  );
 
   // editor ref
   const editorRef = useRef(null);
@@ -128,23 +130,28 @@ const EditorForm = () => {
     setContents(markDown);
   };
 
-  // 등록 버튼
-  const handlePostSaveAlertOpen = () => {
+  // 등록/임시저장 버튼
+  const handlePostSaveAlertOpen = (type) => {
+    let alertTitle = type === 'save' ? '게시글 저장' : '게시글 임시 저장';
     let alertContents = '';
+
     if (!title) {
       alertContents = `'제목'을 입력 해주세요.`;
-    } else if (!subTitle) {
+    } else if (!subTitle && type === 'save') {
       alertContents = `'한 줄 소개'를 입력 해주세요.`;
-    } else if (tagsArray.length === 0) {
+    } else if (tagsArray.length === 0 && type === 'save') {
       alertContents = `'태그'를 추가 해주세요.`;
-    } else if (!contents.trim()) {
+    } else if (!contents.trim() && type === 'save') {
       alertContents = `'게시글'을 작성 해주세요.`;
     }
 
-    if (!title || !subTitle || tagsArray.length === 0 || !contents.trim()) {
+    if (
+      (type === 'save' && (!title || !subTitle || tagsArray.length === 0 || !contents.trim())) ||
+      (type === 'temp' && !title)
+    ) {
       // modal 세팅
       setAlertProps({
-        title: '게시글 저장',
+        title: alertTitle,
         contents: alertContents,
         mod: '',
       });
@@ -154,12 +161,17 @@ const EditorForm = () => {
 
     // thumbnail 세팅
     setThumbNail(getImgUrlByRegExp(contentsHtml));
+
+    alertContents = type === 'save' ? '게시글을 저장 하시겠습니까?' : '게시글을 임시 저장 하시겠습니까?';
+
     // modal 세팅
     setAlertProps({
-      title: '게시글 저장',
-      contents: '게시글을 저장하시겠습니까?',
+      title: alertTitle,
+      contents: alertContents,
       mod: 'action',
       actionText: '저장',
+      type: type,
+      time: new Date(),
     });
   };
 
@@ -170,27 +182,24 @@ const EditorForm = () => {
     }
   }, [alertProps]);
 
-  // 게시글 임시저장
-  const handleTempPostSave = () => {
+  // 게시글 저장 or 임시 저장
+  const handlePostSave = (type) => {
     dispatch(
-      tempSavePostRequestAction({
-        title,
-        tagsArray,
-        contents,
-      })
-    );
-  };
-
-  // 게시글 저장
-  const handlePostSave = () => {
-    dispatch(
-      savePostRequestAction({
-        title,
-        tagsArray,
-        contents,
-        thumbNail,
-        subTitle,
-      })
+      type === 'save'
+        ? savePostRequestAction({
+            title,
+            tagsArray,
+            contents,
+            thumbNail,
+            subTitle,
+          })
+        : tempSavePostRequestAction({
+            title,
+            tagsArray,
+            contents,
+            thumbNail,
+            subTitle,
+          })
     );
 
     // alert close
@@ -204,6 +213,16 @@ const EditorForm = () => {
     }
   }, [savePostSuccess]);
 
+  useEffect(() => {
+    if (tempSavePostSuccess) {
+      setAlertProps({
+        title: '게시글 임시 저장',
+        contents: '게시글 임시 저장 성공',
+        mod: '',
+      });
+    }
+  }, [tempSavePostSuccess]);
+
   useDeepCompareEffect(() => {
     if (savePostFailure.err) {
       setAlertProps({
@@ -213,6 +232,16 @@ const EditorForm = () => {
       });
     }
   }, [savePostFailure]);
+
+  useDeepCompareEffect(() => {
+    if (tempSavePostFailure.err) {
+      setAlertProps({
+        title: '게시글 임시 저장',
+        contents: `${tempSavePostFailure.message}`,
+        mod: '',
+      });
+    }
+  }, [tempSavePostFailure]);
 
   return (
     <>
@@ -239,10 +268,10 @@ const EditorForm = () => {
         </Box>
         <ForwardedPostEditor height="calc(100vh - 30rem)" editorRef={editorRef} handleEditPost={handleEditPost} />
         <Flex justifyContent="flex-end">
-          <Button size={buttonSize} m="1rem .1rem" onClick={handleTempPostSave}>
+          <Button size={buttonSize} m="1rem .1rem" onClick={() => handlePostSaveAlertOpen('temp')}>
             임시 저장
           </Button>
-          <Button size={buttonSize} m="1rem .1rem" onClick={handlePostSaveAlertOpen}>
+          <Button size={buttonSize} m="1rem .1rem" onClick={() => handlePostSaveAlertOpen('save')}>
             등록
           </Button>
           <Button bg="gray.300" size={buttonSize} m="1rem 0">
@@ -255,7 +284,7 @@ const EditorForm = () => {
         contents={alertProps.contents}
         mod={alertProps.mod}
         actionText={alertProps.actionText}
-        btnAction={handlePostSave}
+        btnAction={() => handlePostSave(alertProps.type)}
         isOpen={isOpen}
         onClose={onClose}
       />

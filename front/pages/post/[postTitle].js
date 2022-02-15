@@ -22,7 +22,7 @@ const PostView = () => {
 
   return (
     <MainLayout>
-      <PostViewer contents={loadPostInfo.contents} />
+      <PostViewer title={loadPostInfo.title} contents={loadPostInfo.contents} tags={loadPostInfo.tags} />
     </MainLayout>
   );
 };

@@ -103,7 +103,7 @@ const PostCard = ({ post }) => {
           {post.sub_title}
         </Text>
         <Box position="relative" mb=".5rem" pt="1.5rem">
-          <Box position="absolute" top="0" left="0" w="100%" h="100%" overflow="hidden">
+          <Box>
             {post.tags.map((tag, idx) => (
               <Tag
                 key={`${tag}_${idx}`}

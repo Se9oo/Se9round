@@ -1,11 +1,14 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 
-import { Flex, Button, Image, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Box, Button, Image, useBreakpointValue } from '@chakra-ui/react';
+
+import { adminLogoutRequestAction } from '../reducers/user';
 
 const Header = () => {
-  const { isAdmin } = useSelector((state) => state.user);
+  const { isAdmin, adminLogoutSuccess } = useSelector((state) => state.user);
+  const dispatch = useDispatch('');
 
   const logoSize = useBreakpointValue({
     xxs: '1.3rem',
@@ -21,6 +24,17 @@ const Header = () => {
   const handleEditPost = () => {
     router.push('/editPost');
   };
+
+  // 로그아웃
+  const handleLogout = () => {
+    dispatch(adminLogoutRequestAction());
+  };
+
+  useEffect(() => {
+    if (adminLogoutSuccess) {
+      router.push('/');
+    }
+  }, [adminLogoutSuccess]);
 
   return (
     <header>
@@ -45,9 +59,14 @@ const Header = () => {
           cursor="pointer"
         />
         {isAdmin && (
-          <Button size="sm" m="0 1rem" onClick={handleEditPost}>
-            글쓰기
-          </Button>
+          <Box>
+            <Button size="sm" m="0 .3rem 0 0" onClick={handleEditPost}>
+              글쓰기
+            </Button>
+            <Button size="sm" m="0 .3rem 0 0" bg="gray.400" onClick={handleLogout}>
+              로그아웃
+            </Button>
+          </Box>
         )}
       </Flex>
     </header>

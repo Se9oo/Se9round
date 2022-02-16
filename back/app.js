@@ -5,6 +5,7 @@ const path = require('path');
 
 const postRouter = require('./routes/post');
 const imageRouter = require('./routes/image');
+const userRouter = require('./routes/user');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 // router 연결
 app.use(postRouter);
 app.use(imageRouter);
+app.use(userRouter);
 
 app.use('/', express.static(path.join(__dirname, 'uploads')));
 

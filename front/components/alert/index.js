@@ -13,7 +13,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 
-const Alert = ({ title, contents, mod, actionText, btnAction, isOpen, onClose }) => {
+const Alert = ({ alertProps, isOpen, onClose }) => {
   const buttonSize = useBreakpointValue({
     xxs: 'sm',
     xs: 'sm',
@@ -24,6 +24,8 @@ const Alert = ({ title, contents, mod, actionText, btnAction, isOpen, onClose })
     xxl: 'md',
     '2xl': 'md',
   });
+
+  const { title, contents, mod, actionText, btnAction } = alertProps;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

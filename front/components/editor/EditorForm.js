@@ -6,22 +6,11 @@ import axios from 'axios';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { baseURL } from '../../config/config';
 
+import Alert from '../alert';
+import useAlert from '../../hooks/useAlert';
 import { getImgUrlByRegExp } from '../../util/common';
 
-import {
-  Flex,
-  Button,
-  Input,
-  Box,
-  Text,
-  useBreakpointValue,
-  Tag,
-  TagLabel,
-  TagCloseButton,
-  useDisclosure,
-} from '@chakra-ui/react';
-
-import Alert from '../alert';
+import { Flex, Button, Input, Box, Text, useBreakpointValue, Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 
 import { savePostRequestAction, tempSavePostRequestAction } from '../../reducers/post';
 
@@ -49,8 +38,7 @@ const EditorForm = () => {
   const [contentsHtml, setContentsHtml] = useState('');
   const [thumbNail, setThumbNail] = useState(null);
 
-  // alert state
-  const [alertProps, setAlertProps] = useState({});
+  const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
   const dispatch = useDispatch('');
   const { savePostSuccess, savePostFailure, tempSavePostSuccess, tempSavePostFailure } = useSelector(
@@ -83,9 +71,6 @@ const EditorForm = () => {
 
     return () => {};
   }, [editorRef.current]);
-
-  // alert
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // 태그 등록
   const onKeyPress = (e) => {
@@ -150,7 +135,7 @@ const EditorForm = () => {
       (type === 'temp' && !title)
     ) {
       // modal 세팅
-      setAlertProps({
+      openAlert({
         title: alertTitle,
         contents: alertContents,
         mod: '',
@@ -165,22 +150,14 @@ const EditorForm = () => {
     alertContents = type === 'save' ? '게시글을 저장 하시겠습니까?' : '게시글을 임시 저장 하시겠습니까?';
 
     // modal 세팅
-    setAlertProps({
+    openAlert({
       title: alertTitle,
       contents: alertContents,
       mod: 'action',
+      btnAction: () => handlePostSave(type),
       actionText: '저장',
-      type: type,
-      time: new Date(),
     });
   };
-
-  useDeepCompareEffect(() => {
-    if (alertProps.title !== null && alertProps.title !== undefined) {
-      // alert open
-      onOpen();
-    }
-  }, [alertProps]);
 
   // 게시글 저장 or 임시 저장
   const handlePostSave = (type) => {
@@ -215,7 +192,7 @@ const EditorForm = () => {
 
   useEffect(() => {
     if (tempSavePostSuccess) {
-      setAlertProps({
+      openAlert({
         title: '게시글 임시 저장',
         contents: '게시글 임시 저장 성공',
         mod: '',
@@ -225,7 +202,7 @@ const EditorForm = () => {
 
   useDeepCompareEffect(() => {
     if (savePostFailure.err) {
-      setAlertProps({
+      openAlert({
         title: '게시글 저장',
         contents: `${savePostFailure.message}`,
         mod: '',
@@ -235,7 +212,7 @@ const EditorForm = () => {
 
   useDeepCompareEffect(() => {
     if (tempSavePostFailure.err) {
-      setAlertProps({
+      openAlert({
         title: '게시글 임시 저장',
         contents: `${tempSavePostFailure.message}`,
         mod: '',
@@ -279,15 +256,7 @@ const EditorForm = () => {
           </Button>
         </Flex>
       </Box>
-      <Alert
-        title={alertProps.title}
-        contents={alertProps.contents}
-        mod={alertProps.mod}
-        actionText={alertProps.actionText}
-        btnAction={() => handlePostSave(alertProps.type)}
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+      <Alert alertProps={alertProps} isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

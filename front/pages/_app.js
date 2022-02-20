@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 
 import { ChakraProvider } from '@chakra-ui/react';
@@ -12,7 +13,15 @@ import wrapper from '../store/configureStore';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-const App = ({ Component, pageProps }) => {
+import { checkIsAdminRequestAction } from '../reducers/user';
+
+const Se9round = ({ Component, pageProps }) => {
+  const dispatch = useDispatch('');
+
+  useEffect(() => {
+    dispatch(checkIsAdminRequestAction());
+  }, []);
+
   return (
     <ChakraProvider theme={theme} resetCSS>
       <Fonts />
@@ -28,4 +37,4 @@ const App = ({ Component, pageProps }) => {
   );
 };
 
-export default wrapper.withRedux(App);
+export default wrapper.withRedux(Se9round);

@@ -7,6 +7,9 @@ import {
   ADMIN_LOGOUT_REQUEST,
   ADMIN_LOGOUT_SUCCESS,
   ADMIN_LOGOUT_FAILURE,
+  CHECK_IS_ADMIN_REQUEST,
+  CHECK_IS_ADMIN_SUCCESS,
+  CHECK_IS_ADMIN_FAILURE,
 } from '../reducers/user';
 
 // 관리자 로그인
@@ -56,6 +59,28 @@ function* watchAdminLogout() {
   yield takeLatest(ADMIN_LOGOUT_REQUEST, adminLogout);
 }
 
+// 관리자 체크
+function checkIsAdminAPI() {
+  return axios.post('/api/admin-check');
+}
+
+function* checkIsAdmin() {
+  try {
+    yield call(checkIsAdminAPI);
+    yield put({
+      type: CHECK_IS_ADMIN_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: CHECK_IS_ADMIN_FAILURE,
+      err: err.response.data,
+    });
+  }
+}
+
+function* watchCheckIsAdmin() {
+  yield takeLatest(CHECK_IS_ADMIN_REQUEST, checkIsAdmin);
+}
 export default function* userSaga() {
-  yield all([fork(watchAdminLogin), fork(watchAdminLogout)]);
+  yield all([fork(watchAdminLogin), fork(watchAdminLogout), fork(watchCheckIsAdmin)]);
 }

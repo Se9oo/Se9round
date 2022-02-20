@@ -6,6 +6,9 @@ export const initialState = {
   adminLogoutLoading: false,
   adminLogoutSuccess: false,
   adminLogoutFailure: { err: false, msg: null },
+  checkIsAdminLoading: false,
+  checkIsAdminSuccess: false,
+  checkIsAdminFailure: { err: false, msg: null },
 };
 
 // 관리자 로그인
@@ -28,6 +31,17 @@ export const ADMIN_LOGOUT_FAILURE = 'ADMIN_LOGOUT_FAILURE';
 export const adminLogoutRequestAction = () => {
   return {
     type: ADMIN_LOGOUT_REQUEST,
+  };
+};
+
+// 관리자 체크
+export const CHECK_IS_ADMIN_REQUEST = 'CHECK_IS_ADMIN_REQUEST';
+export const CHECK_IS_ADMIN_SUCCESS = 'CHECK_IS_ADMIN_SUCCESS';
+export const CHECK_IS_ADMIN_FAILURE = 'CHECK_IS_ADMIN_FAILURE';
+
+export const checkIsAdminRequestAction = () => {
+  return {
+    type: CHECK_IS_ADMIN_REQUEST,
   };
 };
 
@@ -79,6 +93,29 @@ const reducer = (state = initialState, action) => {
         adminLogoutLoading: false,
         adminLogoutSuccess: false,
         adminLogoutFailure: { err: true, msg: action.err },
+      };
+    // 관리자 체크
+    case CHECK_IS_ADMIN_REQUEST:
+      return {
+        ...state,
+        checkIsAdminLoading: true,
+        checkIsAdminSuccess: false,
+        checkIsAdminFailure: false,
+      };
+    case CHECK_IS_ADMIN_SUCCESS:
+      return {
+        ...state,
+        isAdmin: true,
+        checkIsAdminLoading: false,
+        checkIsAdminSuccess: true,
+        checkIsAdminFailure: false,
+      };
+    case CHECK_IS_ADMIN_FAILURE:
+      return {
+        ...state,
+        checkIsAdminLoading: false,
+        checkIsAdminSuccess: true,
+        checkIsAdminFailure: { err: true, msg: action.err },
       };
     default:
       return state;

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const postRouter = require('./routes/post');
@@ -20,6 +21,9 @@ app.use(
 // body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// cookie Parser
+app.use(cookieParser());
 
 // router 연결
 app.use(postRouter);

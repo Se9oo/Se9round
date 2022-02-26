@@ -3,31 +3,63 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+// access token 생성
 exports.createAccessToken = (payload) => {
   return jwt.sign(payload, process.env.LOGIN_KEY, { expiresIn: '15m' });
 };
 
-exports.verifyAccessToken = (req, res, next) => {
+// refresh token 생성
+exports.createRefreshToken = () => {
+  return jwt.sign({}, process.env.LOGIN_KEY, { expiresIn: '1d' });
+};
+
+// token 검증
+exports.verifyTokens = (req, res, next) => {
   try {
-    if (!req.headers.cookie) {
+    if (!req.cookies) {
       res.status(401).json('로그인 필요');
     } else {
-      const cookies = req.headers.cookie.split(' ');
+      const cookies = req.cookies;
 
-      const accessToken = cookies[0].split('user=')[1];
-      const decoded = jwt.verify(accessToken, process.env.LOGIN_KEY);
+      let accessToken = cookies.user;
+      let refreshToken = cookies.refresh;
 
-      if (decoded) {
-        next();
-      } else {
+      // token 검증
+      const decodedAccessToken = checkToken(accessToken);
+      const decodedRefreshToken = checkToken(refreshToken);
+
+      // access, refresh token 둘 다 만료된 경우
+      if (!decodedAccessToken && !decodedRefreshToken) {
         res.status(401).json('권한이 없습니다.');
+        // access token 만 만료된 경우
+      } else {
+        if (!decodedAccessToken && decodedRefreshToken) {
+          // access token 재발급
+          const newAccessToken = this.createAccessToken({ admin: 'admin' });
+
+          res.cookie('user', newAccessToken, { httpOnly: true, overwrite: true });
+          // refresh token 만 만료된 경우
+        } else if (decodedAccessToken && !decodedRefreshToken) {
+          // refresh token 재발급
+          const newRefreshToken = this.createRefreshToken();
+
+          res.cookie('refresh', newRefreshToken, { httpOnly: true, overwrite: true });
+        }
+        next();
       }
     }
   } catch (err) {
-    res.status(401).json('error');
+    res.status(500).json('error');
   }
 };
 
-exports.createRefreshToken = () => {
-  return jwt.sign({}, process.env.LOGIN_KEY, { expiresIn: '1d' });
+// 각 token 검증
+const checkToken = (token) => {
+  try {
+    const decodedToken = jwt.verify(token, process.env.LOGIN_KEY);
+
+    return decodedToken;
+  } catch (err) {
+    return null;
+  }
 };

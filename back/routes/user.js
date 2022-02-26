@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verifyAccessToken, createAccessToken, createRefreshToken } = require('../middlewares/auth');
+const { verifyTokens, createAccessToken, createRefreshToken } = require('../middlewares/auth');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -17,8 +17,8 @@ router.post('/api/admin-login', (req, res) => {
       const accessToken = createAccessToken(payload);
       const refreshToken = createRefreshToken();
 
-      res.cookie('user', accessToken, { httpOnly: true });
-      res.cookie('refresh', refreshToken, { httpOnly: true });
+      res.cookie('user', accessToken, { httpOnly: true, overwrite: true });
+      res.cookie('refresh', refreshToken, { httpOnly: true, overwrite: true });
       res.status(200).json('success');
     } else {
       res.status(401).json('로그인 실패');
@@ -34,7 +34,7 @@ router.post('/api/admin-logout', (req, res) => {
 });
 
 // 관리자 체크
-router.post('/api/admin-check', verifyAccessToken, (req, res) => {
+router.post('/api/admin-check', verifyTokens, (req, res) => {
   res.status(200).json('success');
 });
 

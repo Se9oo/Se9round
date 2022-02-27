@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Flex, useBreakpointValue } from '@chakra-ui/react';
@@ -7,7 +8,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import PostCard from './PostCard';
 import Alert from '../alert';
 import useAlert from '../../hooks/useAlert';
-import { cancelPostRequestAction } from '../../reducers/post';
+import { addClickCountRequestAction, cancelPostRequestAction } from '../../reducers/post';
 
 const PostList = () => {
   const width = useBreakpointValue({
@@ -25,7 +26,18 @@ const PostList = () => {
   const { postList, cancelPostSuccess, cancelPostFailure } = useSelector((state) => state.post);
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
-  // 게시글 제어 아이콘 버튼 클릭
+  // 게시글 페이지로 이동
+  const handlePostClick = useCallback((postId, postTitle) => {
+    // 조회수 add
+    dispatch(addClickCountRequestAction({ postId }));
+
+    router.push({
+      pathname: `/post/[postTitle]`,
+      query: { postTitle },
+    });
+  }, []);
+
+  // 게시글 취소
   const handlePostCancel = useCallback((postId) => {
     openAlert({
       title: '게시글 삭제',
@@ -36,9 +48,8 @@ const PostList = () => {
     });
   }, []);
 
-  // 게시글 취소
   const postCancel = (postId) => {
-    dispatch(cancelPostRequestAction({ postId: postId }));
+    dispatch(cancelPostRequestAction({ postId }));
 
     // alert close
     onClose();
@@ -71,7 +82,14 @@ const PostList = () => {
       <Flex flexDir="column" w={width}>
         <Flex flexWrap="wrap">
           {postList.map((post) => {
-            return <PostCard key={post.id} post={post} handlePostCancel={handlePostCancel} />;
+            return (
+              <PostCard
+                key={post.id}
+                post={post}
+                handlePostClick={handlePostClick}
+                handlePostCancel={handlePostCancel}
+              />
+            );
           })}
         </Flex>
       </Flex>

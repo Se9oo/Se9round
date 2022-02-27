@@ -9,6 +9,8 @@ import PostViewer from '../../../components/viewer/PostViewer';
 // store
 import wrapper from '../../../store/configureStore';
 import { useSelector } from 'react-redux';
+import { checkIsAdminRequestAction } from '../../../reducers/user';
+import axios from 'axios';
 
 const PostView = () => {
   const { loadPostInfo } = useSelector((state) => state.post);
@@ -31,7 +33,17 @@ const PostView = () => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, res, ...etc }) => {
   const { postTitle } = etc.query;
 
+  // header에 cookie 넣어주기
+  const cookies = req ? req.headers.cookie : '';
+
+  axios.defaults.headers.Cookie = '';
+
+  if (req && cookies) {
+    axios.defaults.headers.Cookie = cookies;
+  }
+
   // 게시글 내용
+  store.dispatch(checkIsAdminRequestAction());
   store.dispatch(loadPostRequestAction({ postTitle }));
 
   store.dispatch(END);

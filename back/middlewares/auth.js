@@ -16,7 +16,7 @@ exports.createRefreshToken = () => {
 // token 검증
 exports.verifyTokens = (req, res, next) => {
   try {
-    if (!req.cookies) {
+    if (Object.keys(req.cookies).length === 0) {
       res.status(401).json('로그인 필요');
     } else {
       const cookies = req.cookies;

@@ -16,6 +16,9 @@ export const initialState = {
   loadPostLoading: false,
   loadPostSuccess: false,
   loadPostFailure: { err: false, message: null },
+  cancelPostLoading: false,
+  cancelPostSuccess: false,
+  cancelPostFailure: { err: false, message: null },
 };
 
 // 게시글 목록 조회
@@ -73,6 +76,18 @@ export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 export const loadPostRequestAction = (data) => {
   return {
     type: LOAD_POST_REQUEST,
+    data,
+  };
+};
+
+// 게시글 취소
+export const CANCEL_POST_REQUEST = 'CANCEL_POST_REQUEST';
+export const CANCEL_POST_SUCCESS = 'CANCEL_POST_SUCCESS';
+export const CANCEL_POST_FAILURE = 'CANCEL_POST_FAILURE';
+
+export const cancelPostRequestAction = (data) => {
+  return {
+    type: CANCEL_POST_REQUEST,
     data,
   };
 };
@@ -192,6 +207,30 @@ const reducer = (state = initialState, action) => {
         loadPostLoading: false,
         loadPostSuccess: false,
         loadPostFailure: true,
+      };
+    // 게시글 취소
+    case CANCEL_POST_REQUEST:
+      return {
+        ...state,
+        cancelPostLoading: true,
+        cancelPostSuccess: false,
+        cancelPostFailure: { err: false, message: null },
+      };
+    case CANCEL_POST_SUCCESS:
+      const newPostList = [...state.postList].filter((post) => post.id !== action.data.postId);
+      return {
+        ...state,
+        postList: newPostList,
+        cancelPostLoading: false,
+        cancelPostSuccess: true,
+        cancelPostFailure: { err: false, message: null },
+      };
+    case CANCEL_POST_FAILURE:
+      return {
+        ...state,
+        cancelPostLoading: false,
+        cancelPostSuccess: false,
+        cancelPostFailure: { err: true, message: action.err },
       };
     default:
       return state;

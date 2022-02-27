@@ -17,6 +17,9 @@ import {
   LOAD_POST_REQUEST,
   LOAD_POST_SUCCESS,
   LOAD_POST_FAILURE,
+  CANCEL_POST_REQUEST,
+  CANCEL_POST_SUCCESS,
+  CANCEL_POST_FAILURE,
 } from '../reducers/post';
 
 // 게시글 목록 조회
@@ -138,6 +141,31 @@ function* watchLoadPost() {
   yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 
+// 게시글 취소
+function cancelPostAPI(data) {
+  return axios.post('/api/post/cancel', data);
+}
+
+function* cancelPost(data) {
+  try {
+    const result = yield call(cancelPostAPI, data);
+
+    yield put({
+      type: CANCEL_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: CANCEL_POST_FAILURE,
+      err: err.response.data,
+    });
+  }
+}
+
+function* watchCancelPost() {
+  yield takeLatest(CANCEL_POST_REQUEST, cancelPost);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -145,5 +173,6 @@ export default function* postSaga() {
     fork(watchTempSavePost),
     fork(watchAddClickCount),
     fork(watchLoadPost),
+    fork(watchCancelPost),
   ]);
 }

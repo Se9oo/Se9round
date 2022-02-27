@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import router from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel, Divider } from '@chakra-ui/react';
 
-import { ViewIcon } from '@chakra-ui/icons';
-import { getCountFormat, getDateDiff } from '../../util/common';
-import { addClickCountRequestAction } from '../../reducers/post';
+import { ViewIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
-const PostCard = ({ post }) => {
+import { addClickCountRequestAction } from '../../reducers/post';
+import { getCountFormat, getDateDiff } from '../../util/common';
+
+const PostCard = memo(({ post, handlePostActionButton }) => {
   const postWidth = useBreakpointValue({
     xxs: '100%',
     xs: '100%',
@@ -32,6 +33,7 @@ const PostCard = ({ post }) => {
   });
 
   const dispatch = useDispatch('');
+  const { isAdmin } = useSelector((state) => state.user);
 
   // 게시글 페이지로 이동
   const handlePostClick = () => {
@@ -119,9 +121,17 @@ const PostCard = ({ post }) => {
       </Box>
       <Divider mb=".5rem" />
       <Flex justifyContent="space-between">
-        <Text fontSize=".8rem" color="rgba(0, 0, 0, .5)">
-          {getDateDiff(post.reg_dt)}
-        </Text>
+        <Flex alignItems="center">
+          <Text mr=".8rem" fontSize=".8rem" color="rgba(0, 0, 0, .5)">
+            {getDateDiff(post.reg_dt)}
+          </Text>
+          {isAdmin && (
+            <>
+              <EditIcon mr=".3rem" color="brown" cursor="pointer" />
+              <DeleteIcon color="brown" cursor="pointer" onClick={() => handlePostActionButton('cancel', post.id)} />
+            </>
+          )}
+        </Flex>
         <Flex justifyContent="center" alignItems="center">
           <ViewIcon w=".8rem" mr=".3rem" color="brown" />
           <Text fontSize=".8rem" color="rgba(0, 0, 0, .5)">
@@ -131,6 +141,6 @@ const PostCard = ({ post }) => {
       </Flex>
     </Flex>
   );
-};
+});
 
 export default PostCard;

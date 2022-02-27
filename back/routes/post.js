@@ -1,6 +1,7 @@
 const express = require('express');
 // db client
 const client = require('../config/db');
+const { verifyTokens } = require('../middlewares/auth');
 // query
 const {
   selectPostLists,
@@ -8,6 +9,7 @@ const {
   updatePostClickCount,
   selectPostByTitle,
   selectIsExistPost,
+  cancelPost,
 } = require('../query/post');
 const { insertTag } = require('../query/tag');
 // router
@@ -150,6 +152,27 @@ router.get('/api/post', (req, res) => {
           res.status(500).json(error);
         } else {
           res.status(200).json(response.rows[0]);
+        }
+      });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// 게시글 취소
+router.post('/api/post/cancel', verifyTokens, (req, res) => {
+  try {
+    if (!req.body) {
+      res.status(500).json('empty request');
+    } else {
+      const { postId } = req.body.data;
+
+      client.query(cancelPost, [postId, POST_CANCEL_STATUS], (error, response) => {
+        if (error) {
+          res.status(500).json(error);
+        } else {
+          res.status(200).json({ postId });
         }
       });
     }

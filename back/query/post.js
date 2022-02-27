@@ -85,3 +85,11 @@ exports.selectPostByTitle = `
   WHERE
     title = $1
 `;
+
+// 게시글 취소
+exports.cancelPost = `
+  UPDATE post SET
+    status = $2
+  WHERE
+    id = $1
+`;

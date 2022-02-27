@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import router from 'next/router';
 import { END } from 'redux-saga';
-import { loadPostRequestAction } from '../../reducers/post';
+import { loadPostRequestAction } from '../../../reducers/post';
 
-import MainLayout from '../../components/MainLayout';
-import PostViewer from '../../components/viewer/PostViewer';
+import MainLayout from '../../../components/MainLayout';
+import PostViewer from '../../../components/viewer/PostViewer';
 
 // store
-import wrapper from '../../store/configureStore';
+import wrapper from '../../../store/configureStore';
 import { useSelector } from 'react-redux';
 
 const PostView = () => {

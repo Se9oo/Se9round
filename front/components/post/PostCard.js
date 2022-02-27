@@ -9,7 +9,7 @@ import { ViewIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { addClickCountRequestAction } from '../../reducers/post';
 import { getCountFormat, getDateDiff } from '../../util/common';
 
-const PostCard = memo(({ post, handlePostActionButton }) => {
+const PostCard = memo(({ post, handlePostCancel }) => {
   const postWidth = useBreakpointValue({
     xxs: '100%',
     xs: '100%',
@@ -128,7 +128,7 @@ const PostCard = memo(({ post, handlePostActionButton }) => {
           {isAdmin && (
             <>
               <EditIcon mr=".3rem" color="brown" cursor="pointer" />
-              <DeleteIcon color="brown" cursor="pointer" onClick={() => handlePostActionButton('cancel', post.id)} />
+              <DeleteIcon color="brown" cursor="pointer" onClick={() => handlePostCancel(post.id)} />
             </>
           )}
         </Flex>

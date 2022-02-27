@@ -26,30 +26,18 @@ const PostList = () => {
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
   // 게시글 제어 아이콘 버튼 클릭
-  const handlePostActionButton = useCallback((action, postId) => {
-    let alertTitle;
-    let alertContents;
-    let actionText;
-    let btnAction;
-
-    if (action === 'cancel') {
-      alertTitle = '게시글 삭제';
-      alertContents = '게시글을 삭제 하시겠습니까?';
-      actionText = '삭제';
-      btnAction = handlePostCancel;
-    }
-
+  const handlePostCancel = useCallback((postId) => {
     openAlert({
-      title: alertTitle,
-      contents: alertContents,
+      title: '게시글 삭제',
+      contents: '게시글을 삭제 하시겠습니까?',
       mod: 'action',
-      actionText: actionText,
-      btnAction: () => btnAction(postId),
+      actionText: '삭제',
+      btnAction: () => postCancel(postId),
     });
   }, []);
 
   // 게시글 취소
-  const handlePostCancel = (postId) => {
+  const postCancel = (postId) => {
     dispatch(cancelPostRequestAction({ postId: postId }));
 
     // alert close
@@ -83,7 +71,7 @@ const PostList = () => {
       <Flex flexDir="column" w={width}>
         <Flex flexWrap="wrap">
           {postList.map((post) => {
-            return <PostCard key={post.id} post={post} handlePostActionButton={handlePostActionButton} />;
+            return <PostCard key={post.id} post={post} handlePostCancel={handlePostCancel} />;
           })}
         </Flex>
       </Flex>

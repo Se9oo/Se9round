@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 const useAlert = () => {
   const [alertProps, setAlertProps] = useState({});

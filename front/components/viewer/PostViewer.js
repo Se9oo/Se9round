@@ -22,17 +22,18 @@ const PostViewer = ({ title, contents, tags }) => {
         {title}
       </Heading>
       <Box mb="2rem">
-        {tags.map((tag, idx) => (
-          <Tag
-            key={`${tag}_${idx}`}
-            fontSize="1.2rem"
-            m=".1rem .5rem .1rem 0"
-            cursor="pointer"
-            _hover={{ bg: 'rgba(226, 232, 240, .3)' }}
-          >
-            <TagLabel>{tag}</TagLabel>
-          </Tag>
-        ))}
+        {tags &&
+          tags.map((tag, idx) => (
+            <Tag
+              key={`${tag}_${idx}`}
+              fontSize="1.2rem"
+              m=".1rem .5rem .1rem 0"
+              cursor="pointer"
+              _hover={{ bg: 'rgba(226, 232, 240, .3)' }}
+            >
+              <TagLabel>{tag}</TagLabel>
+            </Tag>
+          ))}
       </Box>
       <DynamicPostViewer contents={contents} />
     </Box>

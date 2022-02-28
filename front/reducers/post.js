@@ -19,6 +19,9 @@ export const initialState = {
   cancelPostLoading: false,
   cancelPostSuccess: false,
   cancelPostFailure: { err: false, message: null },
+  modifyPostLoading: false,
+  modifyPostSuccess: false,
+  modifyPostFailure: { err: false, message: null },
 };
 
 // 게시글 목록 조회
@@ -88,6 +91,18 @@ export const CANCEL_POST_FAILURE = 'CANCEL_POST_FAILURE';
 export const cancelPostRequestAction = (data) => {
   return {
     type: CANCEL_POST_REQUEST,
+    data,
+  };
+};
+
+// 게시글 수정
+export const MODIFY_POST_REQUEST = 'MODIFY_POST_REQUEST';
+export const MODIFY_POST_SUCCESS = 'MODIFY_POST_SUCCESS';
+export const MODIFY_POST_FAILURE = 'MODIFY_POST_FAILURE';
+
+export const modifyPostRequestAction = (data) => {
+  return {
+    type: MODIFY_POST_REQUEST,
     data,
   };
 };
@@ -231,6 +246,28 @@ const reducer = (state = initialState, action) => {
         cancelPostLoading: false,
         cancelPostSuccess: false,
         cancelPostFailure: { err: true, message: action.err },
+      };
+    // 게시글 수정
+    case MODIFY_POST_REQUEST:
+      return {
+        ...state,
+        modifyPostLoading: true,
+        modifyPostSuccess: false,
+        modifyPostFailure: { err: false, message: null },
+      };
+    case MODIFY_POST_SUCCESS:
+      return {
+        ...state,
+        modifyPostLoading: false,
+        modifyPostSuccess: true,
+        modifyPostFailure: { err: false, message: null },
+      };
+    case MODIFY_POST_FAILURE:
+      return {
+        ...state,
+        modifyPostLoading: false,
+        modifyPostSuccess: false,
+        modifyPostFailure: { err: true, message: null },
       };
     default:
       return state;

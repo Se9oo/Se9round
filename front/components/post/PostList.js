@@ -26,13 +26,21 @@ const PostList = () => {
   const { postList, cancelPostSuccess, cancelPostFailure } = useSelector((state) => state.post);
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
-  // 게시글 페이지로 이동
+  // 게시글 상세 페이지로 이동
   const handlePostClick = useCallback((postId, postTitle) => {
     // 조회수 add
     dispatch(addClickCountRequestAction({ postId }));
 
     router.push({
       pathname: `/post/[postTitle]`,
+      query: { postTitle },
+    });
+  }, []);
+
+  // 게시글 수정 페이지로 이동
+  const handlePostModify = useCallback((postTitle) => {
+    router.push({
+      pathname: `/post/[postTitle]/modify`,
       query: { postTitle },
     });
   }, []);
@@ -88,6 +96,7 @@ const PostList = () => {
                 post={post}
                 handlePostClick={handlePostClick}
                 handlePostCancel={handlePostCancel}
+                handlePostModify={handlePostModify}
               />
             );
           })}

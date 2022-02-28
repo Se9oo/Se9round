@@ -93,3 +93,15 @@ exports.cancelPost = `
   WHERE
     id = $1
 `;
+
+// 게시글 수정
+exports.modifyPost = `
+  UPDATE post SET
+    tags = $2
+    , contents = $3
+    , thumbnail = $4
+    , sub_title = $5
+    , status = $6
+  WHERE
+    title = $1
+`;

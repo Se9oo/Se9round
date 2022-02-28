@@ -6,7 +6,7 @@ import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel, Div
 import { ViewIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { getCountFormat, getDateDiff } from '../../util/common';
 
-const PostCard = memo(({ post, handlePostClick, handlePostCancel }) => {
+const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModify }) => {
   const postWidth = useBreakpointValue({
     xxs: '100%',
     xs: '100%',
@@ -118,7 +118,7 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel }) => {
           </Text>
           {isAdmin && (
             <>
-              <EditIcon mr=".3rem" color="brown" cursor="pointer" />
+              <EditIcon mr=".3rem" color="brown" cursor="pointer" onClick={() => handlePostModify(post.title)} />
               <DeleteIcon color="brown" cursor="pointer" onClick={() => handlePostCancel(post.id)} />
             </>
           )}

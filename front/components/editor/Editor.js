@@ -11,12 +11,12 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 
-const Editor = ({ height, editorRef, handleEditPost }) => {
+const Editor = ({ height, editorRef, handleEditPost, initialValue }) => {
   return (
     <>
       <Box w="100%" bg="white">
         <TuiEditor
-          initialValue="게시글을 작성하세요!"
+          initialValue={initialValue === '' ? '게시글을 작성하세요!' : initialValue}
           previewStyle="vertical"
           height={height}
           initialEditType="wysiwyg"

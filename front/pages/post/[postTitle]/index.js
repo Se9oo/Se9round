@@ -1,26 +1,18 @@
-import React, { useEffect } from 'react';
-import router from 'next/router';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import { loadPostRequestAction } from '../../../reducers/post';
+import { checkIsAdminRequestAction } from '../../../reducers/user';
 
 import MainLayout from '../../../components/MainLayout';
 import PostViewer from '../../../components/viewer/PostViewer';
 
 // store
 import wrapper from '../../../store/configureStore';
-import { useSelector } from 'react-redux';
-import { checkIsAdminRequestAction } from '../../../reducers/user';
 import axios from 'axios';
 
 const PostView = () => {
   const { loadPostInfo } = useSelector((state) => state.post);
-
-  // CSR
-  useEffect(() => {
-    if (!router.query.postTitle) {
-      dispatch(loadPostRequestAction({ postTitle: router.query.postTitle }));
-    }
-  }, []);
 
   return (
     <MainLayout>

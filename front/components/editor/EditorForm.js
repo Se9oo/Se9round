@@ -36,7 +36,6 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
   const [tagsArray, setTagsArray] = useState([]);
   const [contents, setContents] = useState('');
   const [contentsHtml, setContentsHtml] = useState('');
-  const [thumbNail, setThumbNail] = useState(null);
 
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
@@ -159,9 +158,6 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
       return;
     }
 
-    // thumbnail 세팅
-    setThumbNail(getImgUrlByRegExp(contentsHtml));
-
     alertContents =
       type === 'save'
         ? '게시글을 저장 하시겠습니까?'
@@ -181,7 +177,10 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
 
   // 게시글 저장 or 임시 저장 or 수정
   const handlePostSave = (type) => {
-    const editorValues = { title, tagsArray, contents, thumbNail, subTitle };
+    const editorValues = { title, tagsArray, contents, subTitle };
+    // thumbnail 세팅
+    editorValues.thumbNail = getImgUrlByRegExp(contentsHtml);
+
     if (type !== '') {
       dispatch(
         type === 'save'

@@ -9,7 +9,7 @@ export const getImgUrlByRegExp = (text) => {
   const result = regExp.exec(text);
 
   if (result !== null && Array.isArray(result)) {
-    return regExp.exec(text)[1];
+    return result[1];
   } else {
     return null;
   }

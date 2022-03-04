@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,27 +21,20 @@ const LoginForm = () => {
   });
 
   const [key, setKey] = useState('');
+  const inputRef = useRef('');
 
   const dispatch = useDispatch('');
-  const { adminLoginSuccess, adminLoginFailure, isAdmin } = useSelector((state) => state.user);
+  const { adminLoginSuccess, adminLoginFailure, isAdmin, checkIsAdminSuccess } = useSelector((state) => state.user);
 
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
-
-  useEffect(() => {
-    if (isAdmin) {
-      openAlert({
-        title: '알림',
-        contents: '이미 로그인 중 입니다.',
-        mod: '',
-      });
-    }
-  }, []);
 
   const handleKey = (e) => {
     setKey(e.target.value);
   };
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+
     if (!key) {
       openAlert({
         title: '관리자 로그인',
@@ -54,6 +47,22 @@ const LoginForm = () => {
 
     dispatch(adminLoginRequestAction({ key }));
   };
+
+  // password input에 focus 적용
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  // 페이지 진입시 로그인 여부 체크
+  useEffect(() => {
+    if (isAdmin) {
+      openAlert({
+        title: '알림',
+        contents: '이미 로그인 중 입니다.',
+        mod: '',
+      });
+    }
+  }, [checkIsAdminSuccess]);
 
   // 로그인 성공
   useEffect(() => {
@@ -87,9 +96,9 @@ const LoginForm = () => {
         boxShadow="sm"
       >
         <Image src="/assets/images/se9round_logo.svg" alt="se9round-logo" mb="2rem" />
-        <form>
-          <Input mb="1rem" placeholder="KEY 를 입력하세요" onChange={handleKey} />
-          <Button w="100%" onClick={handleSubmitForm}>
+        <form onSubmit={handleSubmitForm}>
+          <Input type="password" mb="1rem" placeholder="KEY 를 입력하세요" onChange={handleKey} ref={inputRef} />
+          <Button type="submit" w="100%">
             관리자 로그인
           </Button>
         </form>

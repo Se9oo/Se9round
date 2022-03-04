@@ -68,6 +68,10 @@ const theme = extendTheme({
         border: 0,
         borderRadius: 0,
       },
+      '.tui-editor-contents h1, .tui-editor-contents h2': {
+        borderBottom: 'none',
+      },
+
       '.te-md-container .CodeMirror': {
         fontFamily: `'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',
           '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif`,

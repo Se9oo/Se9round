@@ -51,3 +51,30 @@ export const getCountFormat = (count) => {
     return count;
   }
 };
+
+// markdown heading 추출
+export const getMarkdownHeader = (title, contents) => {
+  const headers = [];
+
+  function getTocContents(line, isTitle) {
+    const count = line.split('#').length - 1;
+    const str = isTitle ? line : line.replace(' ', '').replace(/#/g, '');
+
+    let href = str.replace(/ /g, '-');
+    href = '#' + href;
+
+    return { href, text: str, count };
+  }
+
+  // 제목 추출
+  headers.push(getTocContents(title, true));
+
+  // contents 추출
+  contents.split('\n').map((line) => {
+    if (line[0] === '#') {
+      headers.push(getTocContents(line, false));
+    }
+  });
+
+  return headers;
+};

@@ -5,15 +5,17 @@ import router from 'next/router';
 import { Flex, Box, Button, Image, useBreakpointValue } from '@chakra-ui/react';
 
 import { adminLogoutRequestAction } from '../reducers/user';
+import useScroll from '../hooks/useScroll';
 
 const Header = () => {
-  const { isAdmin, adminLogoutSuccess } = useSelector((state) => state.user);
-  const dispatch = useDispatch('');
-
   const logoSize = useBreakpointValue({
     xxs: '1.3rem',
     xs: '1.3rem',
   });
+
+  const dispatch = useDispatch('');
+  const { isAdmin, adminLogoutSuccess } = useSelector((state) => state.user);
+  const { scrollY, isShowHeader } = useScroll();
 
   // 로고 클릭시 홈으로 이동
   const handleLogo = () => {
@@ -49,6 +51,8 @@ const Header = () => {
         bg="white"
         boxShadow="sm"
         zIndex="9999"
+        mt={isShowHeader ? 0 : `${-1 * scrollY}px`}
+        transition="all .2s ease"
       >
         <Image
           h={logoSize}

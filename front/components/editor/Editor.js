@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Box } from '@chakra-ui/react';
 
@@ -12,6 +12,12 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 
 const Editor = ({ height, editorRef, handleEditPost, initialValue }) => {
+  useEffect(() => {
+    if (initialValue !== '' && initialValue) {
+      editorRef.current.getInstance().setMarkdown(initialValue);
+    }
+  }, [editorRef.current]);
+
   return (
     <>
       <Box w="100%" bg="white">

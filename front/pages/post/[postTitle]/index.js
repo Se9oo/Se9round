@@ -10,6 +10,7 @@ import PostViewer from '../../../components/viewer/PostViewer';
 // store
 import wrapper from '../../../store/configureStore';
 import axios from 'axios';
+import TOC from '../../../components/toc';
 
 const PostView = () => {
   const { loadPostInfo } = useSelector((state) => state.post);
@@ -17,13 +18,14 @@ const PostView = () => {
   return (
     <MainLayout>
       <PostViewer title={loadPostInfo.title} contents={loadPostInfo.contents} tags={loadPostInfo.tags} />
+      <TOC title={loadPostInfo.title} contents={loadPostInfo.contents} />
     </MainLayout>
   );
 };
 
 // SSR
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, res, ...etc }) => {
-  const { postTitle } = etc.query;
+  let { postTitle } = etc.query;
 
   // header에 cookie 넣어주기
   const cookies = req ? req.headers.cookie : '';

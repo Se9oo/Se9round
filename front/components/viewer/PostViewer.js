@@ -17,7 +17,7 @@ const PostViewer = ({ title, contents, tags }) => {
   });
 
   return (
-    <Box w={width} bg="white" borderRadius="2rem" m="0 auto" p="1rem">
+    <Box w={width} bg="white" borderRadius="1rem" m="0 auto" p="1rem">
       <Heading as="h1" fontSize="3rem" mb="2rem">
         {title}
       </Heading>

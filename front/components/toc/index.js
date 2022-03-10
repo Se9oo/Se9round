@@ -9,7 +9,15 @@ const TOC = ({ title, contents }) => {
   const markdownHeaders = getMarkdownHeader(title, contents);
 
   return (
-    <Box position="fixed" top="100px" right="50px" borderLeft="1px solid #e5e5e5" p="1rem">
+    <Box
+      position="fixed"
+      top="100px"
+      right="50px"
+      borderLeftWidth="3px"
+      borderLeftStyle="solid"
+      borderLeftColor="brown"
+      p="1rem"
+    >
       {markdownHeaders.map((header, idx) => {
         return <TocItem key={`${header.text}_${idx}`} header={header} />;
       })}

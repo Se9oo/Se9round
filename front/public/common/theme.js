@@ -33,6 +33,7 @@ const theme = extendTheme({
       },
       html: {
         fontSize: '16px',
+        scrollBehavior: 'smooth',
       },
       body: {
         backgroundColor: 'gray.200',

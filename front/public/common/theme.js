@@ -62,16 +62,25 @@ const theme = extendTheme({
         border: 0,
         borderRadius: 0,
       },
+      // markdown code style
       '.tui-editor-contents pre code': {
-        fontFamily: `'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',
+        fontFamily: `'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace',
+          'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',
           '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif`,
         border: 0,
         borderRadius: 0,
       },
+      // markdown header style
       '.tui-editor-contents h1, .tui-editor-contents h2': {
         borderBottom: 'none',
       },
-
+      // markdown a tag style
+      '.tui-editor-contents a': {
+        textDecoration: 'none',
+      },
+      '.tui-editor-contents a:hover': {
+        textDecoration: 'underline',
+      },
       '.te-md-container .CodeMirror': {
         fontFamily: `'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',
           '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif`,

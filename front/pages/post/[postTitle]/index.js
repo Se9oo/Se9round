@@ -6,11 +6,12 @@ import { checkIsAdminRequestAction } from '../../../reducers/user';
 
 import MainLayout from '../../../components/MainLayout';
 import PostViewer from '../../../components/viewer/PostViewer';
+import TOC from '../../../components/toc';
+import ScrollToTop from '../../../components/ScrollToTop';
 
 // store
 import wrapper from '../../../store/configureStore';
 import axios from 'axios';
-import TOC from '../../../components/toc';
 
 const PostView = () => {
   const { loadPostInfo } = useSelector((state) => state.post);
@@ -19,6 +20,7 @@ const PostView = () => {
     <MainLayout>
       <PostViewer title={loadPostInfo.title} contents={loadPostInfo.contents} tags={loadPostInfo.tags} />
       <TOC title={loadPostInfo.title} contents={loadPostInfo.contents} />
+      <ScrollToTop />
     </MainLayout>
   );
 };

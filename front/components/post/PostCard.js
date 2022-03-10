@@ -33,7 +33,6 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
 
   return (
     <Flex
-      w={postWidth}
       flexDir="column"
       bg="white"
       m={margin}

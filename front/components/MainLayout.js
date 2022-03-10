@@ -19,7 +19,7 @@ const MainLayout = ({ children }) => {
   return (
     <Box w="100%" position="relative">
       <Header />
-      <Box w={['100%', '100%', '100%', '100%', '100%', '85%', '85%']} maxW="1400px" m={margin} p="1rem">
+      <Box w={['100%', '100%', '100%', '100%', '100%', '90%', '90%']} maxW="1400px" m={margin} p="1rem">
         {children}
       </Box>
     </Box>

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Flex, useBreakpointValue } from '@chakra-ui/react';
+import { Grid, useBreakpointValue } from '@chakra-ui/react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import PostCard from './PostCard';
@@ -11,15 +11,12 @@ import useAlert from '../../hooks/useAlert';
 import { addClickCountRequestAction, cancelPostRequestAction } from '../../reducers/post';
 
 const PostList = () => {
-  const width = useBreakpointValue({
-    xxs: '100%',
-    xs: '100%',
-    sm: '100%',
-    md: '100%',
-    lg: '90%',
-    xl: '85%',
-    xxl: '85%',
-    '2xl': '75%',
+  const gridTemplate = useBreakpointValue({
+    xxs: 'repeat(1, 1fr)',
+    xs: 'repeat(1, 1fr)',
+    sm: 'repeat(1, 1fr)',
+    md: 'repeat(2, 1fr)',
+    lg: 'repeat(3, 1fr)',
   });
 
   const dispatch = useDispatch('');
@@ -87,21 +84,20 @@ const PostList = () => {
 
   return (
     <>
-      <Flex flexDir="column" w={width}>
-        <Flex flexWrap="wrap">
-          {postList.map((post) => {
-            return (
-              <PostCard
-                key={post.id}
-                post={post}
-                handlePostClick={handlePostClick}
-                handlePostCancel={handlePostCancel}
-                handlePostModify={handlePostModify}
-              />
-            );
-          })}
-        </Flex>
-      </Flex>
+      <Grid gridTemplateColumns={gridTemplate}>
+        {postList.map((post) => {
+          return (
+            <PostCard
+              key={post.id}
+              post={post}
+              handlePostClick={handlePostClick}
+              handlePostCancel={handlePostCancel}
+              handlePostModify={handlePostModify}
+            />
+          );
+        })}
+      </Grid>
+
       <Alert alertProps={alertProps} isOpen={isOpen} onClose={onClose} />
     </>
   );

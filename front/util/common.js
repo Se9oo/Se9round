@@ -23,7 +23,7 @@ export const getDateDiff = (regDt) => {
   if (now.diff(regDate, 'year') > 0) {
     return regDate.format('YYYY-MM-DD');
   } else if (now.diff(regDate, 'month') > 0) {
-    return `${now.diff(regDate, 'month') > 0}달 전`;
+    return `${now.diff(regDate, 'month')}달 전`;
   } else if (now.diff(regDate, 'day') > 0) {
     return `${now.diff(regDate, 'day')}일 전`;
   } else if (now.diff(regDate, 'h') > 0) {

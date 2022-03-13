@@ -141,20 +141,55 @@ router.post('/api/post/count', (req, res) => {
 });
 
 // 특정 게시글 조회
-router.get('/api/post', (req, res) => {
+router.get('/api/post', async (req, res) => {
   try {
     if (!req.body) {
       res.status(500).json('empty request');
     } else {
       const { postTitle } = req.body;
 
-      client.query(selectPostByTitle, [postTitle], (error, response) => {
-        if (error) {
-          res.status(500).json(error);
-        } else {
-          res.status(200).json(response.rows[0]);
+      const result = await client.query(selectPostByTitle, [postTitle]);
+
+      if (result.rowCount === 0) {
+        res.status(500).json('해당 게시글은 존재하지 않습니다.');
+      } else {
+        const postInfo = result.rows[0];
+        const tags = postInfo.tags;
+        // 관련 게시글 표시 수
+        const FIND_POSTS_COUNT = 3;
+
+        // 관련 게시글 초기화
+        postInfo.relatedPosts = [];
+
+        // 게시글 태그로 관련 게시글 찾기
+        if (tags.length > 0) {
+          let relatedPostQuery = `
+          SELECT 
+            * 
+          FROM post 
+          WHERE id <> ${postInfo.id} AND status = 1 AND (
+          `;
+
+          tags.map((tag, idx) => {
+            if (idx === 0) {
+              relatedPostQuery += `'${tag}' = ANY(tags)`;
+            } else {
+              relatedPostQuery += ` OR '${tag}' = ANY(tags)`;
+            }
+          });
+
+          relatedPostQuery += `) ORDER BY reg_dt DESC LIMIT ${FIND_POSTS_COUNT}`;
+
+          // 관련 게시글 조회
+          const relatedPosts = await client.query(relatedPostQuery);
+
+          if (relatedPosts.rowCount > 0) {
+            postInfo.relatedPosts = relatedPosts.rows;
+          }
         }
-      });
+
+        res.status(200).json(postInfo);
+      }
     }
   } catch (err) {
     res.status(500).json(err);

@@ -1,23 +1,12 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { Box, Heading, Tag, TagLabel, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Heading, Tag, TagLabel } from '@chakra-ui/react';
 
 const DynamicPostViewer = dynamic(() => import('./Viewer'), { ssr: false });
 
 const PostViewer = ({ title, contents, tags }) => {
-  const width = useBreakpointValue({
-    xxs: '100%',
-    xs: '100%',
-    sm: '100%',
-    md: '100%',
-    lg: '80%',
-    xl: '75%',
-    xxl: '75%',
-    '2xl': '65%',
-  });
-
   return (
-    <Box w={width} bg="white" borderRadius="1rem" m="0 auto" p="1rem">
+    <Box w="100%" bg="white" borderRadius="1rem" m="0 auto 5rem auto" p="1rem">
       <Heading as="h1" fontSize="3rem" mb="2rem">
         {title}
       </Heading>

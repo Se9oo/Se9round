@@ -12,15 +12,32 @@ import ScrollToTop from '../../../components/ScrollToTop';
 // store
 import wrapper from '../../../store/configureStore';
 import axios from 'axios';
+import RelatedPosts from '../../../components/post/RelatedPosts';
+
+import { Box, useBreakpointValue } from '@chakra-ui/react';
 
 const PostView = () => {
+  const width = useBreakpointValue({
+    xxs: '100%',
+    xs: '100%',
+    sm: '100%',
+    md: '100%',
+    lg: '80%',
+    xl: '75%',
+    xxl: '75%',
+    '2xl': '65%',
+  });
+
   const { loadPostInfo } = useSelector((state) => state.post);
 
   return (
     <MainLayout>
-      <PostViewer title={loadPostInfo.title} contents={loadPostInfo.contents} tags={loadPostInfo.tags} />
-      <TOC title={loadPostInfo.title} contents={loadPostInfo.contents} />
-      <ScrollToTop />
+      <Box w={width} m="0 auto">
+        <PostViewer title={loadPostInfo.title} contents={loadPostInfo.contents} tags={loadPostInfo.tags} />
+        {loadPostInfo && loadPostInfo.relatedPosts.length > 0 && <RelatedPosts list={loadPostInfo.relatedPosts} />}
+        <TOC title={loadPostInfo.title} contents={loadPostInfo.contents} />
+        <ScrollToTop />
+      </Box>
     </MainLayout>
   );
 };

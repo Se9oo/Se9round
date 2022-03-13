@@ -93,6 +93,7 @@ const PostList = () => {
               handlePostClick={handlePostClick}
               handlePostCancel={handlePostCancel}
               handlePostModify={handlePostModify}
+              mode="main"
             />
           );
         })}

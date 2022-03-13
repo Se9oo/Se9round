@@ -6,18 +6,7 @@ import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel, Div
 import { ViewIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { getCountFormat, getDateDiff } from '../../util/common';
 
-const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModify }) => {
-  const postWidth = useBreakpointValue({
-    xxs: '100%',
-    xs: '100%',
-    sm: '100%',
-    md: 'calc(50% - 1rem)',
-    lg: 'calc(50% - 2rem)',
-    xl: 'calc(50% - 2rem)',
-    xxl: 'calc(33% - 2rem)',
-    '2xl': 'calc(33% - 2rem)',
-  });
-
+const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModify, mode }) => {
   const margin = useBreakpointValue({
     xxs: '.5rem 0',
     xs: '.5rem 0',
@@ -115,7 +104,7 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
           <Text mr=".8rem" fontSize=".8rem" color="rgba(0, 0, 0, .5)">
             {getDateDiff(post.reg_dt)}
           </Text>
-          {isAdmin && (
+          {isAdmin && mode === 'main' && (
             <>
               <EditIcon mr=".3rem" color="brown" cursor="pointer" onClick={() => handlePostModify(post.title)} />
               <DeleteIcon color="brown" cursor="pointer" onClick={() => handlePostCancel(post.id)} />

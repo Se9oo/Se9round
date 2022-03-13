@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, useBreakpointValue } from '@chakra-ui/react';
 
 import Header from './Header';
+import Footer from './footer';
 
 const MainLayout = ({ children }) => {
   const margin = useBreakpointValue({
@@ -22,6 +23,7 @@ const MainLayout = ({ children }) => {
       <Box w={['100%', '100%', '100%', '100%', '100%', '90%', '90%']} maxW="1400px" m={margin} p="1rem">
         {children}
       </Box>
+      <Footer />
     </Box>
   );
 };

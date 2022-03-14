@@ -19,7 +19,7 @@ const MainLayout = ({ children }) => {
 
   return (
     // height = (100vh - header - footer - contents padding)
-    <Box w="100%" h="calc(100vh - 3rem - 4rem - 1rem)" position="relative">
+    <Box w="100%" h="calc(100vh - 3rem - 6rem - 1rem)" position="relative">
       <Header />
       <Box
         w={['100%', '100%', '100%', '100%', '100%', '90%', '90%']}

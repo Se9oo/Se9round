@@ -18,9 +18,17 @@ const MainLayout = ({ children }) => {
   });
 
   return (
-    <Box w="100%" position="relative">
+    // height = (100vh - header - footer - contents padding)
+    <Box w="100%" h="calc(100vh - 3rem - 4rem - 1rem)" position="relative">
       <Header />
-      <Box w={['100%', '100%', '100%', '100%', '100%', '90%', '90%']} maxW="1400px" m={margin} p="1rem">
+      <Box
+        w={['100%', '100%', '100%', '100%', '100%', '90%', '90%']}
+        maxW="1400px"
+        h="auto"
+        minH="100%"
+        m={margin}
+        p="1rem"
+      >
         {children}
       </Box>
       <Footer />

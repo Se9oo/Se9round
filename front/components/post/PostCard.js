@@ -80,12 +80,14 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
             {post.tags.map((tag, idx) => (
               <Tag
                 key={`${tag}_${idx}`}
-                m=".1rem .5rem .1rem 0"
+                m="0 .1rem"
                 cursor="pointer"
                 bgColor="brown"
+                borderRadius="0"
                 color="white"
                 fontWeight="600"
                 _hover={{ bg: 'gray.300' }}
+                transition="all .2s ease"
               >
                 <TagLabel>{tag}</TagLabel>
               </Tag>

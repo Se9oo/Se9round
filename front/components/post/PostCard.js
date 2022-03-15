@@ -25,41 +25,33 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
       flexDir="column"
       bg="white"
       m={margin}
-      p="10px"
       boxShadow="sm"
       borderRadius="md"
       _hover={{
         transform: 'translateY(-.5rem)',
-        transition: 'all .2s ease',
         boxShadow: 'lg',
       }}
+      transition="all .3s ease"
     >
-      <Box position="relative" pt="52%" mb="1rem" cursor="pointer" onClick={() => handlePostClick(post.id, post.title)}>
-        {post.thumbnail !== null ? (
-          <Image
-            src={post.thumbnail}
-            alt="thumbnail"
-            position="absolute"
-            w="100%"
-            h="100%"
-            top="0"
-            left="0"
-            objectFit="cover"
-          />
-        ) : (
-          <Image
-            src="/assets/images/empty.png"
-            alt="empty image"
-            position="absolute"
-            w="100%"
-            h="100%"
-            top="0"
-            left="0"
-            objectFit="cover"
-          />
-        )}
+      <Box
+        position="relative"
+        pt="52%"
+        mb=".5rem"
+        cursor="pointer"
+        onClick={() => handlePostClick(post.id, post.title)}
+      >
+        <Image
+          src={post.thumbnail !== null ? post.thumbnail : '/assets/images/empty.png'}
+          alt={post.thumbnail !== null ? 'thumbnail' : 'empty image'}
+          position="absolute"
+          w="100%"
+          h="100%"
+          top="0"
+          left="0"
+          objectFit="cover"
+        />
       </Box>
-      <Box mb=".5rem">
+      <Box mb=".5rem" p="1rem">
         <Heading
           as="h2"
           fontSize="1.3rem"
@@ -90,7 +82,10 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
                 key={`${tag}_${idx}`}
                 m=".1rem .5rem .1rem 0"
                 cursor="pointer"
-                _hover={{ bg: 'rgba(226, 232, 240, .3)' }}
+                bgColor="brown"
+                color="white"
+                fontWeight="600"
+                _hover={{ bg: 'gray.300' }}
               >
                 <TagLabel>{tag}</TagLabel>
               </Tag>
@@ -99,7 +94,7 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
         </Box>
       </Box>
       <Divider mb=".5rem" />
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" p="0 .5rem .5rem .5rem">
         <Flex alignItems="center">
           <Text mr=".8rem" fontSize=".8rem" color="rgba(0, 0, 0, .5)">
             {getDateDiff(post.reg_dt)}

@@ -20,10 +20,8 @@ export const getDateDiff = (regDt) => {
   const regDate = dayjs(regDt);
   const now = dayjs();
 
-  if (now.diff(regDate, 'year') > 0) {
-    return regDate.format('YYYY-MM-DD');
-  } else if (now.diff(regDate, 'month') > 0) {
-    return `${now.diff(regDate, 'month')}달 전`;
+  if (now.diff(regDate, 'month') > 0 || now.diff(regDate, 'day') > 6) {
+    return getDateFormatToKor(regDt);
   } else if (now.diff(regDate, 'day') > 0) {
     return `${now.diff(regDate, 'day')}일 전`;
   } else if (now.diff(regDate, 'h') > 0) {
@@ -33,7 +31,16 @@ export const getDateDiff = (regDt) => {
   } else if (now.diff(regDate, 's') >= 0) {
     return `${now.diff(regDate, 's')}초 전`;
   } else {
-    return regDate.format('YYYY-MM-DD');
+    return getDateFormatToKor(regDt);
+  }
+};
+
+// date format (dt -> kor)
+export const getDateFormatToKor = (regDt) => {
+  if (regDt.length !== 16) {
+    return regDt;
+  } else {
+    return `${regDt.substr(0, 4)}년 ${regDt.substr(5, 2)}월 ${regDt.substr(8, 2)}일`;
   }
 };
 

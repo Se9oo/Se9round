@@ -19,8 +19,8 @@ const TOC = ({ title, contents }) => {
   return (
     <Box
       position="fixed"
-      top="100px"
-      right="50px"
+      top="10%"
+      right="5%"
       borderLeftWidth="3px"
       borderLeftStyle="solid"
       borderLeftColor="brown"

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 
 import { adminLogoutRequestAction } from '../../reducers/user';
@@ -9,6 +9,7 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 
 const HamburgerMenu = () => {
   const dispatch = useDispatch('');
+  const { adminLogoutSuccess } = useSelector((state) => state.user);
 
   // 글쓰기 페이지로 이동
   const handleEditPost = () => {
@@ -19,6 +20,12 @@ const HamburgerMenu = () => {
   const handleLogout = () => {
     dispatch(adminLogoutRequestAction());
   };
+
+  useEffect(() => {
+    if (adminLogoutSuccess) {
+      router.push('/');
+    }
+  }, [adminLogoutSuccess]);
 
   return (
     <Menu>

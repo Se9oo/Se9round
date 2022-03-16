@@ -17,3 +17,14 @@ exports.insertTag = `
     , status = 1
     , cancel_dt = NULL
 `;
+
+exports.selectTagList = `
+  SELECT
+    name
+    , TO_CHAR(reg_dt, 'YYYY-MM-DD HH24:MI') AS reg_dt
+  FROM
+    tag
+  WHERE
+    status = $1
+  ORDER BY reg_dt DESC
+`;

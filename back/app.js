@@ -7,6 +7,7 @@ const path = require('path');
 const postRouter = require('./routes/post');
 const imageRouter = require('./routes/image');
 const userRouter = require('./routes/user');
+const tagRouter = require('./routes/tag');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use(postRouter);
 app.use(imageRouter);
 app.use(userRouter);
+app.use(tagRouter);
 
 app.use('/', express.static(path.join(__dirname, 'uploads')));
 

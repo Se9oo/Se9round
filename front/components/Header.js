@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import router from 'next/router';
 
-import { Flex, Image, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Box, Image, useBreakpointValue } from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons';
 
 import useScroll from '../hooks/useScroll';
 import HamburgerMenu from './menu';
@@ -13,7 +14,7 @@ const Header = () => {
     xs: '1.3rem',
   });
 
-  const { isAdmin, adminLogoutSuccess } = useSelector((state) => state.user);
+  const { isAdmin } = useSelector((state) => state.user);
   const { scrollY, isShowHeader } = useScroll();
 
   // 로고 클릭시 홈으로 이동
@@ -21,11 +22,10 @@ const Header = () => {
     router.push('/');
   };
 
-  useEffect(() => {
-    if (adminLogoutSuccess) {
-      router.push('/');
-    }
-  }, [adminLogoutSuccess]);
+  // 검색 페이지로 이동
+  const handleSearch = () => {
+    router.push('/search');
+  };
 
   return (
     <header>
@@ -50,7 +50,18 @@ const Header = () => {
           onClick={handleLogo}
           cursor="pointer"
         />
-        {isAdmin && <HamburgerMenu />}
+        <Box>
+          <SearchIcon
+            color="brown"
+            fontSize="1.8rem"
+            cursor="pointer"
+            m="0 .5rem"
+            _active={{ color: 'gray.200' }}
+            transition="all .2s ease"
+            onClick={handleSearch}
+          />
+          {isAdmin && <HamburgerMenu />}
+        </Box>
       </Flex>
     </header>
   );

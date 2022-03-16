@@ -37,7 +37,7 @@ export const getDateDiff = (regDt) => {
 
 // date format (dt -> kor)
 export const getDateFormatToKor = (regDt) => {
-  if (regDt.length !== 16) {
+  if (!regDt || regDt.length !== 16) {
     return regDt;
   } else {
     return `${regDt.substr(0, 4)}년 ${regDt.substr(5, 2)}월 ${regDt.substr(8, 2)}일`;
@@ -73,15 +73,19 @@ export const getMarkdownHeader = (title, contents) => {
     return { href, text: str, count };
   }
 
-  // 제목 추출
-  headers.push(getTocContents(title, true));
+  if (!title || !contents) {
+    return headers;
+  } else {
+    // 제목 추출
+    headers.push(getTocContents(title, true));
 
-  // contents 추출
-  contents.split('\n').map((line) => {
-    if (line[0] === '#') {
-      headers.push(getTocContents(line, false));
-    }
-  });
+    // contents 추출
+    contents.split('\n').map((line) => {
+      if (line[0] === '#') {
+        headers.push(getTocContents(line, false));
+      }
+    });
+  }
 
   return headers;
 };

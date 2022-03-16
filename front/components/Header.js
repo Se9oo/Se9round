@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import router from 'next/router';
 
-import { Flex, Box, Button, Image, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Image, useBreakpointValue } from '@chakra-ui/react';
 
-import { adminLogoutRequestAction } from '../reducers/user';
 import useScroll from '../hooks/useScroll';
+import HamburgerMenu from './menu';
 
 const Header = () => {
   const logoSize = useBreakpointValue({
@@ -13,23 +13,12 @@ const Header = () => {
     xs: '1.3rem',
   });
 
-  const dispatch = useDispatch('');
   const { isAdmin, adminLogoutSuccess } = useSelector((state) => state.user);
   const { scrollY, isShowHeader } = useScroll();
 
   // 로고 클릭시 홈으로 이동
   const handleLogo = () => {
     router.push('/');
-  };
-
-  // 글쓰기 페이지로 이동
-  const handleEditPost = () => {
-    router.push('/editPost');
-  };
-
-  // 로그아웃
-  const handleLogout = () => {
-    dispatch(adminLogoutRequestAction());
   };
 
   useEffect(() => {
@@ -49,7 +38,6 @@ const Header = () => {
         top="0"
         left="0"
         bg="white"
-        boxShadow="sm"
         zIndex="9999"
         mt={isShowHeader ? 0 : `${-1 * scrollY}px`}
         transition="all .2s ease"
@@ -62,16 +50,7 @@ const Header = () => {
           onClick={handleLogo}
           cursor="pointer"
         />
-        {isAdmin && (
-          <Box>
-            <Button size="sm" m="0 .3rem 0 0" onClick={handleEditPost}>
-              글쓰기
-            </Button>
-            <Button size="sm" m="0 .3rem 0 0" bg="gray.400" onClick={handleLogout}>
-              로그아웃
-            </Button>
-          </Box>
-        )}
+        {isAdmin && <HamburgerMenu />}
       </Flex>
     </header>
   );

@@ -105,3 +105,38 @@ exports.modifyPost = `
   WHERE
     title = $1
 `;
+
+// 게시글 태그로 관련 게시글 찾기
+exports.selectRelatedPostsByTags = (tags, postId, limitCount, postStatus) => {
+  let relatedPostsQuery = `
+  SELECT
+    id
+  , title
+  , contents
+  , TO_CHAR(reg_dt, 'YYYY-MM-DD HH24:MI') AS reg_dt
+  , cancel_dt
+  , status
+  , tags
+  , thumbnail
+  , sub_title
+  , click_count
+  FROM
+    post
+  WHERE
+    id <> ${postId} 
+    AND status = ${postStatus}
+    AND (
+  `;
+
+  tags.map((tag, idx) => {
+    if (idx === 0) {
+      relatedPostsQuery += `'${tag}' = ANY(tags)`;
+    } else {
+      relatedPostsQuery += ` OR '${tag}' = ANY(tags)`;
+    }
+  });
+
+  relatedPostsQuery += `) ORDER BY reg_dt DESC LIMIT ${limitCount}`;
+
+  return relatedPostsQuery;
+};

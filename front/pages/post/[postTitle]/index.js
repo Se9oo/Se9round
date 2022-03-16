@@ -22,21 +22,35 @@ const PostView = () => {
     xs: '100%',
     sm: '100%',
     md: '100%',
-    lg: '80%',
-    xl: '75%',
-    xxl: '75%',
+    lg: '100%',
+    xl: '65%',
+    xxl: '65%',
     '2xl': '65%',
   });
 
+  const display = useBreakpointValue({
+    xxs: 'none',
+    xs: 'none',
+    sm: 'none',
+    md: 'none',
+    lg: 'none',
+    xl: 'none',
+    xxl: 'block',
+    '2xl': 'block',
+  });
+
   const { loadPostInfo } = useSelector((state) => state.post);
+  const { title, contents, tags, reg_dt, relatedPosts } = loadPostInfo;
 
   return (
     <MainLayout>
       <Box w={width} m="0 auto">
-        <PostViewer title={loadPostInfo.title} contents={loadPostInfo.contents} tags={loadPostInfo.tags} />
-        {loadPostInfo && loadPostInfo.relatedPosts.length > 0 && <RelatedPosts list={loadPostInfo.relatedPosts} />}
-        <TOC title={loadPostInfo.title} contents={loadPostInfo.contents} />
-        <ScrollToTop />
+        <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} />
+        {relatedPosts && relatedPosts.length > 0 && <RelatedPosts list={relatedPosts} />}
+        <Box display={display}>
+          <TOC title={title} contents={contents} />
+          <ScrollToTop />
+        </Box>
       </Box>
     </MainLayout>
   );

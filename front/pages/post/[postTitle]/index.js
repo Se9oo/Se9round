@@ -12,9 +12,9 @@ import ScrollToTop from '../../../components/ScrollToTop';
 // store
 import wrapper from '../../../store/configureStore';
 import axios from 'axios';
-import RelatedPosts from '../../../components/post/RelatedPosts';
+import PostList from '../../../components/post/PostList';
 
-import { Box, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Heading, useBreakpointValue } from '@chakra-ui/react';
 
 const PostView = () => {
   const width = useBreakpointValue({
@@ -46,7 +46,22 @@ const PostView = () => {
     <MainLayout>
       <Box w={width} m="0 auto">
         <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} />
-        {relatedPosts && relatedPosts.length > 0 && <RelatedPosts list={relatedPosts} />}
+        {relatedPosts && relatedPosts.length > 0 && (
+          <>
+            <Heading
+              as="h3"
+              fontSize="1.5rem"
+              borderLeftColor="brown"
+              borderLeftWidth="3px"
+              borderLeftStyle="solid"
+              mb="1rem"
+              p="0 .5rem"
+            >
+              관련 포스트
+            </Heading>
+            <PostList postList={relatedPosts} />
+          </>
+        )}
         <Box display={display}>
           <TOC title={title} contents={contents} />
           <ScrollToTop />

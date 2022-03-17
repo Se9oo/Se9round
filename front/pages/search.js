@@ -5,7 +5,9 @@ import { END } from 'redux-saga';
 import MainLayout from '../components/MainLayout';
 import SearchBox from '../components/search';
 import TagList from '../components/tag/TagList';
-import RelatedPosts from '../components/post/RelatedPosts';
+import PostList from '../components/post/PostList';
+
+import { Heading } from '@chakra-ui/react';
 
 import { checkIsAdminRequestAction } from '../reducers/user';
 import { searchPostsRequestAction } from '../reducers/post';
@@ -22,7 +24,20 @@ const Search = ({ query }) => {
     <MainLayout>
       <SearchBox query={query} />
       <TagList tagList={tagList} />
-      <RelatedPosts list={searchPostList} />
+      {query !== null && (
+        <Heading
+          as="h3"
+          fontSize="1.5rem"
+          borderLeftColor="brown"
+          borderLeftWidth="3px"
+          borderLeftStyle="solid"
+          mb="1rem"
+          p="0 .5rem"
+        >
+          {`"${query}" 검색 결과`}
+        </Heading>
+      )}
+      <PostList postList={searchPostList} />
     </MainLayout>
   );
 };

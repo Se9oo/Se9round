@@ -10,7 +10,7 @@ import Alert from '../alert';
 import useAlert from '../../hooks/useAlert';
 import { addClickCountRequestAction, cancelPostRequestAction } from '../../reducers/post';
 
-const PostList = () => {
+const PostList = ({ postList }) => {
   const gridTemplate = useBreakpointValue({
     xxs: 'repeat(1, 1fr)',
     xs: 'repeat(1, 1fr)',
@@ -20,7 +20,7 @@ const PostList = () => {
   });
 
   const dispatch = useDispatch('');
-  const { postList, cancelPostSuccess, cancelPostFailure } = useSelector((state) => state.post);
+  const { cancelPostSuccess, cancelPostFailure } = useSelector((state) => state.post);
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
   // 게시글 상세 페이지로 이동

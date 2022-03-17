@@ -13,8 +13,9 @@ import { getImgUrlByRegExp } from '../../util/common';
 import { Flex, Button, Input, Box, Text, useBreakpointValue, Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 
 import { modifyPostRequestAction, savePostRequestAction, tempSavePostRequestAction } from '../../reducers/post';
+import Loading from '../spinner/Loading';
 
-const PostEditor = dynamic(() => import('./Editor'), { ssr: false });
+const PostEditor = dynamic(() => import('./Editor'), { loading: () => <Loading />, ssr: false });
 
 const ForwardedPostEditor = forwardRef((props, ref) => <PostEditor {...props} forwardRef={ref} />);
 

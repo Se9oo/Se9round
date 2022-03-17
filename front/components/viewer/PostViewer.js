@@ -2,8 +2,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { Box, Flex, Heading, Tag, TagLabel, Text } from '@chakra-ui/react';
 import { getDateFormatToKor } from '../../util/common';
+import Loading from '../spinner/Loading';
 
-const DynamicPostViewer = dynamic(() => import('./Viewer'), { ssr: false });
+const DynamicPostViewer = dynamic(() => import('./Viewer'), { loading: () => <Loading />, ssr: false });
 
 const PostViewer = ({ title, contents, tags, reg_dt }) => {
   return (

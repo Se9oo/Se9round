@@ -1,21 +1,11 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
-import { loadTagsRequestAction } from '../../reducers/tag';
-
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import TagItem from './TagItem';
 
-const TagList = () => {
-  const dispatch = useDispatch('');
-  const { tagList } = useSelector((state) => state.tag);
-
-  useEffect(() => {
-    dispatch(loadTagsRequestAction());
-  }, []);
-
+const TagList = ({ tagList }) => {
   return (
-    <Flex flexWrap="wrap">
+    <Flex flexWrap="wrap" mb="3rem">
       {tagList.map((tag, idx) => {
         return <TagItem key={`${tag.name}_${idx}`} tag={tag} />;
       })}

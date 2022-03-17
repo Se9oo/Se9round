@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { verifyTokens, createAccessToken, createRefreshToken } = require('../middlewares/auth');
-const { requestBodyCheck } = require('../middlewares/paramCheck');
+const { requestValueCheck } = require('../middlewares/paramCheck');
 
 const dotenv = require('dotenv');
 dotenv.config();
 
 // 관리자 로그인
-router.post('/api/admin-login', requestBodyCheck, (req, res) => {
+router.post('/api/admin-login', requestValueCheck, (req, res) => {
   const { key } = req.body.data;
 
   if (key === process.env.LOGIN_KEY) {

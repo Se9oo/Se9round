@@ -140,3 +140,29 @@ exports.selectRelatedPostsByTags = (tags, postId, limitCount, postStatus) => {
 
   return relatedPostsQuery;
 };
+
+// 게시글 찾기
+exports.selectSearchPosts = `
+  SELECT
+    id
+    , title
+    , contents
+    , TO_CHAR(reg_dt, 'YYYY-MM-DD HH24:MI') AS reg_dt
+    , cancel_dt
+    , status
+    , tags
+    , thumbnail
+    , sub_title
+    , click_count
+  FROM
+    post
+  WHERE
+    status = $1
+    AND (
+      title LIKE $2
+      OR sub_title LIKE $2
+      OR contents LIKE $2
+      OR $3 = ANY(tags)
+    )
+  ORDER BY reg_dt DESC
+`;

@@ -23,6 +23,9 @@ import {
   MODIFY_POST_REQUEST,
   MODIFY_POST_SUCCESS,
   MODIFY_POST_FAILURE,
+  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_SUCCESS,
+  SEARCH_POSTS_FAILURE,
 } from '../reducers/post';
 
 // 게시글 목록 조회
@@ -192,6 +195,30 @@ function* watchModifyPost() {
   yield takeLatest(MODIFY_POST_REQUEST, modifyPost);
 }
 
+// 게시글 찾기
+function searchPostsAPI(data) {
+  return axios.get(`/api/posts/search?q=${encodeURI(data.data)}`);
+}
+
+function* searchPosts(data) {
+  try {
+    const result = yield call(searchPostsAPI, data);
+    yield put({
+      type: SEARCH_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: SEARCH_POSTS_FAILURE,
+      err: err.response.data,
+    });
+  }
+}
+
+function* watchSearchPosts() {
+  yield takeLatest(SEARCH_POSTS_REQUEST, searchPosts);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -201,5 +228,6 @@ export default function* postSaga() {
     fork(watchLoadPost),
     fork(watchCancelPost),
     fork(watchModifyPost),
+    fork(watchSearchPosts),
   ]);
 }

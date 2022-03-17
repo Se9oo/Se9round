@@ -1,5 +1,6 @@
 export const initialState = {
   postList: [],
+  searchPostList: [],
   loadPostInfo: {},
   loadPostsLoading: false,
   loadPostsSuccess: false,
@@ -22,6 +23,9 @@ export const initialState = {
   modifyPostLoading: false,
   modifyPostSuccess: false,
   modifyPostFailure: { err: false, message: null },
+  searchPostsLoading: false,
+  searchPostsSuccess: false,
+  searchPostsFailure: { err: false, message: null },
 };
 
 // 게시글 목록 조회
@@ -103,6 +107,18 @@ export const MODIFY_POST_FAILURE = 'MODIFY_POST_FAILURE';
 export const modifyPostRequestAction = (data) => {
   return {
     type: MODIFY_POST_REQUEST,
+    data,
+  };
+};
+
+// 게시글 찾기
+export const SEARCH_POSTS_REQUEST = 'SEARCH_POSTS_REQUEST';
+export const SEARCH_POSTS_SUCCESS = 'SEARCH_POSTS_SUCCESS';
+export const SEARCH_POSTS_FAILURE = 'SEARCH_POSTS_FAILURE';
+
+export const searchPostsRequestAction = (data) => {
+  return {
+    type: SEARCH_POSTS_REQUEST,
     data,
   };
 };
@@ -268,6 +284,29 @@ const reducer = (state = initialState, action) => {
         modifyPostLoading: false,
         modifyPostSuccess: false,
         modifyPostFailure: { err: true, message: null },
+      };
+    // 게시글 찾기
+    case SEARCH_POSTS_REQUEST:
+      return {
+        ...state,
+        searchPostsLoading: true,
+        searchPostsSuccess: false,
+        searchPostsFailure: { err: false, message: null },
+      };
+    case SEARCH_POSTS_SUCCESS:
+      return {
+        ...state,
+        searchPostList: [...action.data],
+        searchPostsLoading: false,
+        searchPostsSuccess: true,
+        searchPostsFailure: { err: false, message: null },
+      };
+    case SEARCH_POSTS_FAILURE:
+      return {
+        ...state,
+        searchPostsLoading: false,
+        searchPostsSuccess: false,
+        searchPostsFailure: { err: false, message: action.err },
       };
     default:
       return state;

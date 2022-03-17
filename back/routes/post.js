@@ -3,7 +3,7 @@ const express = require('express');
 const pool = require('../config/db');
 // middlewares
 const { verifyTokens } = require('../middlewares/auth');
-const { requestBodyCheck } = require('../middlewares/paramCheck');
+const { requestValueCheck } = require('../middlewares/paramCheck');
 // query
 const {
   selectPostLists,
@@ -14,6 +14,7 @@ const {
   cancelPost,
   modifyPost,
   selectRelatedPostsByTags,
+  selectSearchPosts,
 } = require('../query/post');
 const { insertTag } = require('../query/tag');
 // router
@@ -40,7 +41,7 @@ router.get('/api/posts', async (req, res) => {
 });
 
 // 게시글 등록
-router.post('/api/post', verifyTokens, requestBodyCheck, async (req, res) => {
+router.post('/api/post', verifyTokens, requestValueCheck, async (req, res) => {
   const client = await pool.connect();
 
   try {
@@ -75,7 +76,7 @@ router.post('/api/post', verifyTokens, requestBodyCheck, async (req, res) => {
 });
 
 // 게시글 임시 저장
-router.post('/api/post/temp', verifyTokens, requestBodyCheck, async (req, res) => {
+router.post('/api/post/temp', verifyTokens, requestValueCheck, async (req, res) => {
   const client = await pool.connect();
 
   try {
@@ -102,7 +103,7 @@ router.post('/api/post/temp', verifyTokens, requestBodyCheck, async (req, res) =
 });
 
 // 게시글 조회수 add
-router.post('/api/post/count', requestBodyCheck, async (req, res) => {
+router.post('/api/post/count', requestValueCheck, async (req, res) => {
   const client = await pool.connect();
 
   try {
@@ -119,7 +120,7 @@ router.post('/api/post/count', requestBodyCheck, async (req, res) => {
 });
 
 // 특정 게시글 조회
-router.get('/api/post', requestBodyCheck, async (req, res) => {
+router.get('/api/post', requestValueCheck, async (req, res) => {
   const client = await pool.connect();
 
   try {
@@ -160,7 +161,7 @@ router.get('/api/post', requestBodyCheck, async (req, res) => {
 });
 
 // 게시글 취소
-router.post('/api/post/cancel', verifyTokens, requestBodyCheck, async (req, res) => {
+router.post('/api/post/cancel', verifyTokens, requestValueCheck, async (req, res) => {
   const client = await pool.connect();
 
   try {
@@ -177,7 +178,7 @@ router.post('/api/post/cancel', verifyTokens, requestBodyCheck, async (req, res)
 });
 
 // 게시글 수정
-router.post('/api/post/modify', verifyTokens, requestBodyCheck, async (req, res) => {
+router.post('/api/post/modify', verifyTokens, requestValueCheck, async (req, res) => {
   const client = await pool.connect();
 
   try {
@@ -193,6 +194,25 @@ router.post('/api/post/modify', verifyTokens, requestBodyCheck, async (req, res)
     await client.query(modifyPost, [title, tagsArray, contents, thumbNail, subTitle, POST_OK_STATUS]);
 
     res.status(200).json('success');
+  } catch (err) {
+    res.status(500).json(err);
+  } finally {
+    client.release();
+  }
+});
+
+// 게시글 찾기
+router.get('/api/posts/search', requestValueCheck, async (req, res) => {
+  const client = await pool.connect();
+
+  try {
+    const { q } = req.query;
+    const decodedQuery = decodeURI(q);
+    const decodedLikeParam = `%${decodedQuery}%`;
+
+    const result = await client.query(selectSearchPosts, [POST_OK_STATUS, decodedLikeParam, decodedQuery]);
+
+    res.status(200).json(result.rows);
   } catch (err) {
     res.status(500).json(err);
   } finally {

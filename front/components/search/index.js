@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import router from 'next/router';
 
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import { searchPostsRequestAction } from '../../reducers/post';
 
 const SearchBox = ({ query }) => {
   // focus 설정
@@ -18,8 +16,6 @@ const SearchBox = ({ query }) => {
     }
   }, []);
 
-  //dispatch
-  const dispatch = useDispatch('');
   // search input state
   const [search, setSearch] = useState('');
   const handleSearch = (e) => {
@@ -29,8 +25,6 @@ const SearchBox = ({ query }) => {
   // 검색어 search event
   const handleSearchWord = (e) => {
     if (e.key === 'Enter') {
-      //dispatch(searchPostsRequestAction(search));
-
       router.push({
         pathname: '/search',
         query: { q: search },

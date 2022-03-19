@@ -1,3 +1,4 @@
+// 태그 등록
 exports.insertTag = `
   INSERT INTO tag
   (
@@ -18,6 +19,7 @@ exports.insertTag = `
     , cancel_dt = NULL
 `;
 
+// 태그 목록 조회
 exports.selectTagList = `
   SELECT
     name
@@ -27,4 +29,13 @@ exports.selectTagList = `
   WHERE
     status = $1
   ORDER BY reg_dt DESC
+`;
+
+// 태그 취소
+exports.cancelTag = `
+  UPDATE tag SET
+    status = 0
+    , cancel_dt = NOW()
+  WHERE
+    name = $1
 `;

@@ -166,3 +166,25 @@ exports.selectSearchPosts = `
     )
   ORDER BY reg_dt DESC
 `;
+
+// 게시글 태그 가져오기
+exports.selectTagsByPostId = `
+  SELECT
+    tags
+  FROM
+    post
+  WHERE
+    id = $1
+`;
+
+// 해당 태그가 존재하는 게시글 개수 조회
+exports.selectPostsCountWithTag = `
+  SELECT
+    count(*) AS cnt
+  FROM
+    post
+  WHERE
+    status = $1
+    AND $2 = ANY(tags)
+    AND id <> $3
+`;

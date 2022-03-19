@@ -15,8 +15,10 @@ const {
   modifyPost,
   selectRelatedPostsByTags,
   selectSearchPosts,
+  selectTagsByPostId,
+  selectPostsCountWithTag,
 } = require('../query/post');
-const { insertTag } = require('../query/tag');
+const { insertTag, cancelTag } = require('../query/tag');
 // router
 const router = express.Router();
 
@@ -167,10 +169,30 @@ router.post('/api/post/cancel', verifyTokens, requestValueCheck, async (req, res
   try {
     const { postId } = req.body.data;
 
+    // 취소할 게시글 태그 조회
+    const cancelPostTags = await client.query(selectTagsByPostId, [postId]);
+
+    // transaction
+    await client.query('BEGIN');
+
+    // 태그 존재할 경우
+    if (cancelPostTags.rowCount > 0) {
+      for (const tag of cancelPostTags.rows[0].tags) {
+        const postCount = await client.query(selectPostsCountWithTag, [POST_OK_STATUS, tag, postId]);
+
+        // 게시글이 없다면 태그 취소처리
+        if (parseInt(postCount.rows[0].cnt) === 0) {
+          await client.query(cancelTag, [tag]);
+        }
+      }
+    }
+
     await client.query(cancelPost, [postId, POST_CANCEL_STATUS]);
+    await client.query('COMMIT');
 
     res.status(200).json({ postId });
   } catch (err) {
+    await client.query('ROLLBACK');
     res.status(500).json(err);
   } finally {
     client.release();

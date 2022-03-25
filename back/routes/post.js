@@ -242,4 +242,19 @@ router.get('/api/posts/search', requestValueCheck, async (req, res) => {
   }
 });
 
+// 임시 게시글 목록 조회
+router.get('/api/temp/posts', async (req, res) => {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query(selectPostLists, [POST_TEMP_STATUS]);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    res.status(500).json(err);
+  } finally {
+    client.release();
+  }
+});
+
 module.exports = router;

@@ -1,6 +1,7 @@
 export const initialState = {
   postList: [],
   searchPostList: [],
+  tempPostList: [],
   loadPostInfo: {},
   loadPostsLoading: false,
   loadPostsSuccess: false,
@@ -26,6 +27,9 @@ export const initialState = {
   searchPostsLoading: false,
   searchPostsSuccess: false,
   searchPostsFailure: { err: false, message: null },
+  loadTempPostsLoading: false,
+  loadTempPostsSuccess: false,
+  loadTempPostsFailure: { err: false, message: null },
 };
 
 // 게시글 목록 조회
@@ -120,6 +124,17 @@ export const searchPostsRequestAction = (data) => {
   return {
     type: SEARCH_POSTS_REQUEST,
     data,
+  };
+};
+
+// 임시 글 목록 불러오기
+export const LOAD_TEMP_POSTS_REQUEST = 'LOAD_TEMP_POSTS_REQUEST';
+export const LOAD_TEMP_POSTS_SUCCESS = 'LOAD_TEMP_POSTS_SUCCESS';
+export const LOAD_TEMP_POSTS_FAILURE = 'LOAD_TEMP_POSTS_FAILURE';
+
+export const loadTempPostsRequestAction = () => {
+  return {
+    type: LOAD_TEMP_POSTS_REQUEST,
   };
 };
 
@@ -307,6 +322,21 @@ const reducer = (state = initialState, action) => {
         searchPostsLoading: false,
         searchPostsSuccess: false,
         searchPostsFailure: { err: false, message: action.err },
+      };
+    case LOAD_TEMP_POSTS_REQUEST:
+      return {
+        ...state,
+        loadTempPostsLoading: true,
+        loadTempPostsSuccess: false,
+        loadTempPostsFailure: { err: false, message: action.err },
+      };
+    case LOAD_TEMP_POSTS_SUCCESS:
+      return {
+        ...state,
+        tempPostList: [...action.data],
+        loadTempPostsLoading: false,
+        loadTempPostsSuccess: true,
+        loadTempPostsFailure: { err: false, message: action.err },
       };
     default:
       return state;

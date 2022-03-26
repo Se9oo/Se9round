@@ -16,6 +16,16 @@ exports.selectPostLists = `
   WHERE
     status = $1
   ORDER BY id DESC
+  LIMIT $2 OFFSET $3
+`;
+
+exports.selectPostListCount = `
+  SELECT
+    count(*) AS cnt
+  FROM
+    post
+  WHERE
+    status = $1
 `;
 
 exports.selectIsExistPost = `

@@ -3,9 +3,10 @@ export const initialState = {
   searchPostList: [],
   tempPostList: [],
   loadPostInfo: {},
+  pagination: {},
   loadPostsLoading: false,
   loadPostsSuccess: false,
-  loadPostsFailure: false,
+  loadPostsFailure: { err: false, message: null },
   savePostLoading: false,
   savePostSuccess: false,
   savePostFailure: { err: false, message: null },
@@ -37,9 +38,10 @@ export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 
-export const loadPostsRequestAction = () => {
+export const loadPostsRequestAction = (data) => {
   return {
     type: LOAD_POSTS_REQUEST,
+    data,
   };
 };
 
@@ -146,22 +148,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadPostsLoading: true,
         loadPostsSuccess: false,
-        loadPostsFailure: false,
+        loadPostsFailure: { err: false, message: null },
       };
     case LOAD_POSTS_SUCCESS:
       return {
         ...state,
         loadPostsLoading: false,
         loadPostsSuccess: true,
-        loadPostsFailure: false,
-        postList: [...action.data],
+        loadPostsFailure: { err: false, message: null },
+        postList: [...action.data.postList],
+        pagination: { ...action.data.pageInfo },
       };
     case LOAD_POSTS_FAILURE:
       return {
         ...state,
         loadPostsLoading: false,
         loadPostsSuccess: false,
-        loadPostsFailure: true,
+        loadPostsFailure: { err: true, message: action.err },
       };
     // 게시글 저장
     case SAVE_POST_REQUEST:
@@ -309,6 +312,7 @@ const reducer = (state = initialState, action) => {
         searchPostsFailure: { err: false, message: null },
       };
     case SEARCH_POSTS_SUCCESS:
+      console.log(action.data);
       return {
         ...state,
         searchPostList: [...action.data],

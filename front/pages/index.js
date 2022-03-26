@@ -1,24 +1,14 @@
 import React, { useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { loadPostsRequestAction } from '../reducers/post';
+import router from 'next/router';
 
 import MainLayout from '../components/MainLayout';
-import PostList from '../components/post/PostList';
 
 const Se9round = () => {
-  const dispatch = useDispatch('');
-  const { postList } = useSelector((state) => state.post);
-
   useEffect(() => {
-    dispatch(loadPostsRequestAction());
+    router.push('/home');
   }, []);
 
-  return (
-    <MainLayout>
-      <PostList postList={postList} />
-    </MainLayout>
-  );
+  return <MainLayout></MainLayout>;
 };
 
 export default Se9round;

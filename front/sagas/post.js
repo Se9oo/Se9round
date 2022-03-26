@@ -32,13 +32,13 @@ import {
 } from '../reducers/post';
 
 // 게시글 목록 조회
-function loadPostsAPI() {
-  return axios.get('/api/posts');
+function loadPostsAPI(data) {
+  return axios.get(`/api/posts/${data.data.page}`);
 }
 
-function* loadPosts() {
+function* loadPosts(data) {
   try {
-    const result = yield call(loadPostsAPI);
+    const result = yield call(loadPostsAPI, data);
 
     yield put({
       type: LOAD_POSTS_SUCCESS,

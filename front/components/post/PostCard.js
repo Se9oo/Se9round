@@ -1,10 +1,11 @@
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Flex, Box, Heading, Text, Image, Tag, TagLabel, Divider } from '@chakra-ui/react';
-
+import { Flex, Box, Heading, Text, Image, Divider } from '@chakra-ui/react';
 import { ViewIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+
 import { getCountFormat, getDateDiff } from '../../util/common';
+import TagList from '../tag/TagList';
 
 const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModify, mode }) => {
   const { isAdmin } = useSelector((state) => state.user);
@@ -66,21 +67,7 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
         </Text>
         <Box position="relative" mb=".5rem" pt="1.5rem">
           <Box>
-            {post.tags.map((tag, idx) => (
-              <Tag
-                key={`${tag}_${idx}`}
-                m="0 .1rem"
-                cursor="pointer"
-                bgColor="brown"
-                borderRadius="0"
-                color="white"
-                fontWeight="600"
-                _hover={{ bg: 'gray.300' }}
-                transition="all .2s ease"
-              >
-                <TagLabel>{tag}</TagLabel>
-              </Tag>
-            ))}
+            <TagList tagList={post.tags} />
           </Box>
         </Box>
       </Box>

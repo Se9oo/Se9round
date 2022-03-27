@@ -16,7 +16,9 @@ router.get('/api/tags', async (req, res) => {
   try {
     const result = await client.query(selectTagList, [TAG_OK_STATUS]);
 
-    res.status(200).json(result.rows);
+    const tags = result.rows.map((tag) => tag.name);
+
+    res.status(200).json(tags);
   } catch (err) {
     res.status(500).json(error);
   } finally {

@@ -23,7 +23,7 @@ const Search = ({ query }) => {
   return (
     <MainLayout>
       <SearchBox query={query} />
-      <TagList tagList={tagList} />
+      <TagList tagList={tagList} mode="search" />
       {query !== null && (
         <Heading
           as="h3"

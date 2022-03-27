@@ -4,7 +4,7 @@ import router from 'next/router';
 import { Flex } from '@chakra-ui/react';
 import TagItem from './TagItem';
 
-const TagList = ({ tagList }) => {
+const TagList = ({ tagList, mode }) => {
   const handleSearchTag = useCallback((search) => {
     router.push({
       pathname: '/search',
@@ -15,7 +15,7 @@ const TagList = ({ tagList }) => {
   return (
     <Flex flexWrap="wrap" mb="2rem">
       {tagList.map((tag, idx) => {
-        return <TagItem key={`${tag.name}_${idx}`} tag={tag} handleSearchTag={handleSearchTag} />;
+        return <TagItem key={`${tag}_${idx}`} tag={tag} handleSearchTag={handleSearchTag} mode={mode} />;
       })}
     </Flex>
   );

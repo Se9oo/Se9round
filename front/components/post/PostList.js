@@ -14,9 +14,17 @@ const PostList = ({ postList }) => {
   const gridTemplate = useBreakpointValue({
     xxs: 'repeat(1, 1fr)',
     xs: 'repeat(1, 1fr)',
-    sm: 'repeat(1, 1fr)',
-    md: 'repeat(2, 1fr)',
+    sm: 'repeat(2, 1fr)',
+    md: 'repeat(3, 1fr)',
     lg: 'repeat(3, 1fr)',
+  });
+
+  const gridColumnGap = useBreakpointValue({
+    xxs: '0',
+    xs: '0',
+    sm: '1rem',
+    md: '1rem',
+    lg: '1rem',
   });
 
   const dispatch = useDispatch('');
@@ -84,7 +92,7 @@ const PostList = ({ postList }) => {
 
   return (
     <>
-      <Grid gridTemplateColumns={gridTemplate}>
+      <Grid gridTemplateColumns={gridTemplate} gridColumnGap={gridColumnGap}>
         {postList.map((post) => {
           return (
             <PostCard

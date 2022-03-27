@@ -1,30 +1,19 @@
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Flex, Box, Heading, Text, Image, useBreakpointValue, Tag, TagLabel, Divider } from '@chakra-ui/react';
+import { Flex, Box, Heading, Text, Image, Tag, TagLabel, Divider } from '@chakra-ui/react';
 
 import { ViewIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { getCountFormat, getDateDiff } from '../../util/common';
 
 const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModify, mode }) => {
-  const margin = useBreakpointValue({
-    xxs: '.5rem 0',
-    xs: '.5rem 0',
-    sm: '.5rem 0',
-    md: '.5rem',
-    lg: '.5rem',
-    xl: '.5rem',
-    xxl: '.5rem',
-    '2xl': '.5rem',
-  });
-
   const { isAdmin } = useSelector((state) => state.user);
 
   return (
     <Flex
       flexDir="column"
       bg="white"
-      m={margin}
+      m=".5rem 0"
       boxShadow="sm"
       borderRadius="md"
       _hover={{

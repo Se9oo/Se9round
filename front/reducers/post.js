@@ -2,6 +2,7 @@ export const initialState = {
   postList: [],
   searchPostList: [],
   tempPostList: [],
+  cancelPostList: [],
   loadPostInfo: {},
   pagination: {},
   loadPostsLoading: false,
@@ -28,9 +29,9 @@ export const initialState = {
   searchPostsLoading: false,
   searchPostsSuccess: false,
   searchPostsFailure: { err: false, message: null },
-  loadTempPostsLoading: false,
-  loadTempPostsSuccess: false,
-  loadTempPostsFailure: { err: false, message: null },
+  loadManagePostsLoading: false,
+  loadManagePostsSuccess: false,
+  loadManagePostsFailure: { err: false, message: null },
 };
 
 // 게시글 목록 조회
@@ -130,13 +131,13 @@ export const searchPostsRequestAction = (data) => {
 };
 
 // 임시 글 목록 불러오기
-export const LOAD_TEMP_POSTS_REQUEST = 'LOAD_TEMP_POSTS_REQUEST';
-export const LOAD_TEMP_POSTS_SUCCESS = 'LOAD_TEMP_POSTS_SUCCESS';
-export const LOAD_TEMP_POSTS_FAILURE = 'LOAD_TEMP_POSTS_FAILURE';
+export const LOAD_MANAGE_POSTS_REQUEST = 'LOAD_MANAGE_POSTS_REQUEST';
+export const LOAD_MANAGE_POSTS_SUCCESS = 'LOAD_MANAGE_POSTS_SUCCESS';
+export const LOAD_MANAGE_POSTS_FAILURE = 'LOAD_MANAGE_POSTS_FAILURE';
 
-export const loadTempPostsRequestAction = () => {
+export const loadManagePostsRequestAction = () => {
   return {
-    type: LOAD_TEMP_POSTS_REQUEST,
+    type: LOAD_MANAGE_POSTS_REQUEST,
   };
 };
 
@@ -327,20 +328,28 @@ const reducer = (state = initialState, action) => {
         searchPostsSuccess: false,
         searchPostsFailure: { err: false, message: action.err },
       };
-    case LOAD_TEMP_POSTS_REQUEST:
+    case LOAD_MANAGE_POSTS_REQUEST:
       return {
         ...state,
-        loadTempPostsLoading: true,
-        loadTempPostsSuccess: false,
-        loadTempPostsFailure: { err: false, message: action.err },
+        loadManagePostsLoading: true,
+        loadManagePostsSuccess: false,
+        loadManagePostsFailure: { err: false, message: null },
       };
-    case LOAD_TEMP_POSTS_SUCCESS:
+    case LOAD_MANAGE_POSTS_SUCCESS:
       return {
         ...state,
-        tempPostList: [...action.data],
-        loadTempPostsLoading: false,
-        loadTempPostsSuccess: true,
-        loadTempPostsFailure: { err: false, message: action.err },
+        tempPostList: [...action.data.tempPostList],
+        cancelPostList: [...action.data.cancelPostList],
+        loadManagePostsLoading: false,
+        loadManagePostsSuccess: true,
+        loadManagePostsFailure: { err: false, message: null },
+      };
+    case LOAD_MANAGE_POSTS_FAILURE:
+      return {
+        ...state,
+        loadManagePostsLoading: false,
+        loadManagePostsSuccess: false,
+        loadManagePostsFailure: { err: true, message: action.err },
       };
     default:
       return state;

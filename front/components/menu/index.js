@@ -17,8 +17,8 @@ const HamburgerMenu = () => {
   };
 
   // 임시글 관리 페이지로 이동
-  const handleTempPostManage = () => {
-    router.push('/tempPostManage');
+  const handlePostManage = () => {
+    router.push('/postManage');
   };
 
   // 로그아웃
@@ -39,7 +39,7 @@ const HamburgerMenu = () => {
       </MenuButton>
       <MenuList>
         <MenuItem onClick={handleEditPost}>글 쓰기</MenuItem>
-        <MenuItem onClick={handleTempPostManage}>임시 글 관리</MenuItem>
+        <MenuItem onClick={handlePostManage}>글 관리</MenuItem>
         <MenuDivider />
         <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
       </MenuList>

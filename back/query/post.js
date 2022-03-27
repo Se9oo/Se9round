@@ -1,23 +1,30 @@
 // 게시글 목록 조회
-exports.selectPostLists = `
-  SELECT
-    id
-    , title
-    , contents
-    , TO_CHAR(reg_dt, 'YYYY-MM-DD HH24:MI') AS reg_dt
-    , cancel_dt
-    , status
-    , tags
-    , thumbnail
-    , sub_title
-    , click_count
-  FROM
-    post
-  WHERE
-    status = $1
-  ORDER BY id DESC
-  LIMIT $2 OFFSET $3
-`;
+exports.selectPostLists = (isPagination, limit, offset) => {
+  let query = `
+      SELECT
+      id
+      , title
+      , contents
+      , TO_CHAR(reg_dt, 'YYYY-MM-DD HH24:MI') AS reg_dt
+      , cancel_dt
+      , status
+      , tags
+      , thumbnail
+      , sub_title
+      , click_count
+    FROM
+      post
+    WHERE
+      status = $1
+    ORDER BY id DESC
+  `;
+
+  if (isPagination) {
+    query += `LIMIT ${limit} OFFSET ${offset}`;
+  }
+
+  return query;
+};
 
 exports.selectPostListCount = `
   SELECT

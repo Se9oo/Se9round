@@ -26,9 +26,9 @@ import {
   SEARCH_POSTS_REQUEST,
   SEARCH_POSTS_SUCCESS,
   SEARCH_POSTS_FAILURE,
-  LOAD_TEMP_POSTS_REQUEST,
-  LOAD_TEMP_POSTS_SUCCESS,
-  LOAD_TEMP_POSTS_FAILURE,
+  LOAD_MANAGE_POSTS_REQUEST,
+  LOAD_MANAGE_POSTS_SUCCESS,
+  LOAD_MANAGE_POSTS_FAILURE,
 } from '../reducers/post';
 
 // 게시글 목록 조회
@@ -223,27 +223,27 @@ function* watchSearchPosts() {
 }
 
 // 임시 게시글 목록 불러오기
-function loadTempPostsAPI() {
-  return axios.get('/api/temp/posts');
+function loadManagePostsAPI() {
+  return axios.get('/api/manage/posts');
 }
 
-function* loadTempPosts() {
+function* loadManagePosts() {
   try {
-    const result = yield call(loadTempPostsAPI);
+    const result = yield call(loadManagePostsAPI);
     yield put({
-      type: LOAD_TEMP_POSTS_SUCCESS,
+      type: LOAD_MANAGE_POSTS_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     yield put({
-      type: LOAD_TEMP_POSTS_FAILURE,
+      type: LOAD_MANAGE_POSTS_FAILURE,
       err: err.response.data,
     });
   }
 }
 
-function* watchLoadTempPosts() {
-  yield takeLatest(LOAD_TEMP_POSTS_REQUEST, loadTempPosts);
+function* watchLoadManagePosts() {
+  yield takeLatest(LOAD_MANAGE_POSTS_REQUEST, loadManagePosts);
 }
 
 export default function* postSaga() {
@@ -256,6 +256,6 @@ export default function* postSaga() {
     fork(watchCancelPost),
     fork(watchModifyPost),
     fork(watchSearchPosts),
-    fork(watchLoadTempPosts),
+    fork(watchLoadManagePosts),
   ]);
 }

@@ -61,7 +61,7 @@ router.get('/api/posts/:page', requestValueCheck, async (req, res) => {
   const offset = parseInt(page) ? MAX_PAGE_ITEMS_COUNT * parseInt(page) - MAX_PAGE_ITEMS_COUNT : 0;
 
   try {
-    const postList = await client.query(selectPostLists, [POST_OK_STATUS, MAX_PAGE_ITEMS_COUNT, offset]);
+    const postList = await client.query(selectPostLists(true, MAX_PAGE_ITEMS_COUNT, offset), [POST_OK_STATUS]);
     const postCount = await client.query(selectPostListCount, [POST_OK_STATUS]);
 
     const pageCount = Math.ceil(parseInt(postCount.rows[0].cnt) / MAX_PAGE_ITEMS_COUNT);
@@ -259,13 +259,14 @@ router.post('/api/post/modify', verifyTokens, requestValueCheck, async (req, res
 });
 
 // 임시 게시글 목록 조회
-router.get('/api/temp/posts', async (req, res) => {
+router.get('/api/manage/posts', async (req, res) => {
   const client = await pool.connect();
 
   try {
-    const result = await client.query(selectPostLists, [POST_TEMP_STATUS]);
+    const tempPostList = await client.query(selectPostLists(false, null, null), [POST_TEMP_STATUS]);
+    const cancelPostList = await client.query(selectPostLists(false, null, null), [POST_CANCEL_STATUS]);
 
-    res.status(200).json(result.rows);
+    res.status(200).json({ tempPostList: tempPostList.rows, cancelPostList: cancelPostList.rows });
   } catch (err) {
     res.status(500).json(err);
   } finally {

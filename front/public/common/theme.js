@@ -63,6 +63,11 @@ const theme = extendTheme({
         border: 0,
         borderRadius: 0,
       },
+      // code block - one dark style
+      '.tui-editor-contents pre': {
+        color: '#abb2bf',
+        backgroundColor: '#282c34',
+      },
       // markdown code style
       '.tui-editor-contents pre code': {
         fontFamily: `'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace',

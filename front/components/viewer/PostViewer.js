@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import dynamic from 'next/dynamic';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { getDateFormatToKor } from '../../util/common';
@@ -7,7 +7,17 @@ import TagList from '../tag/TagList';
 
 const DynamicPostViewer = dynamic(() => import('./Viewer'), { loading: () => <Loading />, ssr: false });
 
-const PostViewer = ({ title, contents, tags, reg_dt }) => {
+const propsAreEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.title === nextProps.title &&
+    prevProps.contents === nextProps.contents &&
+    JSON.stringify(prevProps.tags) === JSON.stringify(nextProps.tags) &&
+    prevProps.reg_dt === nextProps.reg_dt &&
+    prevProps.setTocId === nextProps.setTocId
+  );
+};
+
+const PostViewer = memo(({ title, contents, tags, reg_dt, setTocId }) => {
   return (
     <Box w="100%" bg="white" m="0 auto 5rem auto" p="3rem">
       <Flex w="100%" flexDir="column" justifyContent="center" alignItems="center">
@@ -21,9 +31,9 @@ const PostViewer = ({ title, contents, tags, reg_dt }) => {
           {getDateFormatToKor(reg_dt)}
         </Text>
       </Flex>
-      <DynamicPostViewer contents={contents} />
+      <DynamicPostViewer contents={contents} setTocId={setTocId} />
     </Box>
   );
-};
+}, propsAreEqual);
 
 export default PostViewer;

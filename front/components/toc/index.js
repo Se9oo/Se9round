@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box } from '@chakra-ui/react';
 
 import { getMarkdownHeader } from '../../util/common';
 import TocItem from './TocItem';
 
-const TOC = ({ title, contents }) => {
+const TOC = ({ title, contents, tocId }) => {
   const [selectedTocItem, setSelectedTocItem] = useState(null);
   const markdownHeaders = getMarkdownHeader(title, contents);
 
@@ -15,6 +15,12 @@ const TOC = ({ title, contents }) => {
     setSelectedTocItem(href);
     document.location.href = href;
   };
+
+  useEffect(() => {
+    if (tocId) {
+      setSelectedTocItem(`#${tocId}`);
+    }
+  }, [tocId]);
 
   return (
     <Box

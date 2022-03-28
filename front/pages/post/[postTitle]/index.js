@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import { loadPostRequestAction } from '../../../reducers/post';
@@ -41,11 +41,16 @@ const PostView = () => {
 
   const { loadPostInfo } = useSelector((state) => state.post);
   const { title, contents, tags, reg_dt, relatedPosts } = loadPostInfo;
+  const [tocId, setTocId] = useState(null);
+
+  const handleTocId = useCallback((id) => {
+    setTocId(id);
+  }, []);
 
   return (
     <MainLayout>
       <Box w={width} m="0 auto">
-        <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} />
+        <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} setTocId={handleTocId} />
         {relatedPosts && relatedPosts.length > 0 && (
           <>
             <Heading
@@ -63,7 +68,7 @@ const PostView = () => {
           </>
         )}
         <Box display={display}>
-          <TOC title={title} contents={contents} />
+          <TOC title={title} contents={contents} tocId={tocId} />
           <ScrollToTop />
         </Box>
       </Box>

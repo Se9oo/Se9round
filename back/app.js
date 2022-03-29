@@ -3,6 +3,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const hpp = require('hpp');
+const helmet = require('helmet');
 
 const postRouter = require('./routes/post');
 const imageRouter = require('./routes/image');
@@ -14,7 +16,7 @@ const app = express();
 // cors 설정
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'se9round.dev'],
     credentials: true,
   })
 );
@@ -22,6 +24,12 @@ app.use(
 // body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// 보안 라이브러리 적용
+if (process.env.NODE_ENV === 'production') {
+  app.use(hpp());
+  app.use(helmet());
+}
 
 // cookie Parser
 app.use(cookieParser());

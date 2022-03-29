@@ -29,6 +29,9 @@ import {
   LOAD_MANAGE_POSTS_REQUEST,
   LOAD_MANAGE_POSTS_SUCCESS,
   LOAD_MANAGE_POSTS_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE,
 } from '../reducers/post';
 
 // 게시글 목록 조회
@@ -222,7 +225,7 @@ function* watchSearchPosts() {
   yield takeLatest(SEARCH_POSTS_REQUEST, searchPosts);
 }
 
-// 임시 게시글 목록 불러오기
+// 게시글 관리 목록 불러오기
 function loadManagePostsAPI() {
   return axios.get('/api/manage/posts');
 }
@@ -246,6 +249,30 @@ function* watchLoadManagePosts() {
   yield takeLatest(LOAD_MANAGE_POSTS_REQUEST, loadManagePosts);
 }
 
+// 게시글 영구 삭제
+function deletePostAPI(data) {
+  return axios.post('/api/post/delete', data);
+}
+
+function* deletePost(data) {
+  try {
+    const result = yield call(deletePostAPI, data);
+    yield put({
+      type: DELETE_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: DELETE_POST_FAILURE,
+      err: err.response.data,
+    });
+  }
+}
+
+function* watchDeletePost() {
+  yield takeLatest(DELETE_POST_REQUEST, deletePost);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -257,5 +284,6 @@ export default function* postSaga() {
     fork(watchModifyPost),
     fork(watchSearchPosts),
     fork(watchLoadManagePosts),
+    fork(watchDeletePost),
   ]);
 }

@@ -18,7 +18,7 @@ const PostManageTab = ({ tempPostList, cancelPostList }) => {
           <PostList postList={tempPostList} />
         </TabPanel>
         <TabPanel>
-          <PostList postList={cancelPostList} />
+          <PostList postList={cancelPostList} manageMode="delete" />
         </TabPanel>
       </TabPanels>
     </Tabs>

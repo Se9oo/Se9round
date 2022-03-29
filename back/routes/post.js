@@ -18,6 +18,7 @@ const {
   selectTagsByPostId,
   selectPostsCountWithTag,
   selectPostListCount,
+  deletePost,
 } = require('../query/post');
 const { insertTag, cancelTag } = require('../query/tag');
 // router
@@ -268,6 +269,28 @@ router.get('/api/manage/posts', async (req, res) => {
 
     res.status(200).json({ tempPostList: tempPostList.rows, cancelPostList: cancelPostList.rows });
   } catch (err) {
+    res.status(500).json(err);
+  } finally {
+    client.release();
+  }
+});
+
+// 게시글 영구 삭제
+router.post('/api/post/delete', verifyTokens, requestValueCheck, async (req, res) => {
+  const client = await pool.connect();
+
+  try {
+    const { postId } = req.body.data;
+
+    await client.query('BEGIN');
+
+    await client.query(deletePost, [postId]);
+
+    await client.query('COMMIT');
+
+    res.status(200).json({ postId });
+  } catch (err) {
+    await client.query('ROLLBACK');
     res.status(500).json(err);
   } finally {
     client.release();

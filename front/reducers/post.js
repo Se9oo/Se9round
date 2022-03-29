@@ -32,6 +32,9 @@ export const initialState = {
   loadManagePostsLoading: false,
   loadManagePostsSuccess: false,
   loadManagePostsFailure: { err: false, message: null },
+  deletePostLoading: false,
+  deletePostSuccess: false,
+  deletePostFailure: { err: false, message: null },
 };
 
 // 게시글 목록 조회
@@ -130,7 +133,7 @@ export const searchPostsRequestAction = (data) => {
   };
 };
 
-// 임시 글 목록 불러오기
+// 게시글 관리 목록 불러오기
 export const LOAD_MANAGE_POSTS_REQUEST = 'LOAD_MANAGE_POSTS_REQUEST';
 export const LOAD_MANAGE_POSTS_SUCCESS = 'LOAD_MANAGE_POSTS_SUCCESS';
 export const LOAD_MANAGE_POSTS_FAILURE = 'LOAD_MANAGE_POSTS_FAILURE';
@@ -138,6 +141,18 @@ export const LOAD_MANAGE_POSTS_FAILURE = 'LOAD_MANAGE_POSTS_FAILURE';
 export const loadManagePostsRequestAction = () => {
   return {
     type: LOAD_MANAGE_POSTS_REQUEST,
+  };
+};
+
+// 게시글 영구 삭제
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+
+export const deletePostRequestAction = (data) => {
+  return {
+    type: DELETE_POST_REQUEST,
+    data,
   };
 };
 
@@ -268,13 +283,17 @@ const reducer = (state = initialState, action) => {
       };
     case CANCEL_POST_SUCCESS:
       const newPostList = [...state.postList].filter((post) => post.id !== action.data.postId);
+      const newTempPostList = [...state.tempPostList].filter((post) => post.id !== action.data.postId);
+
       return {
         ...state,
         postList: newPostList,
+        tempPostList: newTempPostList,
         cancelPostLoading: false,
         cancelPostSuccess: true,
         cancelPostFailure: { err: false, message: null },
       };
+
     case CANCEL_POST_FAILURE:
       return {
         ...state,
@@ -313,7 +332,6 @@ const reducer = (state = initialState, action) => {
         searchPostsFailure: { err: false, message: null },
       };
     case SEARCH_POSTS_SUCCESS:
-      console.log(action.data);
       return {
         ...state,
         searchPostList: [...action.data],
@@ -328,6 +346,7 @@ const reducer = (state = initialState, action) => {
         searchPostsSuccess: false,
         searchPostsFailure: { err: false, message: action.err },
       };
+    // 게시글 관리 목록 불러오기
     case LOAD_MANAGE_POSTS_REQUEST:
       return {
         ...state,
@@ -350,6 +369,30 @@ const reducer = (state = initialState, action) => {
         loadManagePostsLoading: false,
         loadManagePostsSuccess: false,
         loadManagePostsFailure: { err: true, message: action.err },
+      };
+    //게시글 영구 삭제
+    case DELETE_POST_REQUEST:
+      return {
+        ...state,
+        deletePostLoading: true,
+        deletePostSuccess: false,
+        deletePostFailure: { err: false, message: null },
+      };
+    case DELETE_POST_SUCCESS:
+      const newCancelPostList = [...state.cancelPostList].filter((post) => post.id !== action.data.postId);
+      return {
+        ...state,
+        cancelPostList: newCancelPostList,
+        deletePostLoading: false,
+        deletePostSuccess: true,
+        deletePostFailure: { err: false, message: null },
+      };
+    case DELETE_POST_FAILURE:
+      return {
+        ...state,
+        deletePostLoading: false,
+        deletePostSuccess: false,
+        deletePostFailure: { err: true, message: action.err },
       };
     default:
       return state;

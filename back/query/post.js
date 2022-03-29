@@ -205,3 +205,10 @@ exports.selectPostsCountWithTag = `
     AND $2 = ANY(tags)
     AND id <> $3
 `;
+
+// 게시글 영구 삭제
+exports.deletePost = `
+  DELETE FROM POST
+  WHERE
+    id = $1
+`;

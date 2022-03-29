@@ -8,9 +8,9 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import PostCard from './PostCard';
 import Alert from '../alert';
 import useAlert from '../../hooks/useAlert';
-import { addClickCountRequestAction, cancelPostRequestAction } from '../../reducers/post';
+import { addClickCountRequestAction, cancelPostRequestAction, deletePostRequestAction } from '../../reducers/post';
 
-const PostList = ({ postList }) => {
+const PostList = ({ postList, manageMode = '' }) => {
   const gridTemplate = useBreakpointValue({
     xxs: 'repeat(1, 1fr)',
     xs: 'repeat(1, 1fr)',
@@ -28,7 +28,9 @@ const PostList = ({ postList }) => {
   });
 
   const dispatch = useDispatch('');
-  const { cancelPostSuccess, cancelPostFailure } = useSelector((state) => state.post);
+  const { cancelPostSuccess, cancelPostFailure, deletePostSuccess, deletePostFailure } = useSelector(
+    (state) => state.post
+  );
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
   // 게시글 상세 페이지로 이동
@@ -53,16 +55,22 @@ const PostList = ({ postList }) => {
   // 게시글 취소
   const handlePostCancel = useCallback((postId) => {
     openAlert({
-      title: '게시글 삭제',
-      contents: '게시글을 삭제 하시겠습니까?',
+      title: `게시글 ${manageMode === 'delete' ? '영구 ' : ''}삭제`,
+      contents: `게시글을 ${manageMode === 'delete' ? '영구 ' : ''}삭제 하시겠습니까?`,
       mod: 'action',
       actionText: '삭제',
-      btnAction: () => postCancel(postId),
+      btnAction: () => postCancel(postId, manageMode),
     });
   }, []);
 
-  const postCancel = (postId) => {
-    dispatch(cancelPostRequestAction({ postId }));
+  const postCancel = (postId, manageMode) => {
+    if (manageMode === 'delete') {
+      // 게시글 영구 삭제 처리
+      dispatch(deletePostRequestAction({ postId }));
+    } else {
+      // 게시글 상태 취소 처리
+      dispatch(cancelPostRequestAction({ postId }));
+    }
 
     // alert close
     onClose();
@@ -89,6 +97,28 @@ const PostList = ({ postList }) => {
       });
     }
   }, [cancelPostFailure]);
+
+  // 게시글 취소 성공
+  useEffect(() => {
+    if (deletePostSuccess && manageMode === 'delete') {
+      openAlert({
+        title: '게시글 영구 삭제',
+        contents: `게시글 영구 삭제 성공`,
+        mod: '',
+      });
+    }
+  }, [deletePostSuccess]);
+
+  // 게시글 취소 실패
+  useDeepCompareEffect(() => {
+    if (deletePostFailure.err && manageMode === 'delete') {
+      openAlert({
+        title: '게시글 영구 삭제',
+        contents: `${deletePostFailure.message}`,
+        mod: '',
+      });
+    }
+  }, [deletePostFailure]);
 
   return (
     <>

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "build": "next build"
+    "build": "cross-env ANALYZE=true NODE_ENV=production next build"
   },
   "author": "park se hyun",
   "license": "MIT",
@@ -14,10 +14,12 @@
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@next/bundle-analyzer": "^12.1.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^1.0.0",
     "@toast-ui/editor-plugin-color-syntax": "^1.0.1",
     "@toast-ui/react-editor": "^2.5.4",
     "axios": "^0.24.0",
+    "cross-env": "^7.0.3",
     "dayjs": "^1.10.7",
     "framer-motion": "^4.1.17",
     "highlight.js": "^11.4.0",

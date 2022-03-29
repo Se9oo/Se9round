@@ -78,7 +78,7 @@ const PostList = ({ postList, manageMode = '' }) => {
 
   // 게시글 취소 성공
   useEffect(() => {
-    if (cancelPostSuccess) {
+    if (cancelPostSuccess && manageMode !== 'delete') {
       openAlert({
         title: '게시글 삭제',
         contents: `게시글 삭제 성공`,
@@ -89,7 +89,7 @@ const PostList = ({ postList, manageMode = '' }) => {
 
   // 게시글 취소 실패
   useDeepCompareEffect(() => {
-    if (cancelPostFailure.err) {
+    if (cancelPostFailure.err && manageMode !== 'delete') {
       openAlert({
         title: '게시글 삭제',
         contents: `${cancelPostFailure.message}`,

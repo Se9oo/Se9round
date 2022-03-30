@@ -16,7 +16,7 @@ const app = express();
 // cors 설정
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'se9round.dev'],
+    origin: ['http://localhost:3000', 'http://se9round.dev'],
     credentials: true,
   })
 );
@@ -25,10 +25,11 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// 보안 라이브러리 적용
+// 보안 라이브러리 적용, nginx 사용에 따른 proxy 설정
 if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
   app.use(helmet());
+  app.set('trust proxy', 1);
 }
 
 // cookie Parser

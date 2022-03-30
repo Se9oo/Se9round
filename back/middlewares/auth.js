@@ -3,6 +3,18 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const prodCookieOption = {
+  httpOnly: true,
+  overwrite: true,
+  secure: true,
+  domain: '.se9round.dev',
+};
+
+const devCookieOption = {
+  httpOnly: true,
+  overwrite: true,
+};
+
 // access token 생성
 exports.createAccessToken = (payload) => {
   return jwt.sign(payload, process.env.LOGIN_KEY, { expiresIn: '15m' });
@@ -37,13 +49,21 @@ exports.verifyTokens = (req, res, next) => {
           // access token 재발급
           const newAccessToken = this.createAccessToken({ admin: 'admin' });
 
-          res.cookie('user', newAccessToken, { httpOnly: true, overwrite: true });
+          res.cookie(
+            'user',
+            newAccessToken,
+            process.env.NODE_ENV === 'production' ? prodCookieOption : devCookieOption
+          );
           // refresh token 만 만료된 경우
         } else if (decodedAccessToken && !decodedRefreshToken) {
           // refresh token 재발급
           const newRefreshToken = this.createRefreshToken();
 
-          res.cookie('refresh', newRefreshToken, { httpOnly: true, overwrite: true });
+          res.cookie(
+            'refresh',
+            newRefreshToken,
+            process.env.NODE_ENV === 'production' ? prodCookieOption : devCookieOption
+          );
         }
         next();
       }

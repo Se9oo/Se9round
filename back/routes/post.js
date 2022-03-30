@@ -93,21 +93,24 @@ router.post('/api/post', verifyTokens, requestValueCheck, async (req, res) => {
     if (count > 0) {
       res.status(500).json('중복된 게시글이 존재합니다.');
     } else {
+      client.query('BEGIN');
       // 중복되지 않은 경우
       // 태그 저장
       if (Array.isArray(tagsArray) && tagsArray.length !== 0) {
-        tagsArray.map((tag) => {
-          client.query(insertTag, [tag]);
-        });
+        for (const tag of tagsArray) {
+          await client.query(insertTag, [tag]);
+        }
       }
 
       // 게시글 저장
       await client.query(insertPost, [title, contents, tagsArray, thumbNail, subTitle, POST_OK_STATUS]);
 
+      client.query('COMMIT');
       res.status(200).json('success');
     }
   } catch (err) {
-    res.status(500).json(error);
+    client.query('ROLLBACK');
+    res.status(500).json(err);
   } finally {
     client.release();
   }
@@ -128,12 +131,16 @@ router.post('/api/post/temp', verifyTokens, requestValueCheck, async (req, res) 
     if (count > 0) {
       res.status(500).json('중복된 게시글이 존재합니다.');
     } else {
+      await client.query('BEGIN');
       // 게시글 임시 저장
       await client.query(insertPost, [title, contents, tagsArray, thumbNail, subTitle, POST_TEMP_STATUS]);
+
+      await client.query('COMMIT');
 
       res.status(200).json('success');
     }
   } catch (err) {
+    await client.query('ROLLBACK');
     res.status(500).json(err);
   } finally {
     client.release();
@@ -147,10 +154,15 @@ router.post('/api/post/count', requestValueCheck, async (req, res) => {
   try {
     const { postId } = req.body.data;
 
+    await client.query('BEGIN');
+
     await client.query(updatePostClickCount, [postId]);
+
+    await client.query('COMMIT');
 
     res.status(200).json('success');
   } catch (err) {
+    await client.query('ROLLBACK');
     res.status(500).json(err);
   } finally {
     client.release();
@@ -242,17 +254,20 @@ router.post('/api/post/modify', verifyTokens, requestValueCheck, async (req, res
   try {
     const { title, tagsArray, contents, thumbNail, subTitle } = req.body.data;
 
+    await client.query('BEGIN');
     // 태그 저장
     if (Array.isArray(tagsArray) && tagsArray.length !== 0) {
-      tagsArray.map((tag) => {
-        client.query(insertTag, [tag]);
-      });
+      for (const tag of tagsArray) {
+        await client.query(insertTag, [tag]);
+      }
     }
 
     await client.query(modifyPost, [title, tagsArray, contents, thumbNail, subTitle, POST_OK_STATUS]);
+    await client.query('COMMIT');
 
     res.status(200).json('success');
   } catch (err) {
+    await client.query('ROLLBACK');
     res.status(500).json(err);
   } finally {
     client.release();

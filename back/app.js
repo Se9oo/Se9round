@@ -16,7 +16,7 @@ const app = express();
 // cors 설정
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://se9round.dev'],
+    origin: ['http://localhost:3000', 'https://se9round.dev'],
     credentials: true,
   })
 );

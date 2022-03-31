@@ -15,6 +15,7 @@ import axios from 'axios';
 import PostList from '../../../components/post/PostList';
 
 import { Box, Heading, useBreakpointValue } from '@chakra-ui/react';
+import PageHead from '../../../components/head/PageHead';
 
 const PostView = () => {
   const width = useBreakpointValue({
@@ -40,7 +41,7 @@ const PostView = () => {
   });
 
   const { loadPostInfo } = useSelector((state) => state.post);
-  const { title, contents, tags, reg_dt, relatedPosts } = loadPostInfo;
+  const { title, contents, tags, reg_dt, relatedPosts, sub_title, thumbnail } = loadPostInfo;
   const [tocId, setTocId] = useState(null);
 
   const handleTocId = useCallback((id) => {
@@ -48,31 +49,34 @@ const PostView = () => {
   }, []);
 
   return (
-    <MainLayout>
-      <Box w={width} m="0 auto">
-        <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} setTocId={handleTocId} />
-        {relatedPosts && relatedPosts.length > 0 && (
-          <>
-            <Heading
-              as="h3"
-              fontSize="1.5rem"
-              borderLeftColor="brown"
-              borderLeftWidth="3px"
-              borderLeftStyle="solid"
-              mb="1rem"
-              p="0 .5rem"
-            >
-              관련 포스트
-            </Heading>
-            <PostList postList={relatedPosts} />
-          </>
-        )}
-        <Box display={display}>
-          <TOC title={title} contents={contents} tocId={tocId} />
-          <ScrollToTop />
+    <>
+      <PageHead title={title} description={sub_title} keywords={tags} thumbnail={thumbnail} />
+      <MainLayout>
+        <Box w={width} m="0 auto">
+          <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} setTocId={handleTocId} />
+          {relatedPosts && relatedPosts.length > 0 && (
+            <>
+              <Heading
+                as="h3"
+                fontSize="1.5rem"
+                borderLeftColor="brown"
+                borderLeftWidth="3px"
+                borderLeftStyle="solid"
+                mb="1rem"
+                p="0 .5rem"
+              >
+                관련 포스트
+              </Heading>
+              <PostList postList={relatedPosts} />
+            </>
+          )}
+          <Box display={display}>
+            <TOC title={title} contents={contents} tocId={tocId} />
+            <ScrollToTop />
+          </Box>
         </Box>
-      </Box>
-    </MainLayout>
+      </MainLayout>
+    </>
   );
 };
 

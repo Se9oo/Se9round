@@ -26,11 +26,13 @@ const Se9round = ({ Component, pageProps }) => {
     <ChakraProvider theme={theme} resetCSS>
       <Fonts />
       <Head>
+        <title>Se9round.dev</title>
         <meta
           name="viewport"
           content="initial-scale=1.0, width=device-width,
            maximum-scale=1, minimum-scale=1, user-scalable=no"
         />
+        <meta name="description" content="se9oo의 개발 블로그" />
       </Head>
       <Component {...pageProps} />
     </ChakraProvider>

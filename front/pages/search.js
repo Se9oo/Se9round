@@ -15,30 +15,37 @@ import { loadTagsRequestAction } from '../reducers/tag';
 
 import wrapper from '../store/configureStore';
 import axios from 'axios';
+import PageHead from '../components/head/PageHead';
 
 const Search = ({ query }) => {
   const { tagList } = useSelector((state) => state.tag);
   const { searchPostList } = useSelector((state) => state.post);
 
   return (
-    <MainLayout>
-      <SearchBox query={query} />
-      <TagList tagList={tagList} mode="search" />
-      {query !== null && (
-        <Heading
-          as="h3"
-          fontSize="1.5rem"
-          borderLeftColor="brown"
-          borderLeftWidth="3px"
-          borderLeftStyle="solid"
-          mb="1rem"
-          p="0 .5rem"
-        >
-          {`"${query}" 검색 결과`}
-        </Heading>
-      )}
-      <PostList postList={searchPostList} />
-    </MainLayout>
+    <>
+      <PageHead
+        title={query ? `"${query}" 검색 결과` : 'Search - se9round.dev'}
+        keywords={query ? [query] : ['search', '검색']}
+      />
+      <MainLayout>
+        <SearchBox query={query} />
+        <TagList tagList={tagList} mode="search" />
+        {query !== null && (
+          <Heading
+            as="h3"
+            fontSize="1.5rem"
+            borderLeftColor="brown"
+            borderLeftWidth="3px"
+            borderLeftStyle="solid"
+            mb="1rem"
+            p="0 .5rem"
+          >
+            {`"${query}" 검색 결과`}
+          </Heading>
+        )}
+        <PostList postList={searchPostList} />
+      </MainLayout>
+    </>
   );
 };
 

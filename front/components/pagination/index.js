@@ -8,10 +8,16 @@ const Pagination = ({ pagination, handlePages }) => {
 
   return (
     <Flex w="100%" justifyContent="center" alignItems="center" m="3rem 0 .5rem 0">
-      <IconButton icon={<ChevronLeftIcon fontSize="2rem" />} m="0 .2rem" onClick={() => handlePages(page - 1)} />
+      <IconButton
+        w="2rem"
+        icon={<ChevronLeftIcon fontSize="2rem" />}
+        m="0 .2rem"
+        onClick={() => handlePages(page - 1)}
+      />
       {pages.map((num, idx) => {
         return (
           <Button
+            w="2rem"
             key={idx}
             bg={page === num ? 'brown' : 'gray.200'}
             color={page === num ? 'white' : 'black'}
@@ -23,7 +29,12 @@ const Pagination = ({ pagination, handlePages }) => {
           </Button>
         );
       })}
-      <IconButton icon={<ChevronRightIcon fontSize="2rem" />} m="0 .2rem" onClick={() => handlePages(page + 1)} />
+      <IconButton
+        w="2rem"
+        icon={<ChevronRightIcon fontSize="2rem" />}
+        m="0 .2rem"
+        onClick={() => handlePages(page + 1)}
+      />
     </Flex>
   );
 };

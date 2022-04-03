@@ -13,7 +13,6 @@ const MainLayout = ({ children }) => {
     md: '4rem 0 0',
     lg: '4rem auto 0',
     xl: '4rem auto 0',
-    xxl: '4rem auto 0',
     '2xl': '4rem auto 0',
   });
 
@@ -21,14 +20,7 @@ const MainLayout = ({ children }) => {
     // height = (100vh - header - footer - contents padding)
     <Box w="100%" h="calc(100vh - 3rem - 6rem - 1rem)" position="relative">
       <Header />
-      <Box
-        w={['100%', '100%', '100%', '100%', '100%', '90%', '90%']}
-        maxW="1400px"
-        h="auto"
-        minH="100%"
-        m={margin}
-        p="1rem"
-      >
+      <Box w="100%" maxW="1000px" h="auto" minH="100%" m={margin} p="1rem">
         {children}
       </Box>
       <Footer />

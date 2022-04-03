@@ -4,13 +4,13 @@ import { createBreakpoints } from '@chakra-ui/theme-tools';
 import { Button, Input } from './customComponents';
 
 const breakpoints = createBreakpoints({
-  xxs: '17.5rem',
-  xs: '20rem',
-  sm: '36rem',
-  md: '48rem',
-  lg: '62rem',
-  xl: '75rem',
-  xxl: '87.5rem',
+  xxs: '280px',
+  xs: '320px',
+  sm: '576px',
+  md: '768px',
+  lg: '992px',
+  xl: '1200px',
+  '2xl': '1400px',
 });
 
 const colors = {
@@ -32,12 +32,11 @@ const theme = extendTheme({
         boxSizing: 'border-box',
       },
       html: {
-        fontSize: '16px',
+        fontSize: ['16px', '16px', '16px', '18px', '18px', '18px', '18px'],
         scrollBehavior: 'smooth',
       },
       body: {
         backgroundColor: 'gray.100',
-        fontSize: '16px',
         position: 'relative',
       },
       'body, input, a, ol, ul, li, button': {
@@ -59,7 +58,7 @@ const theme = extendTheme({
       '.tui-editor-contents': {
         fontFamily: `'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',
           '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif`,
-        fontSize: '16px',
+        fontSize: '1rem',
         border: 0,
         borderRadius: 0,
       },
@@ -76,9 +75,13 @@ const theme = extendTheme({
         border: 0,
         borderRadius: 0,
       },
+      '.tui-editor-contents h2': {
+        fontSize: '1.5rem',
+      },
       // markdown header style
       '.tui-editor-contents h1, .tui-editor-contents h2': {
         borderBottom: 'none',
+        lineHeight: '1.2',
       },
       // markdown a tag style
       '.tui-editor-contents a': {
@@ -90,7 +93,7 @@ const theme = extendTheme({
       '.te-md-container .CodeMirror': {
         fontFamily: `'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',
           '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif`,
-        fontSize: '16px',
+        fontSize: '1rem',
         border: 0,
         borderRadius: 0,
       },

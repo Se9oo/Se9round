@@ -23,15 +23,7 @@ const TOC = ({ title, contents, tocId }) => {
   }, [tocId]);
 
   return (
-    <Box
-      position="fixed"
-      top="10%"
-      right="5%"
-      borderLeftWidth="3px"
-      borderLeftStyle="solid"
-      borderLeftColor="brown"
-      p="1rem"
-    >
+    <Box w="250px" position="fixed" borderLeftWidth="3px" borderLeftStyle="solid" borderLeftColor="brown" p="1rem">
       {markdownHeaders.map((header, idx) => {
         return (
           <TocItem

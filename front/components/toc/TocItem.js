@@ -9,6 +9,7 @@ const TocItem = ({ header, selectedTocItem, handleTocItem }) => {
     <Box ml={`${count / 2}rem`}>
       <Text
         color={selectedTocItem === href ? 'brown' : 'gray.500'}
+        fontSize=".9rem"
         fontWeight={selectedTocItem === href ? '600' : '500'}
         transform={selectedTocItem === href ? 'scale(1.05)' : 'scale(1)'}
         transition="all .1s ease"

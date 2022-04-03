@@ -10,8 +10,7 @@ const ScrollToTop = () => {
   return (
     <ArrowUpIcon
       position="fixed"
-      bottom="13%"
-      right="15%"
+      top="90%"
       fontSize="2.5rem"
       color="white"
       backgroundColor="brown"

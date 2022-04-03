@@ -17,7 +17,7 @@ const Home = () => {
   const { postList, pagination } = useSelector((state) => state.post);
 
   const handlePages = useCallback((page) => {
-    if (page > 0) {
+    if (page > 0 && page <= pagination.pageCount) {
       router.push({
         pathname: '/home',
         query: { page },

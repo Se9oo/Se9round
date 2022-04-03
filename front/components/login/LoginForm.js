@@ -16,7 +16,6 @@ const LoginForm = () => {
     md: '30rem',
     lg: '30rem',
     xl: '30rem',
-    xxl: '30rem',
     '2xl': '30rem',
   });
 

@@ -21,7 +21,6 @@ const Alert = ({ alertProps, isOpen, onClose }) => {
     md: 'sm',
     lg: 'md',
     xl: 'md',
-    xxl: 'md',
     '2xl': 'md',
   });
 

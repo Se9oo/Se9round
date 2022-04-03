@@ -27,7 +27,6 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
     md: 'sm',
     lg: 'md',
     xl: 'md',
-    xxl: 'md',
     '2xl': 'md',
   });
 

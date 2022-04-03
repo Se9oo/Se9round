@@ -5,7 +5,6 @@ import router from 'next/router';
 import { Flex, Box, Image, useBreakpointValue } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 
-import useScroll from '../hooks/useScroll';
 import HamburgerMenu from './menu';
 
 const Header = () => {
@@ -15,7 +14,6 @@ const Header = () => {
   });
 
   const { isAdmin } = useSelector((state) => state.user);
-  const { scrollY, isShowHeader } = useScroll();
 
   // 로고 클릭시 홈으로 이동
   const handleLogo = () => {
@@ -39,8 +37,8 @@ const Header = () => {
         left="0"
         bg="white"
         zIndex="9999"
-        mt={isShowHeader ? 0 : `${-1 * scrollY}px`}
         transition="all .2s ease"
+        boxShadow="sm"
       >
         <Image
           h={logoSize}

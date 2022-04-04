@@ -2,13 +2,14 @@ import React from 'react';
 
 import { ArrowUpIcon } from '@chakra-ui/icons';
 
-const ScrollToTop = () => {
+const ScrollToTop = ({ display }) => {
   const handleScrollToTop = () => {
     window.scroll({ top: 0, left: 0, behavior: 'smooth' });
   };
 
   return (
     <ArrowUpIcon
+      display={display}
       position="fixed"
       top="90%"
       fontSize="2.5rem"

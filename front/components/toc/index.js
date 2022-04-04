@@ -5,7 +5,7 @@ import { Box } from '@chakra-ui/react';
 import { getMarkdownHeader } from '../../util/common';
 import TocItem from './TocItem';
 
-const TOC = ({ title, contents, tocId }) => {
+const TOC = ({ display, title, contents, tocId }) => {
   const [selectedTocItem, setSelectedTocItem] = useState(null);
   const markdownHeaders = getMarkdownHeader(title, contents);
 
@@ -23,7 +23,15 @@ const TOC = ({ title, contents, tocId }) => {
   }, [tocId]);
 
   return (
-    <Box w="250px" position="fixed" borderLeftWidth="3px" borderLeftStyle="solid" borderLeftColor="brown" p="1rem">
+    <Box
+      w="250px"
+      display={display}
+      position="fixed"
+      borderLeftWidth="3px"
+      borderLeftStyle="solid"
+      borderLeftColor="brown"
+      p="1rem"
+    >
       {markdownHeaders.map((header, idx) => {
         return (
           <TocItem

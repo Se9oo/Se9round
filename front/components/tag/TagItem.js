@@ -3,7 +3,7 @@ import { Box, Tag, TagLabel } from '@chakra-ui/react';
 
 const TagItem = ({ tag, handleSearchTag, mode }) => {
   return (
-    <Box m=".2rem">
+    <Box m=".1rem .4rem .1rem 0">
       <Tag
         bgColor={mode === 'search' ? 'gray.300' : 'brown'}
         borderRadius="0"
@@ -14,7 +14,7 @@ const TagItem = ({ tag, handleSearchTag, mode }) => {
         transition="all .2s ease"
         onClick={() => handleSearchTag(tag)}
       >
-        <TagLabel p=".3rem">{tag}</TagLabel>
+        <TagLabel>{tag}</TagLabel>
       </Tag>
     </Box>
   );

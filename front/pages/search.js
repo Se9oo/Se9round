@@ -7,7 +7,7 @@ import SearchBox from '../components/search';
 import TagList from '../components/tag/TagList';
 import PostList from '../components/post/PostList';
 
-import { Heading } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 import { checkIsAdminRequestAction } from '../reducers/user';
 import { searchPostsRequestAction } from '../reducers/post';
@@ -29,7 +29,9 @@ const Search = ({ query }) => {
       />
       <MainLayout>
         <SearchBox query={query} />
-        <TagList tagList={tagList} mode="search" />
+        <Box mb="4rem">
+          <TagList tagList={tagList} mode="search" />
+        </Box>
         {query !== null && (
           <Heading
             as="h3"

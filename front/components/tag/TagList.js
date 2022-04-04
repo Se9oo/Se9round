@@ -13,7 +13,7 @@ const TagList = ({ tagList, mode }) => {
   }, []);
 
   return (
-    <Flex flexWrap="wrap" mb="2rem">
+    <Flex flexWrap="wrap">
       {tagList.map((tag, idx) => {
         return <TagItem key={`${tag}_${idx}`} tag={tag} handleSearchTag={handleSearchTag} mode={mode} />;
       })}

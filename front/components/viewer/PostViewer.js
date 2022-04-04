@@ -6,7 +6,7 @@ import PostAndToc from './PostAndToc';
 
 const PostViewer = ({ title, contents, tags, reg_dt }) => {
   return (
-    <Box w="100%" bg="white" m="0 auto 5rem auto" p="1.5rem">
+    <Box w="100%" m="0 auto 5rem auto" p="1.5rem">
       <Flex w="100%" flexDir="column" justifyContent="center" alignItems="center">
         <Heading as="h1" fontSize="2.5rem" mb="2rem">
           {title}

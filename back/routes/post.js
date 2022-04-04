@@ -58,7 +58,7 @@ router.get('/api/posts/:page', requestValueCheck, async (req, res) => {
     page = 1;
   }
 
-  const MAX_PAGE_ITEMS_COUNT = 4;
+  const MAX_PAGE_ITEMS_COUNT = 9;
   const offset = parseInt(page) ? MAX_PAGE_ITEMS_COUNT * parseInt(page) - MAX_PAGE_ITEMS_COUNT : 0;
 
   try {
@@ -69,7 +69,7 @@ router.get('/api/posts/:page', requestValueCheck, async (req, res) => {
 
     res.status(200).json({
       postList: postList.rows,
-      pageInfo: { pageCount, postCount: parseInt(postCount.rows[0].cnt), page: parseInt(page) },
+      pageInfo: { pageCount, postCount: parseInt(postCount.rows[0].cnt), currentPage: parseInt(page) },
     });
   } catch (err) {
     res.status(500).json(err);

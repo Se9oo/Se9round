@@ -1,6 +1,5 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import router from 'next/router';
 
 import { loadPostsRequestAction } from '../reducers/post';
 import { checkIsAdminRequestAction } from '../reducers/user';
@@ -16,22 +15,10 @@ import { END } from 'redux-saga';
 const Home = () => {
   const { postList, pagination } = useSelector((state) => state.post);
 
-  const handlePages = useCallback((page) => {
-    if (page > 0 && page <= pagination.pageCount) {
-      router.push({
-        pathname: '/home',
-        query: { page },
-      });
-
-      // page 상단으로 이동
-      window.scrollTo(0, 0);
-    }
-  }, []);
-
   return (
     <MainLayout>
       <PostList postList={postList} />
-      <Pagination pagination={pagination} handlePages={handlePages} />
+      <Pagination pagination={pagination} />
     </MainLayout>
   );
 };

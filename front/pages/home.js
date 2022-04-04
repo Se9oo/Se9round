@@ -5,8 +5,11 @@ import { loadPostsRequestAction } from '../reducers/post';
 import { checkIsAdminRequestAction } from '../reducers/user';
 
 import MainLayout from '../components/MainLayout';
+import Introduce from '../components/introduce/Introduce';
 import PostList from '../components/post/PostList';
 import Pagination from '../components/pagination';
+
+import { Box, Divider } from '@chakra-ui/react';
 
 import axios from 'axios';
 import wrapper from '../store/configureStore';
@@ -17,6 +20,10 @@ const Home = () => {
 
   return (
     <MainLayout>
+      <Box m="1rem 0">
+        <Introduce />
+      </Box>
+      <Divider mb="2rem" />
       <PostList postList={postList} />
       <Pagination pagination={pagination} />
     </MainLayout>

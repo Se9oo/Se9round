@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon app",
-    "start": "node app"
+    "start": "cross-env NODE_ENV=production pm2 start app.js"
   },
   "author": "park se hyun",
   "license": "MIT",
@@ -20,7 +20,8 @@
     "hpp": "^0.2.3",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "pm2": "^5.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

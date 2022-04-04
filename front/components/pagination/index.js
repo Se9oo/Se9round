@@ -20,7 +20,7 @@ const Pagination = ({ pagination }) => {
 
   return (
     <Flex w="100%" justifyContent="center" alignItems="center" m="3rem 0 .5rem 0">
-      {pageCount && pageCount > MAX_PAGE_COUNT && (
+      {pageCount > MAX_PAGE_COUNT && (
         <IconButton
           w="2rem"
           icon={<ArrowLeftIcon fontSize="1rem" />}
@@ -58,7 +58,7 @@ const Pagination = ({ pagination }) => {
         m="0 .2rem"
         onClick={() => handleMovePage(currentPage + 1)}
       />
-      {pageCount && pageCount > MAX_PAGE_COUNT && (
+      {pageCount > MAX_PAGE_COUNT && (
         <IconButton
           w="2rem"
           icon={<ArrowRightIcon fontSize="1rem" />}

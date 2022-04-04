@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { loadPostsRequestAction } from '../reducers/post';
 import { checkIsAdminRequestAction } from '../reducers/user';
 
+import PageHead from '../components/head/PageHead';
 import MainLayout from '../components/MainLayout';
 import Introduce from '../components/introduce/Introduce';
 import PostList from '../components/post/PostList';
@@ -19,14 +20,17 @@ const Home = () => {
   const { postList, pagination } = useSelector((state) => state.post);
 
   return (
-    <MainLayout>
-      <Box m="1rem 0">
-        <Introduce />
-      </Box>
-      <Divider mb="2rem" />
-      <PostList postList={postList} />
-      <Pagination pagination={pagination} />
-    </MainLayout>
+    <>
+      <PageHead />
+      <MainLayout>
+        <Box m="1rem 0">
+          <Introduce />
+        </Box>
+        <Divider mb="2rem" />
+        <PostList postList={postList} />
+        <Pagination pagination={pagination} />
+      </MainLayout>
+    </>
   );
 };
 

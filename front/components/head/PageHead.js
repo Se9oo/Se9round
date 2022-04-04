@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 
-const PageHead = ({ title, description, keywords, thumbnail }) => {
-  const thumbnailImg = thumbnail ? thumbnail : '/assets/images/empty.png';
+const PageHead = ({ title = 'se9round.dev', description, keywords, thumbnail }) => {
+  const thumbnailImg = thumbnail ? thumbnail : '/assets/images/profile.png';
   const desc = description ? description : 'se9oo의 개발 블로그';
 
   return (

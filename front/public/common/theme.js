@@ -36,7 +36,7 @@ const theme = extendTheme({
         scrollBehavior: 'smooth',
       },
       body: {
-        backgroundColor: 'gray.100',
+        backgroundColor: '#F5F5F5',
         position: 'relative',
       },
       'body, input, a, ol, ul, li, button': {

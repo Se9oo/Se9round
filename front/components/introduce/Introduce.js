@@ -8,7 +8,7 @@ const Introduce = () => {
       <Box bg="brown" borderRadius="9999px;">
         <Image w="13rem" src="/assets/images/profile.png" alt="profile-image" borderRadius="9999px" />
       </Box>
-      <Text fontSize="1.5rem" fontWeight="300" p="1rem 0">
+      <Text color="gray.400" fontSize="1rem" fontWeight="300" p="1rem 0">
         se9round.dev
       </Text>
     </Flex>

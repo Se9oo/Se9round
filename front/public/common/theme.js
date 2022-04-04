@@ -74,6 +74,7 @@ const theme = extendTheme({
           '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif`,
         border: 0,
         borderRadius: 0,
+        color: '#abb2bf',
       },
       '.tui-editor-contents h2': {
         fontSize: '1.5rem',

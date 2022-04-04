@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import router from 'next/router';
 
-import { Flex, Box, Image } from '@chakra-ui/react';
+import { Flex, Box, Image, Text } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 
 import HamburgerMenu from './menu';
@@ -35,7 +35,16 @@ const Header = () => {
         transition="all .2s ease"
         boxShadow="sm"
       >
-        <Image src="/assets/images/se9round_logo.svg" alt="logo" p="0 .5rem" onClick={handleLogo} cursor="pointer" />
+        <Text
+          fontSize="1.2rem"
+          p="0 .5rem"
+          onClick={handleLogo}
+          cursor="pointer"
+          _hover={{ color: 'brown' }}
+          transition="ease .2s all"
+        >
+          se9round.dev
+        </Text>
         <Box>
           <SearchIcon
             color="brown"

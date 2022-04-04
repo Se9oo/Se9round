@@ -2,17 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import router from 'next/router';
 
-import { Flex, Box, Image, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, Box, Image } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 
 import HamburgerMenu from './menu';
 
 const Header = () => {
-  const logoSize = useBreakpointValue({
-    xxs: '1.3rem',
-    xs: '1.3rem',
-  });
-
   const { isAdmin } = useSelector((state) => state.user);
 
   // 로고 클릭시 홈으로 이동
@@ -40,14 +35,7 @@ const Header = () => {
         transition="all .2s ease"
         boxShadow="sm"
       >
-        <Image
-          h={logoSize}
-          src="/assets/images/se9round_logo.svg"
-          alt="logo"
-          p="0 .5rem"
-          onClick={handleLogo}
-          cursor="pointer"
-        />
+        <Image src="/assets/images/se9round_logo.svg" alt="logo" p="0 .5rem" onClick={handleLogo} cursor="pointer" />
         <Box>
           <SearchIcon
             color="brown"

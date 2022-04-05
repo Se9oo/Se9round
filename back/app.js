@@ -13,7 +13,6 @@ const tagRouter = require('./routes/tag');
 
 const app = express();
 
-// cors 설정
 app.use(
   cors({
     origin: ['http://localhost:3000', 'https://se9round.dev'],
@@ -30,6 +29,20 @@ if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
   app.use(helmet());
   app.set('trust proxy', 1);
+  // cors 설정
+  app.use(
+    cors({
+      origin: 'https://se9round.dev',
+      credentials: true,
+    })
+  );
+} else {
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credientials: true,
+    })
+  );
 }
 
 // cookie Parser
@@ -41,7 +54,7 @@ app.use(imageRouter);
 app.use(userRouter);
 app.use(tagRouter);
 
-app.use('/', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.listen(3065, () => {
   console.log('서버 실행!');

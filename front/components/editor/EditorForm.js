@@ -76,7 +76,7 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
           //dispatch(saveImageRequestAction(formData));
           const { data } = await axios.post('/api/image', formData);
 
-          callback(`${baseURL}/${data}`, 'alt image');
+          callback(`${baseURL}/uploads/${data}`, 'alt image');
         })();
 
         return false;

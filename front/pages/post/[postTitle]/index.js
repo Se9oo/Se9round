@@ -67,6 +67,18 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   store.dispatch(END);
 
   await store.sagaTask.toPromise();
+
+  const { post, user } = store.getState();
+  const { loadPostInfo } = post;
+
+  // 페이지 정보 없는 경우 or 게시글이 취소 혹은 삭제 상태인 경우
+  if (Object.keys(loadPostInfo).length === 0 || (!user.isAdmin && loadPostInfo.status !== 1)) {
+    return {
+      redirect: {
+        destination: '/404',
+      },
+    };
+  }
 });
 
 export default PostView;

@@ -2,7 +2,7 @@
   "name": "se9round-front",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "home.js",
   "scripts": {
     "dev": "next",
     "build": "cross-env ANALYZE=true NODE_ENV=production next build",
@@ -23,6 +23,7 @@
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.7",
     "framer-motion": "^4.1.17",
+    "globby": "^11.0.1",
     "highlight.js": "^11.4.0",
     "next": "^12.0.4",
     "next-redux-saga": "^4.1.2",

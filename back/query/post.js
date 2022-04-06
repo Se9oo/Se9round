@@ -212,3 +212,13 @@ exports.deletePost = `
   WHERE
     id = $1
 `;
+
+// 게시글 별 제목 조회
+exports.selectPostsTitle = `
+  SELECT
+    title
+  FROM
+    post
+  WHERE
+    status = $1
+`;

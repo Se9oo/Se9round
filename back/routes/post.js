@@ -19,6 +19,7 @@ const {
   selectPostsCountWithTag,
   selectPostListCount,
   deletePost,
+  selectPostsTitle,
 } = require('../query/post');
 const { insertTag, cancelTag } = require('../query/tag');
 // router
@@ -28,6 +29,21 @@ const router = express.Router();
 const POST_CANCEL_STATUS = 0;
 const POST_OK_STATUS = 1;
 const POST_TEMP_STATUS = 2;
+
+// 게시글 별 제목 조회
+router.get('/api/posts', async (req, res) => {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query(selectPostsTitle, [POST_OK_STATUS]);
+
+    res.status(200).json(result.rows);
+  } catch (err) {
+    res.status(500).json(err);
+  } finally {
+    client.release();
+  }
+});
 
 // 게시글 찾기
 router.get('/api/posts/search', requestValueCheck, async (req, res) => {

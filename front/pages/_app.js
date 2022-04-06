@@ -26,7 +26,7 @@ const Se9round = ({ Component, pageProps }) => {
     <ChakraProvider theme={theme} resetCSS>
       <Fonts />
       <Head>
-        <title>Se9round.dev</title>
+        <title>se9round.dev</title>
         <meta
           name="viewport"
           content="initial-scale=1.0, width=device-width,

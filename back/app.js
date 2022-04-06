@@ -13,13 +13,6 @@ const tagRouter = require('./routes/tag');
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://se9round.dev'],
-    credentials: true,
-  })
-);
-
 // body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

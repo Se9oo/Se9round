@@ -1,4 +1,4 @@
-cd ./home/Se9round/front/public
+cd /home/Se9round/front/public
 
 rm -rf sitemap.xml
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 cd /home/Se9round/front
 
 npx pm2 kill

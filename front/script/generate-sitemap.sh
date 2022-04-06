@@ -2,8 +2,5 @@ cd ./home/Se9round/front/public
 
 rm -rf sitemap.xml
 
-cd ..
-cd script
-
-node robots.js
-node sitemap.js
+/root/.nvm/versions/node/v16.14.2/bin/node robots.js
+/root/.nvm/versions/node/v16.14.2/bin/node sitemap.js

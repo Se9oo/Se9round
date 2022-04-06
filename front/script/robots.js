@@ -13,4 +13,4 @@ Disallow: /pages/postManage
 Disallow: /pages/post/[postTItle]/modify
 `;
 
-fs.writeFileSync('../public/robots.txt', generatedSitemap, 'utf8');
+fs.writeFileSync('/home/Se9round/front/public/robots.txt', generatedSitemap, 'utf8');

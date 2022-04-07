@@ -10,14 +10,22 @@ import { loadPostRequestAction } from '../../../reducers/post';
 
 import wrapper from '../../../store/configureStore';
 import axios from 'axios';
+import Error from '../../_error';
 
 const Modify = () => {
   const { loadPostInfo } = useSelector((state) => state.post);
+  const { isAdmin } = useSelector((state) => state.user);
 
   return (
-    <MainLayout>
-      <EditorForm mode="modify" loadPostInfo={loadPostInfo} />
-    </MainLayout>
+    <>
+      {isAdmin ? (
+        <MainLayout>
+          <EditorForm mode="modify" loadPostInfo={loadPostInfo} />
+        </MainLayout>
+      ) : (
+        <Error statusCode="401" />
+      )}
+    </>
   );
 };
 

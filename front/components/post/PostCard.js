@@ -41,13 +41,15 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
           objectFit="cover"
         />
       </Box>
-      <Box mb=".5rem" p="1rem">
+      <Flex flexDir="column" mb=".5rem" p="1rem" flex="1 1 0%">
         <Heading
           as="h2"
           fontSize="1.3rem"
           mb=".5rem"
           cursor="pointer"
           onClick={() => handlePostClick(post.id, post.title)}
+          wordBreak="break-all"
+          flexBasis="40%"
         >
           {post.title}
         </Heading>
@@ -62,15 +64,16 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
           noOfLines="2"
           cursor="pointer"
           onClick={() => handlePostClick(post.id, post.title)}
+          flexBasis="40%"
         >
           {post.sub_title}
         </Text>
-        <Box position="relative" mb=".5rem" pt="1.5rem">
+        <Box position="relative" mb=".5rem" pt="1.5rem" flexBasis="20%">
           <Box>
             <TagList tagList={post.tags} />
           </Box>
         </Box>
-      </Box>
+      </Flex>
       <Divider mb=".5rem" />
       <Flex justifyContent="space-between" p="0 .5rem .5rem .5rem">
         <Flex alignItems="center">

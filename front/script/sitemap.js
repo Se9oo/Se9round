@@ -34,8 +34,8 @@ const DOMAIN = 'https://se9round.dev';
     // exclude
     '!../pages/_app.js',
     '!../pages/_document.js',
+    '!../pages/_err.js',
     '!../pages/404.js',
-    '!../pages/500.js',
     '!../pages/admin.js',
     '!../pages/editPost.js',
     '!../pages/postManage.js',

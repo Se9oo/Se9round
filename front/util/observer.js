@@ -24,7 +24,7 @@ export const getIntersectionObserver = (setState) => {
         }
       });
     },
-    { threshold: 0, rootMargin: '-30px 0px 0px 0px' }
+    { threshold: 0, rootMargin: '-60px 0px 0px 0px' }
   );
 
   return observer;

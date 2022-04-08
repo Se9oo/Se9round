@@ -6,14 +6,13 @@ import { checkIsAdminRequestAction } from '../../../reducers/user';
 
 import MainLayout from '../../../components/MainLayout';
 import PostViewer from '../../../components/viewer/PostViewer';
-import PostList from '../../../components/post/PostList';
+import RelatedPostList from '../../../components/post/RelatedPostList';
 import PageHead from '../../../components/head/PageHead';
 
+import { Box } from '@chakra-ui/react';
 // store
 import wrapper from '../../../store/configureStore';
 import axios from 'axios';
-
-import { Box, Heading } from '@chakra-ui/react';
 
 const PostView = () => {
   const { loadPostInfo } = useSelector((state) => state.post);
@@ -25,22 +24,7 @@ const PostView = () => {
       <MainLayout>
         <Box maxW="768px" m="0 auto">
           <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} />
-          {relatedPosts && relatedPosts.length > 0 && (
-            <>
-              <Heading
-                as="h3"
-                fontSize="1.5rem"
-                borderLeftColor="brown"
-                borderLeftWidth="3px"
-                borderLeftStyle="solid"
-                mb="1rem"
-                p="0 .5rem"
-              >
-                관련 포스트
-              </Heading>
-              <PostList postList={relatedPosts} />
-            </>
-          )}
+          <RelatedPostList postList={relatedPosts} />
         </Box>
       </MainLayout>
     </>

@@ -10,13 +10,13 @@ import Alert from '../alert';
 import useAlert from '../../hooks/useAlert';
 import { addClickCountRequestAction, cancelPostRequestAction, deletePostRequestAction } from '../../reducers/post';
 
-const PostList = ({ postList, manageMode = '' }) => {
+const PostList = ({ postList, manageMode = '', postKind = '' }) => {
   const gridTemplate = useBreakpointValue({
     xxs: 'repeat(1, 1fr)',
     xs: 'repeat(1, 1fr)',
     sm: 'repeat(2, 1fr)',
-    md: 'repeat(3, 1fr)',
-    lg: 'repeat(3, 1fr)',
+    md: 'repeat(2, 1fr)',
+    lg: postKind === 'relatedPost' ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
   });
 
   const gridColumnGap = useBreakpointValue({
@@ -24,7 +24,7 @@ const PostList = ({ postList, manageMode = '' }) => {
     xs: '0',
     sm: '1rem',
     md: '1rem',
-    lg: '1rem',
+    lg: '1.5rem',
   });
 
   const dispatch = useDispatch('');

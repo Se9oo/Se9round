@@ -84,12 +84,18 @@ const theme = extendTheme({
         borderBottom: 'none',
         lineHeight: '1.2',
       },
+      '.tui-editor-contents h3': {
+        margin: '18px 0 8px',
+      },
       // markdown a tag style
       '.tui-editor-contents a': {
         textDecoration: 'none',
       },
       '.tui-editor-contents a:hover': {
         textDecoration: 'underline',
+      },
+      '.tui-editor-contents img': {
+        margin: '.5rem auto',
       },
       '.te-md-container .CodeMirror': {
         fontFamily: `'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',

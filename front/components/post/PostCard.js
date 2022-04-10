@@ -44,8 +44,8 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
       <Flex flexDir="column" mb=".5rem" p="1rem" flex="1 1 0%">
         <Heading
           as="h2"
-          fontSize="1.3rem"
-          mb=".5rem"
+          fontSize="1.2rem"
+          mb="2rem"
           cursor="pointer"
           onClick={() => handlePostClick(post.id, post.title)}
           wordBreak="break-all"
@@ -54,10 +54,8 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
           {post.title}
         </Heading>
         <Text
-          fontSize=".9rem"
+          fontSize=".8rem"
           w="100%"
-          h="2.5rem"
-          mb="1rem"
           textOverflow="ellipsis"
           overflow="hidden"
           wordBreak="break-word"

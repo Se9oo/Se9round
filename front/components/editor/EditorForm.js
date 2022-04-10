@@ -195,10 +195,15 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
     onClose();
   };
 
+  // 게시글 작성 취소
+  const handleEditCancel = () => {
+    router.back();
+  };
+
   // 게시글 저장 후 저장이 성공하면 홈으로 이동
   useEffect(() => {
     if (savePostSuccess) {
-      router.push('/');
+      router.push('/home');
     }
   }, [savePostSuccess]);
 
@@ -214,7 +219,7 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
 
   useEffect(() => {
     if (modifyPostSuccess) {
-      router.push('/');
+      router.push('/home');
     }
   }, [modifyPostSuccess]);
 
@@ -300,7 +305,7 @@ const EditorForm = ({ mode = 'edit', loadPostInfo = {} }) => {
             </Button>
           )}
 
-          <Button bg="gray.300" size={buttonSize} m="1rem 0">
+          <Button bg="gray.300" size={buttonSize} m="1rem 0" onClick={handleEditCancel}>
             취소
           </Button>
         </Flex>

@@ -40,7 +40,6 @@ const DOMAIN = 'https://se9round.dev';
     '!../pages/editPost.js',
     '!../pages/postManage.js',
     '!../pages/index.js',
-    '!../pages/post/[postTitle]/index.js',
     '!../pages/post/[postTitle]/modify.js',
   ]);
 

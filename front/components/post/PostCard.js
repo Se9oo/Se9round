@@ -50,6 +50,7 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
           onClick={() => handlePostClick(post.id, post.title)}
           wordBreak="break-all"
           flexBasis="40%"
+          lineHeight="1.4"
         >
           {post.title}
         </Heading>

@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
-import { loadPostRequestAction } from '../../../reducers/post';
+import { addClickCountRequestAction, loadPostRequestAction } from '../../../reducers/post';
 import { checkIsAdminRequestAction } from '../../../reducers/user';
 
 import MainLayout from '../../../components/MainLayout';
@@ -15,8 +15,14 @@ import wrapper from '../../../store/configureStore';
 import axios from 'axios';
 
 const PostView = () => {
+  const dispatch = useDispatch('');
   const { loadPostInfo } = useSelector((state) => state.post);
   const { title, contents, tags, reg_dt, relatedPosts, sub_title, thumbnail } = loadPostInfo;
+
+  useEffect(() => {
+    // 조회수 add
+    dispatch(addClickCountRequestAction({ postId: loadPostInfo.id }));
+  }, []);
 
   return (
     <>

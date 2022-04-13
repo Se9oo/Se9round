@@ -8,7 +8,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import PostCard from './PostCard';
 import Alert from '../alert';
 import useAlert from '../../hooks/useAlert';
-import { addClickCountRequestAction, cancelPostRequestAction, deletePostRequestAction } from '../../reducers/post';
+import { cancelPostRequestAction, deletePostRequestAction } from '../../reducers/post';
 
 const PostList = ({ postList, manageMode = '', postKind = '' }) => {
   const gridTemplate = useBreakpointValue({
@@ -34,10 +34,7 @@ const PostList = ({ postList, manageMode = '', postKind = '' }) => {
   const { isOpen, openAlert, alertProps, onClose } = useAlert();
 
   // 게시글 상세 페이지로 이동
-  const handlePostClick = useCallback((postId, postTitle) => {
-    // 조회수 add
-    dispatch(addClickCountRequestAction({ postId }));
-
+  const handlePostClick = useCallback((postTitle) => {
     router.push({
       pathname: `/post/[postTitle]`,
       query: { postTitle },

@@ -23,13 +23,7 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
       }}
       transition="all .3s ease"
     >
-      <Box
-        position="relative"
-        pt="52%"
-        mb=".5rem"
-        cursor="pointer"
-        onClick={() => handlePostClick(post.id, post.title)}
-      >
+      <Box position="relative" pt="52%" mb=".5rem" cursor="pointer" onClick={() => handlePostClick(post.title)}>
         <Image
           src={post.thumbnail !== null ? post.thumbnail : '/assets/images/empty.png'}
           alt={post.thumbnail !== null ? 'thumbnail' : 'empty image'}
@@ -41,17 +35,15 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
           objectFit="cover"
         />
       </Box>
-      <Flex flexDir="column" mb=".5rem" p="1rem" flex="1 1 0%">
-        <Heading
-          as="h2"
-          fontSize="1.2rem"
-          mb="2rem"
-          cursor="pointer"
-          onClick={() => handlePostClick(post.id, post.title)}
-          wordBreak="break-all"
-          flexBasis="40%"
-          lineHeight="1.4"
-        >
+      <Flex
+        flexDir="column"
+        mb=".5rem"
+        p="1rem"
+        flex="1 1 0%"
+        cursor="pointer"
+        onClick={() => handlePostClick(post.title)}
+      >
+        <Heading as="h2" fontSize="1.2rem" mb="2rem" wordBreak="break-all" flexBasis="40%" lineHeight="1.4">
           {post.title}
         </Heading>
         <Text
@@ -61,13 +53,11 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
           overflow="hidden"
           wordBreak="break-word"
           noOfLines="2"
-          cursor="pointer"
-          onClick={() => handlePostClick(post.id, post.title)}
           flexBasis="40%"
         >
           {post.sub_title}
         </Text>
-        <Box position="relative" mb=".5rem" pt="1.5rem" flexBasis="20%">
+        <Box position="relative" mb=".5rem" pt="1.5rem" flexBasis="20%" zIndex="999">
           <Box>
             <TagList tagList={post.tags} />
           </Box>

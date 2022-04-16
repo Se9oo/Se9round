@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://se9round.dev/home">
-      <image src="https://user-images.githubusercontent.com/39517335/163668192-61d1b62c-3c89-46a1-9a8e-25a9de74a2a9.png" alt="main" />
+        <image src="https://user-images.githubusercontent.com/39517335/163668386-8e738425-07f7-4c3d-8947-285503d44cfd.png" alt="main" />
     </a>
 </p>
 

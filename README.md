@@ -28,6 +28,8 @@
 ### 메인
 
 ![1 메인](https://user-images.githubusercontent.com/39517335/163663987-ef402f2c-f1ec-4f1e-b05c-cc4b3063618d.jpg)
+<br>
+
 ![1 메인_2](https://user-images.githubusercontent.com/39517335/163665032-891edff4-a426-40f6-ad6e-866ed039f39b.gif)
 - 반응형 레이아웃 구현
 <br>

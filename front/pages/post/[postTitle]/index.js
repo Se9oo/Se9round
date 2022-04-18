@@ -4,10 +4,11 @@ import { END } from 'redux-saga';
 import { addClickCountRequestAction, loadPostRequestAction } from '../../../reducers/post';
 import { checkIsAdminRequestAction } from '../../../reducers/user';
 
+import PageHead from '../../../components/head/PageHead';
 import MainLayout from '../../../components/MainLayout';
 import PostViewer from '../../../components/viewer/PostViewer';
+import Utterances from '../../../components/utterances/utterances';
 import RelatedPostList from '../../../components/post/RelatedPostList';
-import PageHead from '../../../components/head/PageHead';
 
 import { Box } from '@chakra-ui/react';
 // store
@@ -30,6 +31,7 @@ const PostView = () => {
       <MainLayout>
         <Box maxW="768px" m="0 auto">
           <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} />
+          <Utterances />
           <RelatedPostList postList={relatedPosts} />
         </Box>
       </MainLayout>

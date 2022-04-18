@@ -7,7 +7,7 @@ import { checkIsAdminRequestAction } from '../../../reducers/user';
 import PageHead from '../../../components/head/PageHead';
 import MainLayout from '../../../components/MainLayout';
 import PostViewer from '../../../components/viewer/PostViewer';
-import Utterances from '../../../components/utterances/utterances';
+import Utterances from '../../../components/utterances/Utterances';
 import RelatedPostList from '../../../components/post/RelatedPostList';
 
 import { Box } from '@chakra-ui/react';

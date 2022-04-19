@@ -10,7 +10,7 @@ import PostViewer from '../../../components/viewer/PostViewer';
 import Utterances from '../../../components/utterances/Utterances';
 import RelatedPostList from '../../../components/post/RelatedPostList';
 
-import { Box } from '@chakra-ui/react';
+import { Box, Divider } from '@chakra-ui/react';
 // store
 import wrapper from '../../../store/configureStore';
 import axios from 'axios';
@@ -31,6 +31,7 @@ const PostView = () => {
       <MainLayout>
         <Box maxW="768px" m="0 auto">
           <PostViewer title={title} contents={contents} tags={tags} reg_dt={reg_dt} />
+          <Divider m="1rem 0" />
           <Utterances />
           <RelatedPostList postList={relatedPosts} />
         </Box>

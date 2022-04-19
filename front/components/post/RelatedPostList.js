@@ -6,7 +6,7 @@ import PostList from './PostList';
 
 const RelatedPostList = ({ postList }) => {
   return (
-    <Box mt="16rem">
+    <Box mt="10rem">
       <Heading
         as="h3"
         fontSize="1.5rem"

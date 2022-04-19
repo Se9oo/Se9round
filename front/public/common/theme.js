@@ -97,6 +97,12 @@ const theme = extendTheme({
       '.tui-editor-contents img': {
         margin: '.5rem auto',
       },
+      '.tui-editor-contents ol': {
+        margin: '10px 0 10px',
+      },
+      '.tui-editor-contents blockquote': {
+        borderLeft: '4px solid #8C7A70',
+      },
       '.te-md-container .CodeMirror': {
         fontFamily: `'Apple SD Gothic', 'Apple SD 산돌고딕 Neo', -apple-system, 'Lucida Grande',
           '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif`,

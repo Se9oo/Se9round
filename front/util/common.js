@@ -65,7 +65,7 @@ export const getMarkdownHeader = (title, contents) => {
 
   function getTocContents(line, isTitle) {
     const count = line.split('#').length - 1;
-    const str = isTitle ? line : line.replace(' ', '').replace(/#/g, '');
+    const str = isTitle ? line : line.replace(' ', '').replace(/#/g, '').replace(/\\/g, '');
 
     let href = str.replace(/ /g, '-');
     href = '#' + href;

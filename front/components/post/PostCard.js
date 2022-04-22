@@ -6,6 +6,7 @@ import { ViewIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 import { getCountFormat, getDateDiff } from '../../util/common';
 import TagList from '../tag/TagList';
+import LazyImage from '../lazyImage/LazyImage';
 
 const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModify, mode }) => {
   const { isAdmin } = useSelector((state) => state.user);
@@ -24,16 +25,7 @@ const PostCard = memo(({ post, handlePostClick, handlePostCancel, handlePostModi
       transition="all .3s ease"
     >
       <Box position="relative" pt="52%" mb=".5rem" cursor="pointer" onClick={() => handlePostClick(post.title)}>
-        <Image
-          src={post.thumbnail !== null ? post.thumbnail : '/assets/images/empty.png'}
-          alt={post.thumbnail !== null ? 'thumbnail' : 'empty image'}
-          position="absolute"
-          w="100%"
-          h="100%"
-          top="0"
-          left="0"
-          objectFit="cover"
-        />
+        <LazyImage thumbnail={post.thumbnail} />
       </Box>
       <Flex
         flexDir="column"

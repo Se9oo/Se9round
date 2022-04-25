@@ -1,7 +1,7 @@
 export const initialState = {
   saveImageLoading: false,
   saveImageSuccess: false,
-  saveImageFailure: false,
+  saveImageFailure: { err: false, msg: null },
   imageName: null,
 };
 
@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         saveImageLoading: true,
         saveImageSuccess: false,
-        saveImageFailure: false,
+        saveImageFailure: { err: false, msg: null },
         imageName: null,
       };
     case SAVE_IMAGE_SUCCESS:
@@ -32,7 +32,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         saveImageLoading: false,
         saveImageSuccess: true,
-        saveImageFailure: false,
+        saveImageFailure: { err: false, msg: null },
         imageName: action.data,
       };
     case SAVE_IMAGE_FAILURE:
@@ -40,7 +40,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         saveImageLoading: false,
         saveImageSuccess: false,
-        saveImageFailure: true,
+        saveImageFailure: { err: true, msg: action.err },
         imageName: null,
       };
     default:

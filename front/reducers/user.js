@@ -100,7 +100,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         checkIsAdminLoading: true,
         checkIsAdminSuccess: false,
-        checkIsAdminFailure: false,
+        checkIsAdminFailure: { err: false, msg: null },
       };
     case CHECK_IS_ADMIN_SUCCESS:
       return {
@@ -108,7 +108,7 @@ const reducer = (state = initialState, action) => {
         isAdmin: true,
         checkIsAdminLoading: false,
         checkIsAdminSuccess: true,
-        checkIsAdminFailure: false,
+        checkIsAdminFailure: { err: false, msg: null },
       };
     case CHECK_IS_ADMIN_FAILURE:
       return {

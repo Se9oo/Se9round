@@ -16,7 +16,7 @@ export const initialState = {
   tempSavePostFailure: { err: false, message: null },
   addClickCountLoading: false,
   addClickCountSuccess: false,
-  addClickCountFailure: false,
+  addClickCountFailure: { err: false, message: null },
   loadPostLoading: false,
   loadPostSuccess: false,
   loadPostFailure: { err: false, message: null },
@@ -232,21 +232,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         addClickCountLoading: true,
         addClickCountSuccess: false,
-        addClickCountFailure: false,
+        addClickCountFailure: { err: false, message: null },
       };
     case ADD_CLICK_COUNT_SUCCESS:
       return {
         ...state,
         addClickCountLoading: false,
         addClickCountSuccess: true,
-        addClickCountFailure: false,
+        addClickCountFailure: { err: false, message: null },
       };
     case ADD_CLICK_COUNT_FAILURE:
       return {
         ...state,
         addClickCountLoading: false,
         addClickCountSuccess: false,
-        addClickCountFailure: true,
+        addClickCountFailure: { err: true, message: action.err },
       };
     // 특정 게시글 조회
     case LOAD_POST_REQUEST:
@@ -255,7 +255,7 @@ const reducer = (state = initialState, action) => {
         loadPostInfo: {},
         loadPostLoading: true,
         loadPostSuccess: false,
-        loadPostFailure: false,
+        loadPostFailure: { err: false, message: null },
       };
     case LOAD_POST_SUCCESS:
       return {
@@ -263,7 +263,7 @@ const reducer = (state = initialState, action) => {
         loadPostInfo: action.data,
         loadPostLoading: false,
         loadPostSuccess: true,
-        loadPostFailure: false,
+        loadPostFailure: { err: false, message: null },
       };
     case LOAD_POST_FAILURE:
       return {
@@ -271,7 +271,7 @@ const reducer = (state = initialState, action) => {
         loadPostInfo: {},
         loadPostLoading: false,
         loadPostSuccess: false,
-        loadPostFailure: true,
+        loadPostFailure: { err: true, message: action.err },
       };
     // 게시글 취소
     case CANCEL_POST_REQUEST:
@@ -321,7 +321,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         modifyPostLoading: false,
         modifyPostSuccess: false,
-        modifyPostFailure: { err: true, message: null },
+        modifyPostFailure: { err: true, message: action.err },
       };
     // 게시글 찾기
     case SEARCH_POSTS_REQUEST:
@@ -344,7 +344,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         searchPostsLoading: false,
         searchPostsSuccess: false,
-        searchPostsFailure: { err: false, message: action.err },
+        searchPostsFailure: { err: true, message: action.err },
       };
     // 게시글 관리 목록 불러오기
     case LOAD_MANAGE_POSTS_REQUEST:

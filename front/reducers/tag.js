@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadTagsLoading: false,
         loadTagsSuccess: false,
-        loadTagsFailure: { err: false, msg: null },
+        loadTagsFailure: { err: false, msg: action.err },
       };
     default:
       return state;

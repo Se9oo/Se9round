@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 // 보안 라이브러리 적용, nginx 사용에 따른 proxy 설정
 if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
-  app.use(helmet());
+  app.use(helmet({ crossOriginResourcePolicy: { policy: 'same-site' } }));
   app.set('trust proxy', 1);
   // cors 설정
   app.use(

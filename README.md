@@ -94,7 +94,7 @@
 ![7 게시글_관리](https://user-images.githubusercontent.com/39517335/163667231-ed9899ab-5b50-4ad9-9e90-5fe60ec5f1e7.png)
 ![7-1 게시글_관리](https://user-images.githubusercontent.com/39517335/163667248-23bbfb04-deef-4165-b521-10eb7fff2a36.png)
 - 임시 저장된 글을 저장/삭제 할 수 있습니다.
-- 삭제된 글은 한번 더 삭제 영구삭제가 가능합니다.
+- 삭제된 글은 한번 더 삭제시 영구삭제가 가능합니다.
   
 <br>
 

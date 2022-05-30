@@ -12,6 +12,17 @@
 
 <br>
 
+## 🔧사용한 기술
+- React
+- Redux
+- Redux-Saga
+- Next
+- Express
+- PostgreSQL
+- GCP
+
+<br>
+
 ## 🖥 실행 화면 
 
 ### 목차  
@@ -99,17 +110,6 @@
 <br>
 
 [목차로 이동](#목차)
-
-<br>
-
-## 🔧사용한 기술
-- React
-- Redux
-- Redux-Saga
-- Next
-- Express
-- GCP
-- nginx
 
 
 
